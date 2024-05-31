@@ -1,24 +1,24 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Developer Guide",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#C58B01",
+    "light": "#f6da67",
+    "dark": "#C58B01",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#C58B01",
+      "to": "#f6da67"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:dev@gleef.eu"
     }
   ],
   "topbarCtaButton": {
