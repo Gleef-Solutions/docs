@@ -19,7 +19,7 @@ mintlify dev
 
 ### Publishing Changes
 
-Any change merged to the main branch is automatically published at [docs.gleef.eu](https://docs.gleef.ey).
+Any change merged to the main branch is automatically published to [docs.gleef.eu](https://docs.gleef.ey).
 
 #### Troubleshooting
 
