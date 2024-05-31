@@ -57,6 +57,13 @@
     },
 
     {
+      "group": "Questions",
+      "pages": [
+        "QA"
+      ]
+    },
+
+    {
       "group": "Under the hood",
       "pages": [
         "under-the-hood/gdpr"
