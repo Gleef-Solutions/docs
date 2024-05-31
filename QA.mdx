@@ -1,29 +1,169 @@
 ---
-title: 'QA'
-sidebarTitle: 'Q&A'
+title: 'Q&A'
 icon: "question"
 iconType: "solid"
 ---
 
+## Statistical questions
 <AccordionGroup>
-  <Accordion title="Will Gleef slon">
-    You can put other components inside Accordions.
+  <Accordion title="Do I have enough traffic on my website to run A/B tests">
+    <Info>You'll need approximately 7,448 visitors for each variant to detect a 1% difference with 95% confidence and 80% power.</Info>
 
-    ```java HelloWorld.java
-    class HelloWorld {
-        public static void main(String[] args) {
-            System.out.println("Hello, World!");
-        }
-    }
-    ```
+    Thus, any website can runs A/B testing, it simply depends on how much time you will not changing your website.
+    Nonethless, if the variation goes for a ver
+    To run effective A/B tests, it's crucial to ensure that your website has sufficient traffic. The number of visitors impacts the reliability and statistical significance of your test results.
 
+    #### Key Considerations
+
+    1. **Sample Size:**
+      - The number of visitors needed to detect a meaningful difference between variants.
+      - Calculated using statistical formulas based on the desired confidence level and effect size.
+
+    2. **Effect Size:**
+      - The minimum detectable change in conversion rate or other metrics.
+      - Smaller effect sizes require larger sample sizes.
+
+    3. **Confidence Level:**
+      - The probability that the test results are not due to random chance.
+      - Commonly used confidence levels are 95% and 99%.
+
+    #### Statistical Formula for Sample Size
+
+    The sample size `n` can be calculated using the following formula for two proportions:
+    
+    `n` = $(2 * ($`Z_alpha`$/2 + $`Z_beta`$)^2 * $`p`$ * (1 - $`p`$)) / ($`delta`$^2)$
+    
+    Where:
+    - `Z_alpha/2` is the `Z-value` for the desired confidence level (e.g., 1.96 for 95% confidence).
+    - `Z_beta` is the `Z-value` for the desired power (e.g., 0.84 for 80% power).
+    - `p` is the estimated overall conversion rate.
+    - `delta` is the minimum detectable effect size (difference between conversion rates of the control and variant).
+
+    #### Example Calculation for a 1% difference
+
+    Assume you have the following:
+    - Overall conversion rate (`p`) = 5% (0.05)
+    - Desired confidence level = 95% (`Z-value` = 1.96)
+    - Desired power = 80% (`Z-value` = 0.84)
+    - Minimum detectable effect size (`delta`) = 1% (0.01)
+
+    Plugging these values into the formula:<br/>
+    `n` = $(2 * (1.96 + 0.84)^2 * 0.05 * 0.95) / 0.0001$ <br/>
+    `n` = $7448$ <br/>
+
+    You would need approximately 7,448 visitors for each variant to detect a 1% difference with 95% confidence and 80% power.
+
+    #### Example Calculation
+
+    Assume you have the following:
+    - Overall conversion rate (`p`) = 5% (0.05)
+    - Desired confidence level = 95% (`Z-value` = 1.96)
+    - Desired power = 80% (`Z-value` = 0.84)
+    - Minimum detectable effect size (`delta`) = 10% (0.01)
+
+    Plugging these values into the formula:<br/>
+    `n` = $(2 * (1.96 + 0.84)^2 * 0.05 * 0.95) / 0.001$ <br/>
+    `n` = $74.48$ <br/>
+
+    You would need approximately 75 visitors for each variant to detect a 10% difference with 95% confidence and 80% power.
+
+    #### Practical Considerations
+
+    1. **Traffic Volume:**
+      - High-traffic websites can achieve the necessary sample sizes quickly.
+      - Low-traffic websites may need to run tests for longer periods.
+
+    2. **Test Duration:**
+      - Ensure the test runs long enough to collect the required sample size.
+      - Consider seasonal or time-based variations in traffic and behavior.
+
+    3. **Multiple Variants:**
+      - If testing more than two variants, adjust the sample size calculation accordingly.
+
+    ### Example Scenarios
+
+    1. **High-Traffic Website:**
+      - Daily visitors: 50,000
+      - Estimated conversion rate: 5%
+      - Desired effect size: 1%
+      - Sample size per variant: 7,448
+
+      **Conclusion:** The test can be completed in a few days.
+
+    2. **Low-Traffic Website:**
+      - Daily visitors: 500
+      - Estimated conversion rate: 5%
+      - Desired effect size: 10%
+      - Sample size per variant: 75
+
+      **Conclusion:** The test can be completed with hours.
+
+    By ensuring you have enough traffic and using the right calculations, you can run A/B tests that provide reliable and actionable insights.
   </Accordion>
 
-  <Accordion title="FAQ with Icon" icon="alien-8bit">
-    Check out the [Accordion](/content/components/accordions) docs for all the supported props.
+  <Accordion title="Does Gleef provide extensive statistics information on experiments?">
+    <Info>We now provide `p-value` and `Z-value` on experiments</Info>
+
+    We provide as much information as we can on every experiment you run. We can also provide more information if you email us at experiments[at]gleef.eu. 
   </Accordion>
 
-  <Accordion title="FAQ without Icon">
-    Check out the [Accordion](/content/components/accordions) docs for all the supported props.
+  <Accordion title="Is there any option to download full experiments data?">
+    We do not offer any native possibility to download full experiments data, but we can send you an extensive csv file, containing every information you would need, if you email us at experiments[at]gleef.eu
+  </Accordion>
+
+  <Accordion title="How variation are split among visitors?">
+    For now, variations are equally split among visitors. For instance, if you have 3 different variations on an experiment (including the baseline), 1 visitor out of 3 will see each variation, randomly shown.
+  </Accordion>
+
+  <Accordion title="How can I segment the traffic and who's gonna see an experiment?">
+    For now, we do not provides any segmentation possibility.
+    Nonetheless, you are able to set-up your own segmentation via changing the url the visitor goes to, and implementing experiments on each specific urls.
+  </Accordion>
+
+  <Accordion title="What kind of success event can be set-up?">
+    It depends on the experiment you're running.
+    1. Running an experiment on a Call To Action (CTA)
+      Thus, you'll be given the opportunity to define the sucess as either:
+        1. Clic on that specific item
+        2. Specific url (page view later in the funnel)
+    2. Running an experiment on a regular text (not clickable)
   </Accordion>
 </AccordionGroup>
+
+
+## Technical questions
+<AccordionGroup>
+  <Accordion title="Will Gleef slower my website?">
+    Gleef just adds a seemless script on your website, loading without any flickering in less than 25ms.
+    If you have flickering with Gleef, it probably means that you also have latencies with other javascripts on your website.
+  
+    You can book an appointment with our experts in order to make sure we won't slower your website loading.
+  </Accordion>
+
+  <Accordion title="Who can create & manage A/B testing on my website?">
+    Only users with an account linked to your company can create or manage A/B tests on your website.
+    It can sometimes happen that you are able to open Gleef extensions on other websites.
+    Nonetheless, none of the experiments you would be able to set-up would be live on the website.
+  </Accordion>
+
+  <Accordion title="I can't select a text on my website, why?">
+    It is mostly due to text not being text. The main common issue is willing to expirment text that is on an image. It should not...
+    Ask your developers to change that
+  </Accordion>
+
+  <Accordion title="The text I was running A/B test on was removed from the page">
+    It is mostly due to text not being text. The main common issue is willing to expirment text that is on an image. It should not...
+    Ask your developers to change that
+  </Accordion>
+</AccordionGroup>
+
+Autres questions à mettre :
+Un Ab test a disparu
+Le texte que j'ab testais à été changé
+J'ai plusieurs ab tests sur la meme page que se passe t il ?
+l'url a changé
+le success event a changé
+je veux changer une variation
+je veux retirer une variation
+je veux ajouter une variation
+je veux retirer la variation de base
