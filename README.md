@@ -1,12 +1,7 @@
-# Mintlify Starter Kit
+# Gleef Starter Kit
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
-
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+The Gleef documentation is based on Mintlify.
+Follow the intructions bellow to update the documentation.
 
 ### Development
 
@@ -16,7 +11,7 @@ Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview th
 npm i -g mintlify
 ```
 
-Run the following command at the root of your documentation (where mint.json is)
+Clone this repo, and run the following command at the root of your documentation (where mint.json is)
 
 ```
 mintlify dev
@@ -24,7 +19,7 @@ mintlify dev
 
 ### Publishing Changes
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+Any change merged to the main branch is automatically published at [docs.gleef.eu](https://docs.gleef.ey).
 
 #### Troubleshooting
 
