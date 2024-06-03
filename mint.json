@@ -36,11 +36,10 @@
       "icon": "hourglass-start",
       "url": "https://gleef.eu"
     }
-
   ],
   "tabs": [
     {
-      "name": "Q&A",
+      "name": "Feedback & Support",
       "url": "Q&A"
     }
   ],
@@ -62,11 +61,11 @@
         "how-to/manage"
       ]
     },
-
     {
       "group": "Under the hood",
       "pages": [
-        "under-the-hood/gdpr"
+        "under-the-hood/gdpr",
+        "under-the-hood/privacy-policy"
       ]
     },
     {

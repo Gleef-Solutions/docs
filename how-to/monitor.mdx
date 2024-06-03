@@ -2,3 +2,70 @@
 title: 'Monitor an experiment'
 description: "Follow the result of your experiments once they're significant"
 ---
+
+Following the result of your experiments is really easy. Go on your dashboard and select the experiment you want to monitor.
+
+## Edit experiment
+Despite the experiment status (`Draft`, `In Progress`, `Paused`, `Finished`), you can only edit the name of the experiment once it has been saved.
+<img width="200" src="/images/monitor_details.png" alt="Name edition"/>
+Directly change the name of the experiment and save it.
+
+<Note>You can not change anything else as it is likely to introduce bias in your experiment, as explained in our [FAQ](/Q&A/QA)</Note>
+
+## Start/Pause the experiment
+### Drafted experiment
+<img width="200" src="/images/monitor_draft.png" alt="Draft experiment"/>
+
+When creating an experiment, you can choose to only save it as a draft, not running it live.
+Thus, when an experiment is `drafted` it means that the experiment has not been running yet and so there is no data to display.
+You can start the experiment whenever you want.
+
+<Warning>When an experiment has been drafted for a long time, make sure that the page has not been change in the meantime, so that the wording targeted by the experiment is still on the page.</Warning>
+
+### Paused experiment
+<img width="200" src="/images/monitor_paused.png" alt="Not running experiment"/>
+
+When an experiment is `Draft` or `Paused`, you can start it by clicking on the button.
+Then, the experiment will be running on the webpage, so that variations will be shown to visitors.
+
+### Running experiment
+<img width="200" src="/images/monitor_running.png" alt="In progress experiment"/>
+
+When an experiment is in progress, you can pause it, meaning that the experiment won't be running on your webpage anymore.
+Pausing an experiment will still make it possible to switch it live again later, in order to gain even more data.
+
+You can wish to pause an experiment for different reasons:
+- You realised the wording under experiment has been removed from the page. You pause the experiment while you add it back.
+- You have a very specific event on your website you don't wan't the experiment to be bias with.
+- You are undergoing latencies or any technical issues with your website and want to reduce friction or flickering with third parts.
+
+<Warning>You might not want to pause an experiment too long, as it could have an impact on the results (introduce bias).</Warning>
+
+When you pause an experiment that is significant, it will get the status `finished` meaning that it is not running anymore, and that it is signficant.
+
+
+## Finish the experiment
+When the experiment is statistically significant, you can pause it, leading the experiment to get the status `finished`. 
+Start analyzing the results!
+
+
+## Analyze results
+### Significance
+<img width="200" src="/images/monitor_not-significant.png" alt="Not significant experiment"/>
+
+Significance is a mathematical term that depends on many different parameters. Gleef automatically calculates significance for you.
+You can see how it is done on our [statistical explanations](/Q&A/statistics-data).
+
+<Tip>You can now see `p-value`and `Z-value`.</Tip>
+
+You should keep the experiment running while the significance is not achieved, as the results have not reached the desired outcome and should not be considered.
+Keep in mind that the significance is directly linked to the square of the conversion difference calculated between variations, which means that if you have a 10% difference between 2 variations, your experiment will be significant 100 times quicker than a 1% difference.
+
+### Conversion & growth
+<img width="200" src="/images/monitor_results.png" alt="Results"/>
+At any moment, you can access see & follow the results of your experiment, seeing the conversion of each variations, and the growth in comparison to the `baseline` which is the basic wording under experiment.
+
+<Tip>
+    When hovering conversion or growth metrics, you can access detailed figures
+    <img width="200" src="/images/monitor_hover.png" alt="Hover conversion"/>
+</Tip>

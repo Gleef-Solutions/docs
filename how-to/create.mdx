@@ -2,3 +2,78 @@
 title: 'Create an experiment'
 description: "Set-up your test and get answers about your wordings"
 ---
+
+Setting-up your first test is very easy, and should take you less than 5 minutes.
+You will probably be able to set-up the next one in even less time.
+
+<Steps>
+    <Step title="Open Gleef's extension on the page">
+        Be sure ton open Gleef's extension on the page you want to conduct the experiment.
+        Otherwise, navigate on your website before opening the extension.
+    </Step>
+
+    <Step title="Login with your credentials">
+        Your credentials are unique and must not be shared, as we are keeping a log of any edit done with Gleef, which would enable you to know who made an edit on the website.
+        If you do not have credentials yet, you must ask your company to create some, by emailing us at support@gleef.eu.
+        There is no limitation on the number of user you can have.
+    </Step>
+
+    <Step title="Create the experiment">
+        <img width="200" src="/images/create_step0.png" alt="step 0"/>
+        Create the experiment by clicking on the 'New Experiment", which will enable you to start the implementation.
+    </Step>
+
+    <Step title="Select the wording to experiment">
+        <img width="200" src="/images/create_step1.png" alt="step 1"/>
+        Select the wording on your website you want to experiment.
+        If you can't select the wording you were willing to, it might be because it is defined on an image, or not inside classic textual code tags.
+        
+        Please refer to our [FAQ](/Q&A/trouble-shooting#i-cant-select-some-text-on-my-website-why) if needed.
+    </Step>
+
+    <Step title="Define the variations">
+        <img width="200" src="/images/create_step2.png" alt="step 2"/>
+        Define the variaitons you want to experiment.
+        In theory, you can add as many variations as you want, but we recommand you not to define more than 2 variations (excluding the baseline).
+
+        You can refer to our [best practices](/Q&A/best-practices) to know more on how to set-up a good experiment.
+
+        <Tip>Keep in mind that the more variations you set-up, the longer it will take to the experiment to be significant, [read more](/Q&A/statistics-data)</Tip>
+
+        You don't have the possibility to remove the `baseline` which is the basic wording you are trying to A/B test.
+    </Step>
+
+    <Step title="Define the success event of the expirement">
+        <img width="200" src="/images/create_step3.png" alt="step 3"/>
+        We offer the possibility to define 2 types of success event:
+        1. **A click on the call-to-action:**
+        <Warning>It only works if you're currently running the experiment on a call-to-action text, meaning a text that can be clicked to perform an event.</Warning>
+        We do not yet provide the ability to select a call-to-action that is not the text you're trying to experiment, as it would make the experiment implementation process longer and we want to keep it straightforward.
+        If you're currently running the experiment on a call-to-action, you can define the success event as being the click on that specific call-to-action, meaning that if the visitor click on that button for the first time, we perform the success event, and link it to the variation shown (if applicable).
+        2. **A specific URL page**
+        You can always provide a URL page, that would be a success for you. It can for instance be a 'thank you' page or 'purchase proceeded', right after the visitor has bought your product or service. It can also be anyother page that would be relevant.
+        This enables testing a headline for instance, that is not linked to any particular call-to-action.
+        
+        Please refer to our [success-events page](/how-to/success-event) if needed.    
+    </Step>
+
+    <Step title="Name your experiment">
+        <img width="200" src="/images/create_step4.png" alt="step 4"/>
+        Once everything is set-up, you have to name your experiment, in order to find it easily in your dashboard.
+        Try to abide by the company's formatting when naming your experiments, to make it clear to everyone what is under experiment.
+
+        Quick examples:
+        - ** CTA on the landing page:**
+        The CTA you're setting A/B testing on is the `discover` button. Then, the experiment should be named: `yy.mm-landingPage-CTA-discover`
+        With `yy.mm` being the year and month of your test.
+        - ** Headline on the landing page:**
+        The headline you're setting A/B testing on is the `h1` header, meaning the title of your webpage. Then, the experiment should be named: `yy.mm-landingPage-h1-title`
+        With `yy.mm` being the year and month of your test and `title` being the real title (shorten).
+    </Step>
+
+    <Step title="Save your experiment">
+        <img width="200" src="/images/create_step5.png" alt="step 5"/>
+        When it's all done, you can save your experiment, and either let it as a draft to run it later, or launch it right away.
+        It's your choice!
+    </Step>
+</Steps>

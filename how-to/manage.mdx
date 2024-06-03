@@ -1,4 +1,32 @@
 ---
 title: 'Manage an experiment'
-description: "Change the visibility"
+description: "Change the visibility of an experiment"
 ---
+
+Once your experiment is set-up, you can easily manage it's status.
+
+```mermaid
+flowchart LR
+    A[Drafted]
+    subgraph SP[Experiment running]
+      direction TB
+      B[Paused] --> C[In Progress]
+      C --> B
+    end
+    A --> SP
+    SP --> D[Finished]
+````
+
+An experiment can be in four different states:
+    1. **`Draft`:**
+    When you create the experiment and choose not to launch it immediatly, it is saved a draft, meaning that this experiment has never been launched.
+    2. **`Running`:**
+    When this experiment is currently running, meaning that visitors will see different variations of this experiment when going on the url linked to this experiment.
+    3. **`Paused`:**
+    You can decide to pause an experiment at any time. When paused, the experiment can be re-started manually when you want.
+    When paused, the experiment is not running anymore, meaning that every visitor on your website will see the basic wording for that specific experiment.
+    4. **`Finished`:**
+    A finished experiment is an experiment that you have stopped and that have yeild significant results.
+
+<Note>Note that changing too many times between running/pause can bias your experiment.</Note>
+
