@@ -57,17 +57,20 @@ In order to re-start the experiment, undo the changes from the page concerned, a
 ### I can't find one of my experiment anymore
 In some really rare case, it can happen that an experiment disappear from your dashboard. Please contact us at support@gleef.eu to make sure we re-integrate it.
 
-### I have defined 3 experiments on my page, but only is seen
+### I have defined 3 experiments on my page, but visitor only see 1 experiment at a time
 Running multiple A/B testing on the same page is mostly disencouraged, see our [best practices](/Q&A/best-practices).
 Nonetheless, you can be eager to define different experiments on the same page. If this is the case, we won't show more than 1 single variation to a visitor.
 This means that the visitor will only enter one A/B test, and won't see any other variation, to make sure we stay consistent in our analysis.
 
-For instance, if you're experimenting 3 call-to-actions on the same page, the visitor will only see one experiment - meaning one call-to-action with a variation defined - the other 2, with the classic wording.
+For instance, if you're experimenting 3 different components on the same page, the visitor will only see one experiment - meaning one component with a variation defined - the other 2, with the classic wording.
 
+### I have selected a component to A/B test wording, that is shown more than once on the page, what will happen?
+When you define an experiment on a component's wording, we assume that you wanna experiment all the components that are exactly the same on that specific page.
+That means that we will for instance set under experiment all the components that contains that specific wording and have the same code structure, to make sure your page remains consistent.
 
 
 ## Gleef's technology
-### Gleef slows my website
+### Is Gleef slowing my website?
 It's pretty odd, but it can happen. Gleef is a seemless javascript on your website, that should load in less than 10ms.
 We have even set-up barriers to make sure no flickering will take place on your website.
 
