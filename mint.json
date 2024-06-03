@@ -25,19 +25,31 @@
     "name": "Dashboard",
     "url": "https://dashboard.mintlify.com"
   },
-
   "anchors": [
+    {
+      "name": "Chrome Extension",
+      "icon": "chrome",
+      "url": "https://chromewebstore.google.com/detail/gleef-alpha/dhaimaljdicccaplppipfiikonpdgeelify"
+    },
+    {
+      "name": "Waitlist",
+      "icon": "hourglass-start",
+      "url": "https://gleef.eu"
+    },
     {
       "name": "Community",
       "icon": "slack",
       "url": "https://mintlify.com/community"
-    },
+    }
+
+  ],
+  "tabs": [
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Q&A",
+      "url": "Q&A"
     }
   ],
+
   "navigation": [
     {
       "group": "Get Started",
@@ -57,16 +69,15 @@
     },
 
     {
-      "group": "Questions",
-      "pages": [
-        "QA"
-      ]
-    },
-
-    {
       "group": "Under the hood",
       "pages": [
         "under-the-hood/gdpr"
+      ]
+    },
+    {
+      "group": "Q&A",
+      "pages": [
+        "Q&A/QA"
       ]
     }
   ],
