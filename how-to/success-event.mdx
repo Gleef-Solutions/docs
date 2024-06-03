@@ -1,0 +1,30 @@
+---
+title: 'Sucess events'
+icon: "computer-mouse"
+iconType: "solid"
+description: "Success events are needed to determine whether a variation is performing better than another."
+---
+
+## Success events definitions
+### What is a success event?
+A success event in A/B testing is a predefined action or metric that determines the success of an experiment. It is the key outcome you want to measure to see if your variations perform better than the control. The success event should align with your business goals and objectives.
+
+**Example:**
+For an e-commerce website, a success event could be the completion of a purchase. In this case, the metric you are tracking is the conversion rate, which is the percentage of visitors who complete a purchase. Other examples of success events include:
+- Clicking on a call-to-action button
+- Signing up for a newsletter
+- Downloading a resource or document
+- Performing a specific action
+
+### How many success events can I define with Gleef?
+For now, you might choose one success event when implementing an experiment.
+That being said, you have the choice between two types of experiments. It can either be:
+1. **A click on the call-to-action:**
+<Warning>It only works if you're currently running the experiment on a call-to-action text, meaning a text that can be clicked to perform an event.</Warning>
+We do not yet provide the ability to select a call-to-action that is not the text you're trying to experiment, as it would make the experiment implementation process longer and we want to keep it straightforward.
+If you're currently running the experiment on a call-to-action, you can define the success event as being the click on that specific call-to-action, meaning that if the visitor click on that button for the first time, we perform the success event, and link it to the variation shown (if applicable).
+2. **A specific URL page**
+You can always provide a URL page, that would be a success for you. It can for instance be a 'thank you' page or 'purchase proceeded', right after the visitor has bought your product or service. It can also be anyother page that would be relevant.
+This enables testing a headline for instance, that is not linked to any particular call-to-action.
+
+### What 

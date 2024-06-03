@@ -35,11 +35,6 @@
       "name": "Waitlist",
       "icon": "hourglass-start",
       "url": "https://gleef.eu"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
     }
 
   ],
@@ -77,13 +72,17 @@
     {
       "group": "Q&A",
       "pages": [
-        "Q&A/QA"
+        "Q&A/QA",
+        "Q&A/best-practices",
+        "Q&A/installing",
+        "Q&A/statistics-data",
+        "Q&A/trouble-shooting"
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://x.com/gleef_ai",
+    "github": "https://github.com/gleefai",
+    "linkedin": "https://www.linkedin.com/company/gleefai"
   }
 }
