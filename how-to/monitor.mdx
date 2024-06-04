@@ -28,17 +28,16 @@ When an experiment is `Paused`, it means that it was previously launched but the
 ### Running experiment
 <img width="200" src="/images/monitor_running.png" alt="In progress experiment"/>
 
+When an experiment is in progress, you can pause it at any time. It will no longer be live on your webpage. However, you can switch it back on later to collect additional data.
 
-If you need to pause an experiment that's currently in progress, it will no longer be live on your webpage. However, you can still switch it back on later to collect more data.
+Reasons why you might want to pause an experiment:
 
-There are several reasons why you might want to pause an experiment:
+- The wording under experiment has been removed from the page
+- You're aware of a particular event that could potentially introduce bias into your experiment
 
-- The wording under experiment has been removed from the page, and you need to add it back.
-- You have a specific event on your website that you don't want the experiment to be biased by.
+<Warning>It's advisable to avoid pausing an experiment for an extended period, as it may introduce bias and affect the results.</Warning>
 
-<Warning>You might not want to pause an experiment too long, as it could have an impact on the results (introduce bias).</Warning>
-
-When you pause an experiment that is significant, it will get the status `finished` meaning that it is not running anymore, and that it is signficant.
+If you pause an experiment that has already reached statistical significance, it will be marked as `finished`.
 
 
 ## Finish the experiment
