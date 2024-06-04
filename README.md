@@ -11,7 +11,7 @@ Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview th
 npm i -g mintlify
 ```
 
-Clone this repo, and run the following command at the root of your documentation (where mint.json is)
+Clone this repo, and run the following command at the root of your documentation (where mint.json is placed)
 
 ```
 mintlify dev
