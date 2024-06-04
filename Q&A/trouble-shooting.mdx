@@ -83,7 +83,7 @@ This mechanism helps us avoid repeatedly querying our database each time a visit
 By doing this, we maintain consistency in what the user sees, preventing flickering and latency issues that can arise from frequent database calls.
 
 However, a consequence of this approach is that even if an experiment is paused, the stored variation remains active for the duration of the 7-day period.
-This means that visitors, including yourself, will continue to see the same variation regardless of the experiment’s current status, which can be inconvenient if the experiment has been stopped.
+This means that visitors, including yourself, will continue to see the same variation regardless of the experiment’s current status.
 
 ### Is Gleef be GDPR compliant?
 Yes, we are! We do not use any cookie or non-anonymized data to run experiments. We only store data in the cache and local-storage for the visitor.
