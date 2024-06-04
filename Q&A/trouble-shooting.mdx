@@ -76,6 +76,15 @@ We have even set-up barriers to make sure no flickering will take place on your 
 
 If you're still encountering trouble on loading, it might be due to the way your website set priorities on loading content. Please, email us at support@gleef.eu to make sure we help you solve this.
 
+### I have paused an experiment, but still see live variations on my website, why?
+This is expected behavior.
+We store the variation displayed to each visitor in their browser’s local storage for a period of 7 days.
+This mechanism helps us avoid repeatedly querying our database each time a visitor returns to your site, which not only conserves resources but also ensures a smoother and faster user experience.
+By doing this, we maintain consistency in what the user sees, preventing flickering and latency issues that can arise from frequent database calls.
+
+However, a consequence of this approach is that even if an experiment is paused, the stored variation remains active for the duration of the 7-day period.
+This means that visitors, including yourself, will continue to see the same variation regardless of the experiment’s current status, which can be inconvenient if the experiment has been stopped.
+
 ### Is Gleef be GDPR compliant?
 Yes, we are! We do not use any cookie or non-anonymized data to run experiments. We only store data in the cache and local-storage for the visitor.
 This means that not flickering can be induce due to the visitor accepting or not the cookies, as well as GDPR infrigement. Stay confident, the only cookies we have, we eat them.
