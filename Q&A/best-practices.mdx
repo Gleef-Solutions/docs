@@ -1,100 +1,110 @@
 ---
-title: 'Best Practices'
+title: 'Best Practices when Using Gleef'
 icon: 'circle-check'
 iconType: 'solid'
 ---
 
-A/B testing wording can significantly impact user engagement and conversion rates. 
-Big tech saavy companies have launcher their own A/B testing tools during the past years, and conduct more than thousands test each year.
+A/B testing wording can dramatically enhance user engagement and conversion rates. Leading tech-savvy companies have launched their own A/B testing tools over recent years, conducting thousands of experiments annually.
 
 <Tip>
-    Did you know that Netflix is, on average, conducting around 20 A/B tests continuously on each user?<br/>
-    <i>Find more at [Netflix Technology Blog](https://netflixtechblog.medium.com)</i>
+    Did you know that Netflix continuously runs on average 20 A/B tests for every user at any given time?<br/>
+    <i>Learn more at the [Netflix Technology Blog](https://netflixtechblog.medium.com)</i>
 </Tip>
 
-To ensure your experiments are effective and provide meaningful insights, follow these best practices.
+To ensure your experiments are both effective and insightful, adhere to these best practices.
 
+---
+## Defining goals
 
-## Defining Goals
 ### What is the objective of your A/B test?
-Clearly define what you aim to achieve with your experiment. Common objectives include increasing click-through rates, improving conversion rates, or reducing bounce rates. Having a clear goal helps in designing relevant variations and measuring success accurately.
+Clearly define the objective of your experiment. Common goals include increasing click-through rates, improving conversion rates, and reducing bounce rates. A well-defined goal helps design relevant variations and measure success accurately.
 
-Even though common A/B testing is used to increase revenue, it can also be used with various objectives:
+While A/B testing is commonly used to increase revenue, it can also be employed for various other objectives:
 - Increasing upsells
-- Reducing opt-out
+- Reducing opt-out rates
 - Reducing after-sales contact
 - Improving community engagement
-- Reducing time to buy
+- Reducing time to purchase
 
 <Tip>
-    Don't just think of increasing revenue. A/B testing can also helps you a lot decreasing your costs. <br/>
-    Check out more on our [user stories](/Documentation/Examples)
+    Don't just focus on increasing revenue. A/B testing can also significantly help in reducing your costs. <br/>
+    Discover more through our [user stories.](/Documentation/Examples)
 </Tip>
 
 ### How will you measure success?
-Identify key metrics that will determine the success of your experiment. These could be conversion rates, click-through rates, or any other relevant performance indicators. Make sure these metrics align with your defined goals.
+Identify the key metrics that will indicate the success of your experiment. These could be conversion rates, click-through rates, or other relevant performance indicators. Ensure these metrics are aligned with your defined goals.
 
-Want to know more on sucess event definition with Gleef? Visit our [success event page](/how-to/success-event)
+Want to know more about defining success events with Gleef? Visit our [success event page.](/how-to/success-event)
 
-## Creating Variations
-### Can I remove the default text?
-In order to perform great A/B testing experiments you should keep the text you are trying to experiment as the baseline of your experiment.
-Thus because it will be the reference for the other variations tested.
+---
+## Creating variations
+
+### Can you remove the default text?
+For effective A/B testing, retain the default text as the baseline of your experiment. This serves as the reference point for evaluating the performance of other variations.
 
 ### How many variations should you test?
-Limit the number of variations to keep the experiment manageable. Testing two to three variations is often sufficient. Too many variations can complicate analysis and require a larger sample size to reach statistical significance.
+To keep your experiment manageable, limit the number of variations to two or three. Testing too many variations can complicate analysis and require a larger sample size to achieve statistical significance.
 
 <Info>
-    Keep in mind that you'll need around 7k user per variation to see an 1% change in performance with your baseline.<br/>
-    Read more in our [statistical significance explanation](/Q&A/statistics-data#statistical-significance)
+    Keep in mind that you’ll need around 7,000 users per variation to detect a 1% change in performance relative to your baseline. <br/>
+    Learn more about [statistical significance here.](/Q&A/statistics-data#statistical-significance)
 </Info>
 
-### What kind of wording should you experiment?
-Focus on high-impact elements such as headlines, call-to-action buttons, and product descriptions. Small changes, like tweaking a headline or a button text, can lead to significant improvements in user engagement.
+### What kind of wording should you experiment with?
+Focus on high-impact elements such as headlines, call-to-action buttons, and product descriptions. Small changes, like tweaking wording of a headline or button, can lead to substantial improvements in user engagement.
 
-### Why I can't run any UI experiments with Gleef?
-Gleef defines as the words' expert within your digitals products.
-We strongly beleive than testing UI is a crucial part of you website or application, and needs to come before any A/B testing on wording.
-Nonetheless, A/B testing needs to be straightforward, really easy and no-code, as we're not having any impact on the website structure (be careful with A/B testing UI using no-code softwares, as it can break your whole website).
+### Why can't I run any UI experiments with Gleef?
+Gleef specializes in texts and words within your digital products. We firmly believe that testing UI is a crucial aspect of your website or application and should precede any wording A/B tests.
+Our goal is to make A/B testing straightforward, easy, and entirely no-code, ensuring no impact on your website structure. Be cautious with no-code tools for UI A/B testing, as they can potentially disrupt your website.
 
-We deeply beleive in the power of words, and want to help you experiment in just 10 clics the best wordings, as well as in a near future help you choose the right word, every single time.
+We deeply believe in the power of words and aim to help you experiment with optimal wordings effortlessly. In the near future, we also plan to assist you in selecting the right words every single time.
 
+---
 
-## Running Experiments
+## Running experiments
+
 ### How long should you run your experiments?
-Run your experiments for a duration that allows you to gather enough data to reach statistical significance. This can vary based on your traffic volume. A common practice is to run the test for at least one to two weeks.
+Run your experiments for a duration that allows you to gather ample data to reach statistical significance. This timeframe can vary based on your traffic volume but running the test for at least one to two weeks is a common practice.
+
 
 ### How do you ensure your experiments are not biased?
-Avoid running multiple overlapping experiments on the same page, as this can skew results. Isolate each experiment to a specific section of your website to ensure that the changes are the only variable affecting user behavior.
+Avoid running multiple overlapping experiments on the same page, as this can skew results. Isolate each experiment to a specific section of your website to ensure that changes are the only variable impacting user behavior.
 
-<Tip>No worries, Gleef also manages multiple experiments on the same page, see how [here](/Q&A/QA#multiple-experiments)</Tip>
+<Tip>Don't worry, Gleef also manages multiple experiments on the same page. Learn how [here](/Q&A/QA#multiple-experiments)</Tip>
 
-## Analyzing Results
+---
+## Analyzing results
+
 ### What statistical methods should you use?
-Use standard statistical methods to analyze your results. Calculate the confidence interval and p-value to determine if the results are statistically significant. Aim for a 95% confidence level to ensure reliability.
+Use standard statistical methods to analyze your results. Calculate the confidence interval and p-value to determine if the outcomes are statistically significant. Aim for a 95% confidence level to ensure reliability.
 
-<Info>We have an extensive explanations on statistical calculation. Refer to our [statistical explanations](/Q&A/statistics-data)</Info>
+<Info>We provide detailed explanations on statistical calculations. Refer to our [statistical Q&A for additional information.](/Q&A/statistics-data)</Info>
 
 ### How do you interpret the results?
-Look beyond just the winning variation. Analyze why a particular variation performed better and how it influenced user behavior. This can provide insights for future experiments and overall website optimization.
+Look beyond simply identifying the winning variation. Analyze why a certain variation performed better and how it influenced user behavior. These insights can inform future experiments and facilitate overall website optimization.
 
+---
 
-## Stay consistent during the whole testing period
-### Avoid any changes in the page you're testing while the experiment is still running
-Always coordinate with your development team to avoid changes during an active experiment.
-It can not only break the experiment, but will also have an impact on the results, meaning that your test is biased.
+## Maintaining consistency
 
-### Avoid changing the experiment (variations or success event) during the experiment
-Introducing a new variation, or changing one is the worst thing to do during an experiment. If you want to, you should define and implement a whole new experiment (it's so simple with Gleef).
-Changing variations or the success event while the experiment is still running will introduce bias in it, which will then lead to potential incoherences and not applicable results.
+### Avoid making any changes to the page during the experiment
+Always coordinate with your development team to ensure no changes are made to the page while an experiment is active. Any modifications can disrupt the experiment, skew results, and introduce bias.
 
+### Avoid altering the experiment while it's running
+Introducing or changing variations or the success event during the experiment can lead to inaccurate results. If modifications are necessary, design and implement a new experiment – it’s quick and easy with Gleef. Mid-experiment changes will introduce bias and render the results unreliable.
 
-## Avoiding Common Pitfalls
-### What are common mistakes in A/B testing wording?
-- **Changing multiple elements at once:** Focus on one change at a time to accurately attribute performance differences.
-- **Running tests without enough traffic:** Ensure you have sufficient traffic to achieve statistical significance.
-- **Stopping tests too early:** Wait until the experiment has run for a sufficient period to gather reliable data.
+---
 
+## Avoiding common pitfalls
+
+### Changing multiple elements at once
+To accurately attribute performance differences, change only one element at a time.
+### Running tests without enough traffic
+Ensure you have sufficient traffic to reach statistical significance.
+### Stopping tests too early
+Allow the experiment enough time to gather reliable and actionable data.
+
+---
 
 ## Conclusion
-A/B testing is a powerful tool for improving website performance, but it must be done carefully to ensure valid results. By defining clear goals, creating relevant variations, running unbiased experiments, and accurately analyzing results, you can make informed decisions that enhance user experience and drive conversions.
+A/B testing is a powerful tool for enhancing website performance, but it requires careful execution to ensure valid results. By defining clear objectives, creating relevant variations, running unbiased experiments, and accurately analyzing results, you can make data-driven decisions that genuinely improve user engagement and conversion rates.
