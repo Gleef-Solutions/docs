@@ -58,7 +58,8 @@
       "pages": [
         "how-to/create",
         "how-to/monitor",
-        "how-to/manage"
+        "how-to/manage",
+        "how-to/success-event"
       ]
     },
     {
