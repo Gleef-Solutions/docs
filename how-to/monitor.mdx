@@ -42,29 +42,27 @@ If you pause an experiment that has already reached statistical significance, it
 
 
 ## Finish the experiment
-When the experiment is statistically significant, you can pause it, leading the experiment to get the status `finished`. 
-Start analyzing the results!
+When the experiment reaches statistical significance, you can pause it. This will change the experiment’s status to `finished`. It's time to start analyzing the results!
 
 
 ## Analyze results
 ### Significance
 <img width="200" src="/images/monitor_not-significant.png" alt="Not significant experiment"/>
 
-Significance is a mathematical term that depends on many different parameters. Gleef automatically calculates significance for you.
-You can see how it is done on our [statistical explanations](/Q&A/statistics-data).
+Statistical significance is based on various parameters. Gleef uses an automatic calculation to determine whether your results are significant.
+For detailed insight on how this is done, refer to our [statistics Q&A](/Q&A/statistics-data).
 
-<Tip>You can now see `p-value`and `Z-value` by opening the console of the webpage.</Tip>
+<Tip>You can view the `p-value` and `Z-value` by opening the console of the web page.</Tip>
 
-You should keep the experiment running while the significance is not achieved, as the results have not reached the desired outcome and should not be considered.
-Keep in mind that the significance is directly linked to the square of the conversion difference calculated between variations, which means that if you have a 10% difference between 2 variations, your experiment will be significant 100 times quicker than a 1% difference.
+Continue running the experiment until you achieve statistical significance. Ending the experiment prematurely could hinder the reliability of your results. Remember, significance is closely related to the magnitude of the conversion difference between variations. For example, if you have a 10% conversion difference between two variations, your experiment may reach significance much faster than if the difference were only 1%.
 
-<Note>Significance is fixed at 95% for any experiment, and we do not offer the ability to change it yet.</Note>
+<Note>Significance is fixed at 95% for all experiments, and currently, it is not customizable.</Note>
 
 ### Conversion & growth
 <img width="200" src="/images/monitor_results.png" alt="Results"/>
-At any moment, you can access see & follow the results of your experiment, seeing the conversion of each variations, and the growth in comparison to the `baseline` which is the basic wording under experiment.
+At any time, you can access and monitor the results of your experiment, observing the conversion rates of each variation, and the improvement compared to the `baseline`, which represents the original wording being tested.
 
 <Tip>
-    When hovering conversion or growth metrics, you can access detailed figures
+    Hover over the conversion or growth metrics for detailed figures.
     <img width="200" src="/images/monitor_hover.png" alt="Hover conversion"/>
 </Tip>
