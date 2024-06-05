@@ -18,13 +18,9 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:dev@gleef.eu"
+      "url": "mailto:support@gleef.eu"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
   "anchors": [
     {
       "name": "Chrome Extension",
