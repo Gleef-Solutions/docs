@@ -2,39 +2,42 @@
 title: 'Data & Statistics'
 icon: "database"
 iconType: "solid"
-description: "Understanding the maths behind Gleef"  
+description: "Understanding the mathematics behind Gleef"
 ---
 
-## Statistical questions
-### Practical Considerations
+## Common Questions About Statistics
+
+### What do I need to consider for a successful test?
+
 1. **Traffic Volume:**
-    - High-traffic websites can achieve the necessary sample sizes quickly.
-    - Low-traffic websites may need to run tests for longer periods.
+    - High-traffic websites can quickly achieve the necessary sample sizes.
+    - Low-traffic websites may need to run tests for extended periods to gather sufficient data.
 
 2. **Test Duration:**
-    - Ensure the test runs long enough to collect the required sample size.
-    - Consider seasonal or time-based variations in traffic and behavior.
+    - Ensure the test runs long enough to collect the necessary sample size for accurate results.
+    - Account for seasonal or time-based variations in traffic and user behavior.
 
 3. **Multiple Variants:**
-    - If testing more than two variants, adjust the sample size calculation accordingly.
+    - If testing more than two variants, make sure to adjust the sample size calculation accordingly to maintain statistical validity.
+
 
 ### Do I have enough traffic on my website to run A/B tests?
 <Info>You'll need approximately 7,448 visitors for each variant to detect a 1% difference with 95% confidence and 80% power.</Info>
 
-Thus, any website can runs A/B testing, it simply depends on how much time you will not changing your website.
-Nonethless, if the variation goes for a ver
-To run effective A/B tests, it's crucial to ensure that your website has sufficient traffic. The number of visitors impacts the reliability and statistical significance of your test results.
+Any website can run A/B tests; the key factor is how much time you allow the test to run without making changes to your website. It’s essential to ensure that your website has sufficient traffic to yield reliable and statistically significant results.
 
 **Key Considerations:**
 1. **Sample Size:**
-    - The number of visitors needed to detect a meaningful difference between variants.
-    - Calculated using statistical formulas based on the desired confidence level and effect size.
+   - The number of visitors required to detect a meaningful difference between variants.
+   - Calculated using statistical formulas based on your desired confidence level and effect size.
+
 2. **Effect Size:**
-    - The minimum detectable change in conversion rate or other metrics.
-    - Smaller effect sizes require larger sample sizes.
+   - The minimum detectable change in conversion rate or other metrics.
+   - Smaller effect sizes necessitate larger sample sizes.
+
 3. **Confidence Level:**
-    - The probability that the test results are not due to random chance.
-    - Commonly used confidence levels are 95% and 99%.
+   - The probability that the test results are not due to random chance.
+   - Commonly used confidence levels are 95% and 99%.
 
 **Statistical Formula for Sample Size**
 The sample size `n` can be calculated using the following formula for two proportions:
@@ -46,7 +49,7 @@ Where:
 - `p` is the estimated overall conversion rate.
 - `delta` is the minimum detectable effect size (difference between conversion rates of the control and variant).
 
-<Info>You would need approximately 7,448 visitors for each variant to detect a 1% difference with 95% confidence and 80% power.</Info>
+<Info>To detect a 1% difference with 95% confidence and 80% power, you would need approximately 7,448 visitors per variant.</Info>
 
 <Accordion title="Example Calculation for a 1% difference">
     **statistical-significance**
