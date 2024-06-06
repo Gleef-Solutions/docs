@@ -92,11 +92,11 @@ It's unusual, but it can happen. Gleef is an efficient, seamless JavaScript that
 If you are still experiencing loading issues, it might be related to how your website prioritizes content loading. Please email us at support@gleef.eu, and we will assist you in resolving this issue.
 
 ### Why do I still see live variations on my website after pausing an experiment?
-This is expected behavior. We store the variation displayed to each visitor in their browser’s local storage for a period of 7 days. This mechanism helps avoid repeatedly querying our database each time a visitor returns to your site. This not only conserves resources but also ensures a smoother and faster user experience.
+This is expected behavior. We store the variation displayed to each visitor in their browser’s local storage for a period of one hour. This mechanism helps avoid repeated queries. This not only saves resources, but also ensures a smoother and faster user experience.
 
-By doing this, we maintain consistency in what the user sees, preventing flickering and latency issues that can arise from frequent database calls.
+By doing this, we maintain consistency in what the users see, preventing flickering and latency issues that can arise from frequent database calls.
 
-However, a consequence of this approach is that even if an experiment is paused, the stored variation remains active for the 7-day period. This means that visitors, including yourself, will continue to see the same variation regardless of the experiment’s current status.
+However, a consequence of this approach is that even if an experiment is paused, the stored variation remains active for the one hour period. This means that visitors, including yourself, will continue to see the same variation regardless of the experiment’s current status.
 
 ### Is Gleef GDPR compliant?
 Yes, absolutely! We do not use cookies or non-anonymized data to run experiments. We store data only in the cache and local storage of the visitor's browser. This approach ensures no flickering due to cookie acceptance and complies with GDPR regulations. Rest assured, the only cookies we have are the ones we eat.
