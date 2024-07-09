@@ -1,0 +1,57 @@
+---
+title: 'Flickering'
+icon: 'bolt'
+iconType: 'solid'
+description: 'Flickering is a common issue with A/B testing tool. Learn how to fix it with Gleef.'
+---
+
+## What is flickering
+Flicker is a problem commonly occurring with JavaScript based A/B testing solution. When your webpage is loading, it is possible that the original page displays for a split second instead of the variation. <b>This twinkling is called flicker effect or flickering.</b> It can confuse the visitor or distort the results of any experiment. Gleef includes built-in techniques to eradicate flickering.
+
+Usually, Flickering has two main causes:
+
+- The moment where the script is loaded and executed happens too late, when the browser has already displayed the page (or parts of the page). That's dependent on how you implemented the Gleef script within your page.
+- The engine processing the experiment's variations is too slow, or rather, do not execute and display modifications fast enough.
+
+## How to avoid flickering
+
+Before all things, check if you have flickering at all when using Gleef.
+The default implementation described in [Quickstart](../quickstart) should be sufficient for most cases.
+
+<Warning>
+    Before moving on to the next steps, please check that you're not using Gleef with a tag manager, and that <b>your script is included in the &lt;`head`&gt; section of your website</b>.
+</Warning>
+
+To remove all flickering risk, you can load the script asynchronously alongside an additional snippet that will prevent the page to display before the variations are loaded.
+In the event of Gleef services being unavailable, a timeout fallback will display the page after a defined delay. We strongly advise to keep this default delay.
+
+```html
+<script>
+    var scriptLoadingTimeout = 1000;
+    window.mainScriptStartLoadTime = new Date().getTime();
+    if (!document.getElementById("loadingStyleSheet") && !window.displayPageTimeOut) {
+      var s = document.getElementsByTagName("script")[0];
+      var cc = "* { visibility: hidden !important; background-image: none !important; }";
+      var stn = document.createElement("style");
+      stn.type = "text/css";
+      stn.id = "loadingStyleSheet";
+      if (stn.styleSheet) {
+        stn.styleSheet.cssText = cc;
+      } else {
+        stn.appendChild(document.createTextNode(cc));
+      }
+      s.parentNode.insertBefore(stn, s);
+      window.displayPage = function(fromEngine) {
+        if (!fromEngine) {
+          window.timeout = true;
+        }
+        if (stn.parentNode) {
+          stn.parentNode.removeChild(stn);
+        }
+      };
+      window.displayPageTimeOut = window.setTimeout(window.displayPage, scriptLoadingTimeout);
+    }
+</script>
+<script src="https://d234kfawt0op6y.cloudfront.net/script.js" fetchpriority="high" async></script>
+```
+If you followed all the recommendations but are still experiencing flickering, you can contact us at support@gleef.eu.

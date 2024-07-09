@@ -11,16 +11,18 @@ This section will guide you through the process of integrating Gleef into your w
     Our snippet needs to be integrated to your website to allow wording experiments.
     
     <Warning>
-      The snippet should be integrated to the whole site for Gleef to track and manage success events.
+      The script tag should be integrated in the &lt;`head`&gt; of all pages of your website for Gleef to track and manage success events.
     </Warning>
 
     ```html
-    <script src="https://d234kfawt0op6y.cloudfront.net/script.js" async></script>
+    <script src="https://d234kfawt0op6y.cloudfront.net/script.js"></script>
     ```
+  <Info>
+      This may vary if you want to avoid flickering. To learn more about flickering, click [here](./Q&A/flickering).
+  </Info>
   </Step>
   <Step title="Get credentials from Gleef">
     Gleef manages access to the extension. You need to make an account request before using Gleef.
-    Please follow the link: [sign up](https://gleef.eu/signup)
     <Info>You can only request an account if your company is already a Gleef customer. To become a customer, email us at: contact@gleef.eu</Info>
   </Step>
   <Step title="Download the extension">

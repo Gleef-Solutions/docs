@@ -25,7 +25,7 @@
     {
       "name": "Chrome Extension",
       "icon": "chrome",
-      "url": "https://chromewebstore.google.com/detail/gleef-alpha/dhaimaljdicccaplppipfiikonpdgeelify"
+      "url": "https://chromewebstore.google.com/detail/gleef/dhaimaljdicccaplppipfiikonpdgeel"
     },
     {
       "name": "Waitlist",
@@ -35,7 +35,8 @@
   ],
   "tabs": [
     {
-      "name": "Feedback & Support",
+      "name": "Support",
+
       "url": "Q&A"
     }
   ],
@@ -68,12 +69,13 @@
       ]
     },
     {
-      "group": "Q&A",
+      "group": "Support",
       "pages": [
         "Q&A/QA",
         "Q&A/best-practices",
         "Q&A/installing",
         "Q&A/statistics-data",
+        "Q&A/flickering",
         "Q&A/trouble-shooting"
       ]
     }

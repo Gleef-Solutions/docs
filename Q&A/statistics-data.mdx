@@ -2,39 +2,42 @@
 title: 'Data & Statistics'
 icon: "database"
 iconType: "solid"
-description: "Understanding the maths behind Gleef"  
+description: "Understanding the mathematics behind Gleef"
 ---
 
-## Statistical questions
-### Practical Considerations
+## Common Questions About Statistics
+
+### What do I need to consider for a successful test?
+
 1. **Traffic Volume:**
-    - High-traffic websites can achieve the necessary sample sizes quickly.
-    - Low-traffic websites may need to run tests for longer periods.
+    - High-traffic websites can quickly achieve the necessary sample sizes.
+    - Low-traffic websites may need to run tests for extended periods to gather sufficient data.
 
 2. **Test Duration:**
-    - Ensure the test runs long enough to collect the required sample size.
-    - Consider seasonal or time-based variations in traffic and behavior.
+    - Ensure the test runs long enough to collect the necessary sample size for accurate results.
+    - Account for seasonal or time-based variations in traffic and user behavior.
 
 3. **Multiple Variants:**
-    - If testing more than two variants, adjust the sample size calculation accordingly.
+    - If testing more than two variants, make sure to adjust the sample size calculation accordingly to maintain statistical validity.
+
 
 ### Do I have enough traffic on my website to run A/B tests?
 <Info>You'll need approximately 7,448 visitors for each variant to detect a 1% difference with 95% confidence and 80% power.</Info>
 
-Thus, any website can runs A/B testing, it simply depends on how much time you will not changing your website.
-Nonethless, if the variation goes for a ver
-To run effective A/B tests, it's crucial to ensure that your website has sufficient traffic. The number of visitors impacts the reliability and statistical significance of your test results.
+Any website can run A/B tests; the key factor is how much time you allow the test to run without making changes to your website. It’s essential to ensure that your website has sufficient traffic to yield reliable and statistically significant results.
 
 **Key Considerations:**
 1. **Sample Size:**
-    - The number of visitors needed to detect a meaningful difference between variants.
-    - Calculated using statistical formulas based on the desired confidence level and effect size.
+   - The number of visitors required to detect a meaningful difference between variants.
+   - Calculated using statistical formulas based on your desired confidence level and effect size.
+
 2. **Effect Size:**
-    - The minimum detectable change in conversion rate or other metrics.
-    - Smaller effect sizes require larger sample sizes.
+   - The minimum detectable change in conversion rate or other metrics.
+   - Smaller effect sizes necessitate larger sample sizes.
+
 3. **Confidence Level:**
-    - The probability that the test results are not due to random chance.
-    - Commonly used confidence levels are 95% and 99%.
+   - The probability that the test results are not due to random chance.
+   - Commonly used confidence levels are 95% and 99%.
 
 **Statistical Formula for Sample Size**
 The sample size `n` can be calculated using the following formula for two proportions:
@@ -46,7 +49,7 @@ Where:
 - `p` is the estimated overall conversion rate.
 - `delta` is the minimum detectable effect size (difference between conversion rates of the control and variant).
 
-<Info>You would need approximately 7,448 visitors for each variant to detect a 1% difference with 95% confidence and 80% power.</Info>
+<Info>To detect a 1% difference with 95% confidence and 80% power, you would need approximately 7,448 visitors per variant.</Info>
 
 <Accordion title="Example Calculation for a 1% difference">
     **statistical-significance**
@@ -76,71 +79,67 @@ Where:
     `n` = $74.48$ <br/>
 </Accordion>
 
-### Common examples of traffic & A/B testing statistics
-1. **High-Traffic Website:**
-    - Daily visitors: 50,000
-    - Estimated conversion rate: 5%
-    - Desired effect size: 1%
-    - Sample size per variant: 7,448
+### What are some common examples of traffic and A/B testing statistics?
 
-    **Conclusion:** The test can be completed in a few days.
+1. **High-traffic website:**
+    - **Daily visitors:** 50,000
+    - **Estimated conversion rate:** 5%
+    - **Desired effect size:** 1%
+    - **Sample size per variant:** 7,448
 
-2. **Low-Traffic Website:**
-    - Daily visitors: 500
-    - Estimated conversion rate: 5%
-    - Desired effect size: 10%
-    - Sample size per variant: 75
+    **Conclusion:** This test can be completed in a few days.
 
-    **Conclusion:** The test can be completed with hours.
+2. **Low-traffic website:**
+    - **Daily visitors:** 500
+    - **Estimated conversion rate:** 5%
+    - **Desired effect size:** 10%
+    - **Sample size per variant:** 75
 
-By ensuring you have enough traffic and using the right calculations, you can run A/B tests that provide reliable and actionable insights.
+    **Conclusion:** This test can be completed within hours.
 
-### How variation are split among visitors?
-For now, variations are equally split among visitors.
-For instance, if you have 3 different variations on an experiment (including the baseline), 1 visitor out of 3 will see each variation, randomly shown.
+By ensuring you have enough traffic and using the correct calculations, you can run A/B tests that provide reliable and actionable insights.
 
-### How can I change the significance of my experiment?
-Currently, you cannot change the significance level of your experiment. It is fixed at 95%.
-This means that the confidence level for determining the statistical significance of your results is set to 95%, ensuring a robust and reliable outcome for your experiments.
+### How are variations split among visitors?
+Currently, variations are equally distributed among visitors. For example, if you have three different variations in an experiment (including the baseline), one out of every three visitors will randomly see each variation.
 
-### How can I segment the traffic and who's gonna see an experiment?
-For now, we do not provides any segmentation possibility.
-Nonetheless, you are able to set-up your own segmentation via changing the url the visitor goes to, and implementing experiments on each specific urls.
+### How can I change the significance level of my experiment?
+At the moment, you cannot change the significance level of your experiment. It is fixed at 95%. This means the confidence level for determining the statistical significance of your results is set at 95%, ensuring robustness and reliability for your experiments.
+
+### How can I segment the traffic and determine who sees an experiment?
+Currently, we do not provide built-in segmentation capabilities. However, you can conduct your own segmentation by directing visitors to different URLs and implementing experiments on each specific URL.
 
 ### Can I remove the default text?
-In order to perform great A/B testing experiments you should keep the text you are trying to experiment as the baseline of your experiment.
-Thus because it will be the reference for the other variations tested.
-
-### What kind of success event can be set-up?
-<Info>We provide extensive information on success event on this page: [sucess events](/Q&A/success-event)</Info>
-
-It depends on the experiment you're running.
-1. Running an experiment on a Call To Action (CTA)
-    Thus, you'll be given the opportunity to define the sucess as either:
-    1. Clic on that specific item
-    2. Specific url (page view later in the funnel)
-2. Running an experiment on a regular text (not clickable)
+To conduct effective A/B testing, you should keep the text you're experimenting with as the baseline. This serves as the reference point for all other variations tested.
 
 
-## Retrieving data from experiments
-We tend to provide all useful information, directly in your dashboard.
+### What kinds of success events can be set up?
+
+<Info>We provide extensive information on success events on this page: [Success events](/Q&A/success-event)</Info>
+
+The type of success event depends on the experiment you're running:
+
+1. **Running an experiment on a Call to Action (CTA)**
+     you can define the success event as either:
+      1. A click on the specific item.
+      2. A visit to a specific URL (a page view later in the funnel).
+
+2. **Running an experiment on regular non-clickable text** you can specify the relevant visit to a specific URL (a page view later in the funnel).
+
+
+## Retrieving Data from Experiments
+
+We strive to provide all the essential information directly on your dashboard.
 
 ### How do I interpret the results of an A/B experiment?
-Compare the performance metrics (e.g., conversion rates) of each variation against the control to determine the most effective text.
-Gleef directly shows the best performing variation, right under the 'baseline', which is the text you have decided to run an experiment on.
+Compare the performance metrics (e.g., conversion rates) of each variation against the control to determine the most effective text. Gleef highlights the best-performing variation directly below the 'baseline', which represents the text you selected for the experiment.
 
-### Does Gleef provide extensive statistics information on experiments?
-<Info>We now provide `p-value` and `Z-value` on experiments</Info>
+### Does Gleef provide detailed statistical information on experiments?
+<Info>We now include `p-value` and `Z-value` for all experiments.</Info>
 
-We try to provide as much information as needed for a proper statistical overview of your experiments.
-We tend not to overwhelm you with unnecessary information, as we want Gleef to be smooth and easy to operate.
-Nonetheless, we can provide more information on your experiments if you email us at support@gleef.eu. 
+We aim to deliver all necessary statistical data to provide a comprehensive overview of your experiments. Our intention is to keep Gleef smooth and easy to operate by avoiding information overload. However, if you need more detailed statistics, please contact us at support@gleef.eu, and we will be happy to provide additional information.
 
-### Is there any option to download full experiments data?
-We do not offer any native possibility to download full experiments data, but we can send you an extensive csv file, containing every information you would need, if you email us at support@gleef.eu
+### Is it possible to download full experiment data?
+While we currently do not offer a built-in option for downloading complete experiment data, we can send you a comprehensive CSV file with all necessary details upon request. Simply email us at support@gleef.eu.
 
 ### How do I use the results to optimize my website?
-Gleef does not yet provide any functionality to directly implement changes in your website.
-Thus, you will need to use the classic intern process you have to submit the change of wording, when selecting the best performing variation.
-<Info>Keep in mind that when this change will be pushed to live on your website, the experiment will be not working anymore, as you might have change the baseline of the experiment, used to launch the test.</Info>
-
+Gleef does not currently offer the capability to directly implement changes on your website. Therefore, you will need to follow your internal processes to submit the wording changes based on the best-performing variation.
