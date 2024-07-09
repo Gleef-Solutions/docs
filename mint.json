@@ -62,7 +62,9 @@
       "group": "Under the hood",
       "pages": [
         "under-the-hood/gdpr",
-        "under-the-hood/privacy-policy"
+        "under-the-hood/privacy-policy",
+        "under-the-hood/terms",
+        "under-the-hood/acceptable-use-policy"
       ]
     },
     {
