@@ -1,0 +1,39 @@
+---
+title: 'Add Gleef to Shopify'
+description: 'Get Gleef running in a few steps'
+---
+
+This section will guide you through the process of integrating Gleef into your website and starting your first A/B testing experiment on wording.
+
+<Steps>
+    <Step title="Open the theme.liquid file from the Shopify dashboard">
+        Within your Shopify admin dashboard, go to <b>Online Store</b> and then click on <b>Themes</b>.
+        Here, you'll find your current theme.
+
+        Look for the <b>Actions</b> dropdown, and select <b>Edit code</b>.
+
+        You should see some code in the main window.
+
+        <img
+            className="screenshot"
+            src="/images/screenshot_wordpress.png"
+            alt="Wordpress integration instrcutions screenshot"
+        />
+    </Step>
+    <Step title={"Copy/paste the integration code"}>
+        Copy/paste this code within the window in the center.
+        The following code will allow your website to display and track Gleef experiments.
+        ```php
+        function gleef_script() {
+        echo '<script src="https://script.cdn.api.gleef.eu/script.js"></script>';
+        }
+        add_action("wp_head", "gleef_script", 0);
+        ```
+        Once you're done, click on the <b>Update File</b> button.
+    </Step>
+    <Step title="Launch & manage experiments">
+        You're done! Log into the Chrome Extension, and start creating and managing experiments.
+    </Step>
+</Steps>
+
+See also : [Create an experiment](../how-to/create)

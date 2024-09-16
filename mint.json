@@ -47,7 +47,8 @@
       "pages": [
         "introduction",
         "quickstart",
-        "examples"
+        "examples",
+        "cms-integrations"
       ]
     },
     {
