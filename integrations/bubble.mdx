@@ -1,0 +1,35 @@
+---
+title: 'Add Gleef to Bubble'
+description: 'Get Gleef running in a few steps'
+---
+
+This section will guide you through the process of integrating Gleef into your Bubble store and starting your first A/B testing experiment on wording.
+
+<Steps>
+    <Step title="Access your Bubble website">
+        Open the app you're planning to integrate Gleef on, through your Bubble dashboard. 
+
+        Once the app is opened, go to '<b>Settings</b>', then '<b>SEO/metatags</b>', scroll down up to the section '<b>Script/meta tags in header</b>'.
+
+        <img
+            className="screenshot Bubble"
+            src="../images/screenshot_bubble.avif"
+            alt="Bubble editor screenshot"
+        />
+    </Step>
+    <Step title="Add the Gleef script">
+        On top of the container, before anyother line of code, copy paste the followying code:
+
+        ```liquid
+        <script src="https://script.cdn.api.gleef.eu/script.js"></script>
+        ```
+
+        This code will allow your Bubble store to display and track Gleef experiments.
+        Once you've added the code, click on the <b>Save</b> button in the upper right corner.
+    </Step>
+    <Step title="Launch & manage experiments">
+        You're all set! Log into the Chrome Extension, and start creating and managing experiments on your Bubble store.
+    </Step>
+</Steps>
+
+See also : [Create an experiment](../how-to/create)
