@@ -1,0 +1,35 @@
+---
+title: 'Add Gleef to Framer'
+description: 'Get Gleef running in a few steps'
+---
+
+This section will guide you through the process of integrating Gleef into your Framer store and starting your first A/B testing experiment on wording.
+
+<Steps>
+    <Step title="Access your Framer website">
+        Go to the '<b>Settings</b>' of your website, then '<b>General</b>'.
+        
+        Scroll down to the section '<b>Start of head tag</b>', in the '<b>Custom Code</b>' section.
+
+        <img
+            className="screenshot Framer"
+            src="../images/screenshot_framer.avif"
+            alt="Framer editor screenshot"
+        />
+    </Step>
+    <Step title="Add the Gleef script">
+        Copy paste the following line of code, making sure it's the first one in this section:
+
+        ```liquid
+        <script src="https://script.cdn.api.gleef.eu/script.js"></script>
+        ```
+
+        This code will allow your Framer store to display and track Gleef experiments.
+        Once you've added the code, click on the <b>Save</b> button in the upper right corner.
+    </Step>
+    <Step title="Launch & manage experiments">
+        You're all set! Log into the Chrome Extension, and start creating and managing experiments on your Framer store.
+    </Step>
+</Steps>
+
+See also : [Create an experiment](../how-to/create)
