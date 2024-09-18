@@ -1,0 +1,35 @@
+---
+title: 'Add Gleef to Wix'
+description: 'Get Gleef running in a few steps'
+---
+
+This section will guide you through the process of integrating Gleef into your Wix store and starting your first A/B testing experiment on wording.
+
+<Steps>
+    <Step title="Access your Wix website">
+        Go to <b>Settings</b> in your site's dashboard, then click on <b>Custom Code</b> in the Advanced section.
+        
+        <img
+            className="screenshot Wix"
+            src="../images/screenshot_wix.avif"
+            alt="Wix editor screenshot"
+        />
+    </Step>
+    <Step title="Add the Gleef script">
+
+        Click on <b>+ Add Custom Code</b> at the top right, then paste our code snippet in the text box
+        
+        ```liquid
+        <script src="https://script.cdn.api.gleef.eu/script.js"></script>
+        ```
+
+        Enter a name for your code: '<b>Gleef snippet</b>', then select the option under <b>Add Code to Pages</b> -> <b>All pages</b> in order to make sure Gleef's tracking is available on your whole website.
+        
+        Finally, choose to place your code in the <b>head</b>, under '<b>Place Code in</b>' and validate by clicking on '<b>Apply</b>'.
+    </Step>
+    <Step title="Launch & manage experiments">
+        You're all set! Log into the Chrome Extension, and start creating and managing experiments on your Wix website.
+    </Step>
+</Steps>
+
+See also : [Create an experiment](../how-to/create)
