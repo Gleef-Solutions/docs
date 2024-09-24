@@ -117,3 +117,44 @@ Allow the experiment enough time to gather reliable and actionable data.
 
 ## Conclusion
 A/B testing is a powerful tool for enhancing website performance, but it requires careful execution to ensure valid results. By defining clear objectives, creating relevant variations, running unbiased experiments, and accurately analyzing results, you can make data-driven decisions that genuinely improve user engagement and conversion rates.
+
+
+
+
+
+
+Statistical significance is based on various parameters. Gleef uses an automatic calculation to determine whether your results are significant.
+For detailed insight on how this is done, refer to our [statistics Q&A](/Q&A/statistics-data).
+
+Continue running the experiment until you achieve statistical significance. Ending the experiment prematurely could hinder the reliability of your results. Remember, significance is closely related to the magnitude of the conversion difference between variations.
+For example, if you have a 10% conversion difference between two variations, your experiment may reach significance much faster than if the difference were only 1%.
+
+<Note>Significance is fixed at 95% for all experiments, and currently, it is not customizable.</Note>
+
+For the moment, Gleef does not offer the possibility of managing the significance parameters of experiments. This is automatically triggered when the 95% confidence level is reached (p-value of 0.05). You can see the critical Z value directly in the console when you open the dashboard on a specific experiment. As a reminder, the values are as follows:
+
+| Confidence Level | Critical Value, 𝑍𝑐 |
+| -------- | -------------------------- |
+| 99%      | 2.575                      |
+| 95%      | 2.33                       |
+| 90%      | 1.645                      |
+| 80%      | 1.28                       |
+
+The console displays the critical Z value and the p-value.
+
+<Tip>Please note that the significance of experiments is calculated purely from a mathematical point of view for the time being, and no other rule is involved in changing the dot determining the significance of the experiment.
+However, we recommend that you achieve the following values to ensure the validity of the experiment.</Tip>
+
+Value to look at on top of statistical significance, before taking any decision on your wording:
+- At least 5,000 unique visitors per variation;
+- To run the test for at least 14 days (two business cycles);
+- Achieve 250 conversions.
+
+### Conversion & growth
+<img width="200" src="/images/monitor_results.png" alt="Results"/>
+At any time, you can access and monitor the results of your experiment, observing the conversion rates of each variation, and the improvement compared to the `baseline`, which represents the original wording being tested.
+
+<Tip>
+    Hover over the conversion or growth metrics for detailed figures.
+    <img width="200" src="/images/monitor_hover.png" alt="Hover conversion"/>
+</Tip>

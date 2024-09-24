@@ -1,77 +1,95 @@
 ---
-title: 'Create an experiment'
-description: "Set-up your test and get actionable data about your wording"
+title: 'Create an Experiment'
+icon: "circle-plus"
+head:
+  - - meta
+    - name: description
+      content: Learn how to set up your first experiment and improve your conversions.
+description: "Set up your experiment and gather actionable insights about your wording."
+
 ---
 
-Setting up your first experiment is a quick and easy process that should take less than 5 minutes.
+Setting up your first experiment is quick and easy, taking less than 5 minutes.
 
 <Steps>
-    <Step title="Open Gleef's extension on the relevant page">
-        Make sure to open Gleef's extension on the page you want to conduct the experiment.
-        Otherwise, navigate on your website before opening the extension.
+    <Step title="Open Gleef's Extension on the Relevant Page">
+        Ensure you open Gleef's extension on the page where you want to run the experiment.
+
+        <Warning>Your account may be tied to the current URL domain for creating experiments. If you wish to experiment on a different domain, please [contact us](mailto:support@gleef.eu).</Warning>
+
+        If you're on the wrong page, navigate to the desired one before opening the extension.
     </Step>
 
-    <Step title="Login with your credentials">
-        Your credentials are unique and must not be shared, as we are keeping a log of any edit done with Gleef, which would enable you to know who made an edit on the website.
-        If you do not have credentials yet, you must ask your company to create some, by emailing us at support@gleef.eu.
-        There are no limitations on the number of user.
+    <Step title="Login with Your Credentials">
+        If you're not already logged in, you will be prompted to enter your credentials.
+
+        <Info>If you don't have credentials, you can create a demo account ([learn how](/how-to/signup)) or [contact us](mailto:support@gleef.eu) to validate a paid account.</Info>
     </Step>
 
-    <Step title="Create the experiment">
-        <img width="200" src="/images/create_step0.png" alt="step 0"/>
-        Create the experiment by clicking on the 'New test", which will enable you to start the implementation.
+    <Step title="Create a New Experiment">
+        Click the 'New Experiment' button to begin.
+
+        <Warning>This will create an experiment on the current page. If you want to set up an experiment on another page, navigate there before opening Gleef.</Warning>
     </Step>
 
-    <Step title="Select the wording to experiment">
-        <img width="200" src="/images/create_step1.png" alt="step 1"/>
-        Select the wording on your website you want to experiment.
-        If you can't select the wording you wanted to, it might be because it is an image, or not inside classic textual code tags.
+    <Step title="Select the Wording to Experiment">
+        <Frame>
+            <img width="300" src="/images/Experiment-creation_Step1_mockup-colors.png" alt="step 1"/>
+        </Frame>
         
-        Please refer to our [FAQ](/Q&A/trouble-shooting#i-cant-select-some-text-on-my-website-why) if needed.
+        Select the text on your website that you wish to test. If you're unable to select the wording, it may be because it's part of an image or not within standard HTML text tags.
+
+        Refer to our [FAQ](TK) for more information.
     
         <Note>
-            If you choose a specific component and there are identical ones on the same page, they will all be impacted by the experiment. This is to maintain consistency across the page, and we will replace all components that are an exact match to the one you've selected.
+            When you choose a specific element, all identical elements on the page will be included in the experiment to maintain consistency. This means all matching components will be affected.
         </Note>
+
+        <Info>You can select multiple elements on the page. [Learn how](TK).</Info>
     </Step>
 
-    <Step title="Define the variations">
-        <img width="200" src="/images/create_step2.png" alt="step 2"/>
-        Define the variations you want to experiment.
-        Although Gleef doesn't impose a limit on variations, it's advisable to not create more than 2 variations (excluding the baseline) for optimal results.
-        
-        You can refer to our [best practices](/Q&A/best-practices) to know more on how to set-up a good experiment.
+    <Step title="Define the Variations">
+        <Frame>
+            <img width="300" src="/images/Experiment-creation_Step2_mockup-colors.png" alt="step 2"/>
+        </Frame>
+        Create the variations you want to test. While there's no limit on the number of variations in Gleef, we recommend no more than 2 variations (plus the baseline) for optimal results ([learn why](TK)).
 
-        <Tip>It's important to note that increasing the number of variations in your experiment will also increase the time it takes to achieve statistically significant results, [read more](/Q&A/statistics-data)</Tip>
+        Refer to our [best practices](/Q&A/best-practices) for guidance on setting up effective experiments.
 
-        The 'baseline' cannot be removed as it represents the original wording that you are testing against in your A/B experiment.
+        <Tip>More variations will extend the time needed to achieve statistically significant results. [Learn more](TK).</Tip>
+
+        The 'baseline' represents the original text and cannot be removed, as it serves as the control in your A/B test.
     </Step>
 
-    <Step title="Define the success event of the experiment">
-        <img width="200" src="/images/create_step3.png" alt="step 3"/>
-       In accordance with A/B testing best practices, Gleef provides the option to define two types of success events:
-        1. **A click on the call-to-action:**
-        When testing a call-to-action button, you can define the success event as a click on that button. This feature only works for clickable call-to-action text and records the first click as a success event linked to the variation shown.
-        <Warning>We currently don't offer the option to select a call-to-action that is separate from the text you're testing. </Warning>
+    <Step title="Define the Success Event for the Experiment">
+        <Frame>
+            <img width="300" src="/images/Experiment-creation_Step3_mockup-colors.png" alt="step 3"/>
+        </Frame>
+
+        Gleef allows you to define two types of success events in line with [A/B testing best practices](TK):
+        1. **Click on the Call-to-Action (CTA):**  
+        For tests involving a CTA button, you can set the success event as a click. This only works for clickable CTA text, and the first click will be tracked as the success event tied to the variation shown.
         
-        2. **A specific URL page:**
-        Specify a URL for a page that signifies a successful outcome for your experiment, such as a 'thank you' or 'purchase confirmed' page. This allows you to test elements like headlines that aren't tied to a specific call-to-action.
+        <Warning>Currently, there's no direct option to select a CTA separate from the tested text, but there is a workaround. [Learn how](TK).</Warning>
         
-        Please refer to our [success-events page](/how-to/success-event) if needed.    
+        2. **Specific URL Visit:**  
+        Define a success event as reaching a specific URL (e.g., a 'thank you' or 'purchase confirmation' page). This is useful for testing headlines or other non-CTA elements.
+
+        See our [success events guide](/how-to/success-event) for more information.
     </Step>
 
-    <Step title="Name your experiment">
-        <img width="200" src="/images/create_step4.png" alt="step 4"/>
-        After completing the setup, you will need to name your experiment to make it easy to locate on your Gleef dashboard. Gleef recommends to follow your company's naming conventions to make it clear to everyone which experiment is in progress.
-        
-        Experiment naming convention is "**Text in test** " & "**Page of the test**". Here are some examples:
-        - **CTA 1 Landing:**
-        You set an experiment on a CTA on your landing page with the highest hierrachy, for example the `Shop now` button.
-        - **Headline About:**
-        You set an experiment on the "Making progress inevitable" headline and set the success event on the `Contact us` CTA url.
+    <Step title="Name Your Experiment">
+        <Frame>
+            <img width="300" src="/images/Experiment-creation_Step4_mockup-colors.png" alt="step 4"/>
+        </Frame>
+        Name your experiment to easily locate it in your Gleef dashboard. We recommend following your company's naming conventions.
+
+        A suggested naming format is "**Element in test** – **Page of the test**." Example:
+        - **CTA 1 Landing:** For a CTA experiment on the landing page, such as the primary 'Shop Now' button.
+        - **Headline About:** For a headline test on the About page, with the success event set to a 'Contact Us' page.
     </Step>
 
-    <Step title="Save or launch your experiment">
-        <img width="200" src="/images/create_step5.png" alt="step 5"/>
-        You've already reached the final step! You can save your experiment as a draft to run later or launch it immediately - the choice is yours!
+    <Step title="Save or Launch Your Experiment">
+        Congratulations! You're ready to either save your experiment as a draft or launch it immediately, depending on your needs.
     </Step>
 </Steps>

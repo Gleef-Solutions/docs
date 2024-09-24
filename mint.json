@@ -5,7 +5,9 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
+  
   "favicon": "/favicon.svg",
+  
   "colors": {
     "primary": "#C58B01",
     "light": "#f6da67",
@@ -15,48 +17,50 @@
       "to": "#f6da67"
     }
   },
+
   "topbarLinks": [
     {
       "name": "Support",
       "url": "mailto:support@gleef.eu"
     }
   ],
-  "anchors": [
-    {
-      "name": "Chrome Extension",
-      "icon": "chrome",
-      "url": "https://chromewebstore.google.com/detail/gleef/dhaimaljdicccaplppipfiikonpdgeel"
-    },
-    {
-      "name": "Waitlist",
-      "icon": "hourglass-start",
-      "url": "https://gleef.eu"
-    }
-  ],
+  "topbarCtaButton":{
+    "name": "Chrome extension",
+    "url": "https://chromewebstore.google.com/detail/gleef/dhaimaljdicccaplppipfiikonpdgeel"
+  },
+
+  "feedback": {
+    "thumbsRating": true,
+    "raiseIssue": true
+  },
   "tabs": [
     {
       "name": "Support",
-
       "url": "Q&A"
+    },
+    {
+      "name": "Integrations",
+      "url": "integrations"
     }
   ],
 
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
         "introduction",
         "quickstart",
-        "examples",
+        "use-cases",
         "cms-integrations"
       ]
     },
     {
       "group": "Using Gleef",
       "pages": [
+        "how-to/install",
+        "how-to/signup",
         "how-to/create",
         "how-to/monitor",
-        "how-to/manage",
         "how-to/success-event"
       ]
     },
@@ -79,11 +83,28 @@
         "Q&A/flickering",
         "Q&A/trouble-shooting"
       ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/integrations",
+        {
+          "group": "Integrations",
+          "pages": [
+            "integrations/webflow",
+            "integrations/wordpress",
+            "integrations/shopify",
+            "integrations/wix",
+            "integrations/bubble",
+            "integrations/framer"
+          ]
+        }
+      ]
     }
   ],
   "footerSocials": {
     "x": "https://x.com/gleef_ai",
-    "github": "https://github.com/gleefai",
+    "github": "https://github.com/Gleef-Solutions",
     "linkedin": "https://www.linkedin.com/company/gleefai"
   }
 }

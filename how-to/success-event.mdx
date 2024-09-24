@@ -1,5 +1,6 @@
 ---
 title: 'Sucess events'
+icon: "circle-check"
 description: "Success events are essential for determining which variation performs better in an A/B test."
 ---
 
@@ -20,12 +21,20 @@ Each of these actions provides valuable insights into user behavior and helps yo
 ### How many success events can I define with Gleef?
 Currently, you can specify one among two success event for each experiment you conduct.
 
-1. **Click on the Call-to-Action (CTA)**
-    <Warning>This option is available only if you are running an experiment on a CTA text that triggers an event when clicked.</Warning>
- 
+1. **Click on an item (CTA)** - Not recommanded
+
     By defining the success event as a click on the targeted CTA, we track the first time a visitor clicks the button, and then attribute that event to the specific variation being shown (if applicable).
 
-2. **Specific URL Page**
+    <Tip>This kind of success event is used to calculate the CtR (Click through Rate) of your call to action. It is not recommanded as it can be misleading if the visitor didn't actually complete the desired action, or directly quit the page.</Tip>
+
+    <Warning>This option has the following limitations:</Warning>
+    - It requires the element you're experimenting to be clickable
+    - If multiple elements are clickable, only one of them - the one you're experimenting will be the success event, unless there are multiple likewise elements.
+    - If you want to define the success event as a click on another item - not the one you're currently experimenting, you can define a multi-select experiment,
+    firstly selecting the element you want to define as the success event, and setting its variation equals to the baseline, and then selecting the other element you really want to experiment.
+    
+2. **Specific URL Page** - Highly recommanded
+
     You can choose any URL that represents a meaningful outcome for your experiment. URLs that signal a successful event can be 'thank you' or 'purchase completed' pages. 
     
-    This type of success event is especially useful when testing elements like headlines that don't involve clickable CTAs.
+    <Tip>We highly recommand to use this kind of success event as long as it reflects a real impact on your business, and not a click that can be misleading if the visitor didn't actually complete the desired action, or directly quit the page.</Tip>

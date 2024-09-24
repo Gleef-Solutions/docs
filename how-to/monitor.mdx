@@ -1,86 +1,120 @@
 ---
-title: 'Monitor an experiment'
-description: "Follow how your experiments are performing in real-time"
+title: 'Monitor an Experiment'
+icon: "eye"
+head:
+  - - meta
+    - name: description
+      content: Track and manage your experiments in real-time with detailed insights and results.
+description: "Monitor the performance of your experiments in real-time and analyze the results."
+
 ---
 
-To monitor the results of your experiments, simply go to your dashboard and select the experiment you'd like to view.
+Managing your experiments is straightforward with Gleef's real-time monitoring features.
 
-## Edit the name of the experiment
-You have the option to edit the `Test name` at any time, and regardless of the status of your experiment (`Draft`, `In Progress`, `Paused`, `Finished`).
-<img width="200" src="/images/monitor_details.png" alt="Name edition"/>
-Simply edit it and then save the changes.
+## Get an Overview of All Your Experiments
+<Frame>
+    <img width="300" src="/images/Dashboard-list-allPages.png" alt="Overview"/>
+</Frame>
 
-<Note>To prevent bias in your experiment, the only criteria you can update once it has been saved is the name. For additional information, please visit our [FAQ](/Q&A/QA)</Note>
+When you open Gleef on your website, you can view all created experiments (excluding deleted ones) across all pages. You can easily filter experiments to show only those on the current page.
 
-## Start/Pause the experiment
-### Drafted experiment
-<img width="200" src="/images/monitor_draft.png" alt="Draft experiment"/>
+Experiments are automatically sorted by:
+- Running experiments at the top
+- Creation date in descending order, with the most recent on top
 
-When you create an experiment, you have the option to save it as a draft instead of running it directly. A `Draft` experiment signifies it has never run and therefore, doesn't have any data to display. You can start the experiment whenever you're ready.
+## Experiment Details
+<Frame>
+    <img width="300" src="/images/Dashboard-results-experiment-notSignificant.png" alt="Experiment details"/>
+</Frame>
 
-<Warning>If an experiment has been in the "draft" stage for a while, it's important to verify that the page hasn't undergone any changes in the meantime, so that the targeted wording for the experiment is still relevant.</Warning>
+Clicking on a specific experiment shows detailed information, including its statistical significance. Refer to [our detailed section](TK) if you have questions about significance.
 
-### Paused experiment
-<img width="200" src="/images/monitor_paused.png" alt="Not running experiment"/>
+## Start/Pause an Experiment
+```mermaid
+flowchart LR
+    A[Drafted] --> |Start Experiment| SP[Experiment Running]
 
-When an experiment is `Paused`, it means that it was previously launched but then stopped. At this point, visitors will only see the baseline. The experiment may have some saved data from when it was live. To restart a paused experiment, click the restart button. The experiment will then display variations to visitors and the new data collected will be added to the previous data.
-<Note>If you pause an experiment, you might still see the different variations on your website for up to 7 days. Do not worry, new visitors will not be subject to the experiment. Learn more about it [in our FAQ.](/Q&A/trouble-shooting#i-have-paused-an-experiment-but-still-see-live-variations-on-my-website-why)</Note>
+    subgraph SP
+      direction TB
+      B[Paused] --> |Resume| C[In Progress]
+      C[In Progress] --> |Pause| B[Paused]
+    end
+````
+An experiment can be in one of three different states:
+    1. **`Draft`:**
+    When you create an experiment but choose not to launch it immediately, it is saved as a draft. This means the experiment has never been launched.
+    2. **`Running`:**
+    When an experiment is running, visitors will see different variations associated with the experiment when they visit the linked URL.
+    3. **`Paused`:**
+    You can pause an experiment at any time. When an experiment is paused, it can be manually restarted whenever you choose. While paused, the experiment stops running, and all visitors will see the default text for that specific experiment.
 
-### Running experiment
-<img width="200" src="/images/monitor_running.png" alt="In progress experiment"/>
+<Note>Frequent switching between running and paused states can introduce bias into your experiment results. Please refer to our A/B testing [best practices](TK) for more information.</Note>
 
-When an experiment is in progress, you can pause it at any time. It will no longer be live on your webpage. However, you can switch it back on later to collect additional data.
+### Drafted Experiment
+<Frame>
+    <img width="300" src="/images/monitor_draft.png" alt="Draft experiment"/>
+</Frame>
 
-Reasons why you might want to pause an experiment:
+When you create an experiment, you can save it as a draft instead of running it immediately. A `Draft` experiment has not run and, therefore, contains no data. You can start it whenever you're ready.
 
-- The wording under experiment has been removed from the page
-- You're aware of a particular event that could potentially introduce bias into your experiment
+<Warning>Ensure the page hasn't changed before starting a draft experiment, as changes may affect the relevance of the targeted wording.</Warning>
 
-<Warning>It's advisable to avoid pausing an experiment for an extended period, as it may introduce bias and affect the results.</Warning>
+### Paused Experiment
+<Frame>
+    <img width="300" src="/images/monitor_paused.png" alt="Paused experiment"/>
+</Frame>
 
-If you pause an experiment that has already reached statistical significance, it will be marked as `finished`.
+A `Paused` experiment was previously running but is now stopped. Visitors will only see the baseline. The experiment retains any data gathered before it was paused. You can restart it at any time to resume data collection, which will be added to the previous results.
 
+<Note>Paused experiments may still display variations for visitors that have already seen one to maintain consistency, but new visitors will only see the baseline. Learn more in our [FAQ](TK).</Note>
 
-## Finish the experiment
-When the experiment reaches statistical significance, you can pause it. This will change the experiment’s status to `finished`. It's time to start analyzing the results!
+### Running Experiment
+<Frame>
+    <img width="200" src="/images/monitor_running.png" alt="Running experiment"/>
+</Frame>
 
+A running experiment can be paused at any time, stopping its display on your website. You can resume it later to continue collecting data.
 
-## Analyze results
-### Significance
-<img width="200" src="/images/monitor_not-significant.png" alt="Not significant experiment"/>
+Reasons to pause an experiment:
+- The wording under experiment has been removed from the page.
+- You are aware of an event that might bias the experiment results.
 
-Statistical significance is based on various parameters. Gleef uses an automatic calculation to determine whether your results are significant.
-For detailed insight on how this is done, refer to our [statistics Q&A](/Q&A/statistics-data).
+<Warning>Avoid pausing an experiment for long periods, as it may introduce bias and affect its outcome.</Warning>
 
-Continue running the experiment until you achieve statistical significance. Ending the experiment prematurely could hinder the reliability of your results. Remember, significance is closely related to the magnitude of the conversion difference between variations.
-For example, if you have a 10% conversion difference between two variations, your experiment may reach significance much faster than if the difference were only 1%.
+## Finish the Experiment
+Currently, there is no `Finish` status. To stop an experiment, pause it. Whether or not the experiment is statistically significant, you can analyze the results.
 
-<Note>Significance is fixed at 95% for all experiments, and currently, it is not customizable.</Note>
+<Warning>Stopping an experiment before it reaches statistical significance may result in inconclusive data.</Warning>
 
-For the moment, Gleef does not offer the possibility of managing the significance parameters of experiments. This is automatically triggered when the 95% confidence level is reached (p-value of 0.05). You can see the critical Z value directly in the console when you open the dashboard on a specific experiment. As a reminder, the values are as follows:
+You control the duration of your experiments, even if they have already reached statistical significance.
 
-| Confidence Level | Critical Value, 𝑍𝑐 |
-| -------- | -------------------------- |
-| 99%      | 2.575                      |
-| 95%      | 2.33                       |
-| 90%      | 1.645                      |
-| 80%      | 1.28                       |
+## Delete an Experiment
+<Frame>
+    <img width="300" src="/images/monitor_delete.png" alt="Delete experiment"/>
+</Frame>
 
-The console displays the critical Z value and the p-value.
+You can delete an experiment at any time, but this action is irreversible.
 
-<Tip>Please note that the significance of experiments is calculated purely from a mathematical point of view for the time being, and no other rule is involved in changing the dot determining the significance of the experiment.
-However, we recommend that you achieve the following values to ensure the validity of the experiment.</Tip>
+## Analyze Results
 
-Value to look at on top of statistical significance, before taking any decision on your wording:
-- At least 5,000 unique visitors per variation;
-- To run the test for at least 14 days (two business cycles);
-- Achieve 250 conversions.
+### Statistical Significance
+<Frame>
+    <img width="300" src="/images/Dashboard-results-experiment-notSignificant.png" alt="Results analysis"/>
+</Frame>
 
-### Conversion & growth
-<img width="200" src="/images/monitor_results.png" alt="Results"/>
-At any time, you can access and monitor the results of your experiment, observing the conversion rates of each variation, and the improvement compared to the `baseline`, which represents the original wording being tested.
+Gleef provides clear insights into whether your experiment is statistically significant. Beyond p-value calculation, we provide three additional key metrics:
+- Experiment duration
+- Number of visits (per variation)
+- Number of success events (per variation)
 
-<Tip>
-    Hover over the conversion or growth metrics for detailed figures.
-    <img width="200" src="/images/monitor_hover.png" alt="Hover conversion"/>
-</Tip>
+These metrics will guide your decisions on wording choices. Visit our [significance and results analysis](TK) section for more details.
+
+### Edit the Name of the Experiment
+You can edit the `Test name` at any time, regardless of the experiment’s status (`Draft`, `In Progress`, `Paused`).
+<Frame>
+    <img width="200" src="/images/monitor_details.png" alt="Edit experiment name"/>
+</Frame>
+
+Simply make the change and save it.
+
+<Note>To avoid introducing bias, the only parameter you can change after saving the experiment is the name. Learn more in our [FAQ](/Q&A/QA).</Note>
