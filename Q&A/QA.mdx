@@ -1,61 +1,136 @@
----
 title: 'Frequently Asked Questions'
 icon: "question"
-iconType: "solid"
+iconType: "regular"
+head:
+  - - meta
+    - name: description
+      content: Find answers to the most frequently asked questions about using Gleef for A/B testing. Our support team is ready to help if you need further assistance at support@gleef.eu.
+
 description: "Find answers to our most frequently asked questions below. If you need further assistance, our support team is ready to help at support@gleef.eu."
 ---
 
+## General Questions
+
 ### What is Gleef?
-Gleef is a Chrome extension designed for A/B testing website wording to enhance user engagement and conversion rates. Gleef focuses exclusively on testing text elements, not other webpage components.
+Gleef is a Chrome extension designed for A/B testing website wording, helping to improve user engagement and conversion rates. It focuses exclusively on testing text elements such as headlines, CTAs, and descriptions.
+
+### What can I experiment with using Gleef?
+You can run A/B tests on any text element on your website, including:
+- **Headlines**
+- **Call-to-action buttons**
+- **Product descriptions**
+
+However, text within images or videos cannot be tested. Ensure that your text elements are implemented using standard web development practices.
 
 ### How does Gleef work?
-Gleef allows you to create, manage, and analyze A/B tests by experimenting with different text variations on your website. This JavaScript overlay adjusts your website’s text dynamically, all without any developer intervention or changes to your live product.
-
-### What are the benefits of using Gleef?
-Gleef helps boost conversion rates, enhance user engagement, and optimize overall website performance by testing and refining your wording. As an expert in text-based A/B testing, Gleef facilitates easy experimentation with wording changes—no coding skills required. Developers love Gleef because it doesn’t interfere with the website structure, unlike traditional A/B testing solutions.
-
-### What types of tests does Gleef allow?
-Gleef specializes in A/B testing for text elements, such as headlines, buttons, and product descriptions.
+Gleef allows you to create, manage, and analyze A/B tests without developer involvement. By using a JavaScript overlay, the tool dynamically adjusts the text on your website, making it easy to test different variations.
 
 ### Who can use Gleef?
-Gleef is ideal for marketers, product managers, developers, and anyone involved in website optimization.
+Gleef is ideal for:
+- **Marketers**
+- **Product managers**
+- **Developers**
+- **Website optimization teams**
 
-### Is Gleef compatible with all browsers?
-- **For Website Owners:** Gleef is primarily designed for Google Chrome, allowing for easy experiment implementation and tracking.
-- **For Visitors:** Gleef operates seamlessly on any browser. As it integrates a simple JavaScript code, it functions across all devices and browsers.
+Anyone looking to improve website engagement and conversion through wording changes can benefit from Gleef.
+
+---
+
+## Installation and Setup
+
+### How do I install the Gleef Chrome extension?
+To install the Gleef Chrome extension:
+1. Visit the [Chrome Web Store](https://chromewebstore.google.com/detail/gleef-alpha/dhaimaljdicccaplppipfiikonpdgeelify/).
+2. Search for `Gleef` and click **Add to Chrome**.
+3. Once installed, launch the extension from the browser toolbar.
+
+### Are there specific requirements for installing Gleef?
+Yes, to install and use Gleef, you need:
+1. **Google Chrome**: The latest version of Chrome is required.
+2. **Website Access**: You need the ability to add custom JavaScript to your website’s code to run live experiments.
+
+### How do I create a Gleef account?
+You can create a **demo account** directly from the Chrome extension. The demo account allows you to save experiments as drafts. For a full-featured account, [contact us](mailto:support@gleef.eu) to upgrade.
+
+### How do I add the Gleef JavaScript snippet to my website?
+After signing up, you’ll be provided with a JavaScript snippet. Add this snippet to the `<head>` section of your website to enable event tracking and A/B testing.
+
+<Info>Ensure the JavaScript tag is present on all pages where you want to run experiments.</Info>
+
+---
+
+## Running Experiments
 
 ### Why can't I remove the baseline text from variations?
-The original text you are testing becomes the baseline, serving as the benchmark for your comparison. Therefore, you cannot remove the baseline text from your variations.
+The baseline text is your control and serves as the benchmark for comparison with other variations. Removing it would prevent accurate performance measurement.
 
-### What is the difference between Gleef and other A/B testing tools?
-Gleef stands out by specifically focusing on A/B testing for website wording. While traditional A/B testing tools are great for evaluating UI/UX elements, Gleef hones in on the power of words. This unique specialization brings several distinct benefits:
-
-- **Focused Expertise in Wording:** 
-  Gleef is dedicated to optimizing text elements, understanding that the right words can remarkably influence user behavior. Whether legal text, brand image, or tone of voice, precise wording is critical for effective communication.
-
-- **Complements Traditional UI Testing Tools:** 
-  Gleef doesn't aim to replace traditional A/B testing tools but to complement them. While UI tests are crucial for enhancing visual and functional aspects of a website, wording tests are vital for clear communication and user engagement.
-
-- **Emphasizes the Importance of Words:**
-  Words play a pivotal role in legal compliance, brand perception, and customer engagement. The right message can build trust, convey brand values, and motivate users to take meaningful actions.
-
-- **Builds a Community of Engaged Users:**
-  Gleef fosters a vibrant community of marketers, product managers, and developers focused on the nuanced power of words. Our platform supports collaboration and the sharing of insights to improve communication strategies effectively.
-
-- **Maintains a Developer-Friendly Approach:**
-  By concentrating on text changes rather than UI modifications, Gleef minimizes the risk of affecting site functionality. Developers appreciate that our approach doesn't interfere with the site’s design or performance, making implementation and management seamless.
-
-In summary, Gleef’s focus on wording makes it a unique and valuable tool in the A/B testing landscape. It allows teams to refine their messaging with precision, ensuring that every word enhances the user experience and strengthens engagement.
-
-### Are there any limitations on Gleef usage?
-No, Gleef imposes no limitations on the number of experiments or users. You can create and run as many experiments as you need, and invite as many team members as you like to collaborate on your projects.
-
-### How do I know which plan my company is on?
-Currently, we offer a singular, unlimited plan designed especially for early adopters. This allows you to fully leverage Gleef's capabilities without any restrictions.
+### How do I avoid flickering when running experiments?
+Flickering occurs when the original content briefly appears before the variation is loaded. To prevent this:
+- **Ensure the Gleef JavaScript snippet is placed in the `<head>` section** of your website.
+- **Load the script asynchronously** and use a pre-loader to hide the page until the variation is ready.
 
 ### Running multiple experiments on the same page
-Gleef allows you to run multiple experiments simultaneously. However, conducting several experiments on the same page will impact the time required to reach statistical significance.
+Gleef allows multiple experiments to run simultaneously on different pages without any interference. However, running multiple experiments on the same page may extend the time required to reach statistical significance. Visitors will be randomly assigned to a single experiment to avoid bias.
 
-To prevent any bias in the experimentation process, if multiple experiments are active on the same page (same URL), each visitor will be randomly assigned to a single experiment. This approach ensures that there is no interference bias between the different experiments.
+### How long should I run my experiments?
+Experiments should run long enough to gather sufficient data to reach statistical significance. As a general rule, aim for at least **two weeks** of continuous testing, especially if your page traffic is moderate.
 
-Although this method maintains the integrity of each experiment, it will extend the time needed to achieve statistical significance. Therefore, it is advisable to complete one experiment before starting another to minimize delays and ensure accurate results.
+---
+
+## Troubleshooting and Support
+
+### Does the Gleef extension always work?
+The extension will work as long as the correct JavaScript snippet is installed on your website. This enables real-time A/B tests without issues.
+
+### What happens if Gleef is down?
+In rare cases where Gleef is down, your website will continue to function normally, but your experiments will not run, and visitors will see the baseline content. You won’t be able to access the Gleef dashboard until services are restored. Visitors and experiment statistics will not be collected during this time.
+
+### How do I invite team members to join Gleef?
+Currently, only one user per domain is allowed. You can share your account credentials with colleagues if necessary. We are working on a feature to enable multiple users for a single domain.
+
+---
+
+## Best Practices
+
+### How do I avoid interference when running multiple experiments?
+To avoid interference when running multiple tests on the same page:
+- **Run one experiment at a time** to ensure quicker statistical significance.
+- **Random assignment**: If running multiple tests on the same page is necessary, Gleef randomly assigns each visitor to only one active experiment.
+
+### Why should I prioritize testing high-impact elements?
+Focus on testing text elements with the highest potential to improve user behavior, such as:
+- **Headlines**: Drive more attention and clicks.
+- **CTAs**: Boost conversion rates.
+- **Product descriptions**: Enhance product understanding and encourage action.
+
+Small changes to these elements can produce significant improvements in overall performance.
+
+### What should I do if my test reaches significance early?
+If your test reaches statistical significance before the scheduled end date, continue running the experiment for a few more days to verify the results and account for fluctuations in user behavior.
+
+---
+
+## Pricing and Plans
+
+### How do I know which plan my company is on?
+We currently offer a single unlimited plan designed for early adopters. This plan allows full access to all Gleef features with no restrictions on the number of experiments or users.
+
+### Can I get a free trial?
+Yes, we offer an **unlimited demo mode** that allows you to experiment without using our JavaScript snippet. Follow these steps to start:
+<Steps>
+  <Step title="Download our extension">
+    Download our Chrome extension from [the Chrome store](http://get.gleef.eu).
+  </Step>
+  <Step title="Signup">
+    Signup using your email or Google account.
+  </Step>
+  <Step title="Validate your account">
+    Validate your account and register your domain name.
+  </Step>
+</Steps>
+
+<Tip>No need to integrate the JavaScript snippet to use demo mode!</Tip>
+
+---
+
+For any additional questions or support, feel free to [contact us](mailto:support@gleef.eu).

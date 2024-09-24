@@ -65,6 +65,17 @@
       ]
     },
     {
+      "group": "Best Practices",
+      "pages": [
+        "best-practices/overview-concepts",
+        "best-practices/goals-metrics",
+        "best-practices/creating-variations",
+        "best-practices/running-experiments",
+        "best-practices/analyzing-results",
+        "best-practices/common-pitfalls"
+      ]
+    },
+    {
       "group": "Under the hood",
       "pages": [
         "under-the-hood/gdpr",

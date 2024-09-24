@@ -1,29 +1,82 @@
 ---
 title: 'Flickering'
 icon: 'bolt'
-iconType: 'solid'
-description: 'Flickering is a common issue with A/B testing tool. Learn how to fix it with Gleef.'
+iconType: 'regular'
+head:
+  - - meta
+    - name: description
+      content: Flickering is a common issue with A/B testing tools. Learn what causes it and how to fix flickering with Gleef.
+
+description: 'Flickering is a common issue with A/B testing tools. Learn how to fix it with Gleef.'
 ---
 
-## What is flickering
-Flicker is a problem commonly occurring with JavaScript based A/B testing solution. When your webpage is loading, it is possible that the original page displays for a split second instead of the variation. <b>This twinkling is called flicker effect or flickering.</b> It can confuse the visitor or distort the results of any experiment. Gleef includes built-in techniques to eradicate flickering.
+## What is Flickering?
 
-Usually, Flickering has two main causes:
+Flickering, or the **flicker effect**, occurs when the original version of a webpage is visible for a brief moment before the A/B test variation loads. This issue is common with JavaScript-based A/B testing tools. The flicker effect can confuse visitors or distort the results of your experiment by briefly showing the control version before applying the variation.
 
-- The moment where the script is loaded and executed happens too late, when the browser has already displayed the page (or parts of the page). That's dependent on how you implemented the Gleef script within your page.
-- The engine processing the experiment's variations is too slow, or rather, do not execute and display modifications fast enough.
+<b>Flickering can happen for two main reasons:</b>
 
-## How to avoid flickering
+1. **Script load timing:** The A/B testing script loads too late, causing the browser to display the original content before applying the variations. This is usually due to the way the A/B testing script is implemented on your page.
+   
+2. **Slow script execution:** The engine processing the variations takes too long to apply the changes, resulting in a delay between the initial page load and the variation display.
 
-Before all things, check if you have flickering at all when using Gleef.
-The default implementation described in [Quickstart](../quickstart) should be sufficient for most cases.
+Gleef incorporates built-in mechanisms to minimize and prevent flickering.
+
+---
+
+## How to Avoid Flickering
+
+### 1. **Check for Flickering in Gleef**
+Before making any changes, test your implementation to see if flickering is an issue. The default implementation provided in [Quickstart](../quickstart) should be sufficient for most cases and designed to avoid flickering.
+
+### 2. **Script Placement**
+Ensure that the Gleef script is placed correctly in your website’s code. The script should be:
+- **Placed in the `<head>` section**: This ensures the script runs early, before the webpage renders, preventing flicker.
+- **Not using a tag manager**: Tag managers can delay script execution, which might increase flickering risk.
 
 <Warning>
-    Before moving on to the next steps, please check that you're not using Gleef with a tag manager, and that <b>your script is included in the &lt;`head`&gt; section of your website</b>.
+    If your script is placed incorrectly or loaded via a tag manager, adjust it to load in the `<head>` section to prevent flickering.
 </Warning>
 
-To remove all flickering risk, you can load the script asynchronously alongside an additional snippet that will prevent the page to display before the variations are loaded.
-In the event of Gleef services being unavailable, a timeout fallback will display the page after a defined delay. We strongly advise to keep this default delay.
+### 3. **Load Script Asynchronously with Fallback**
+To completely eliminate flickering, implement the script to load asynchronously and add a pre-loader to prevent the page from displaying until the variations are ready.
+
+Here’s how you can do it:
+
+- **Asynchronous Script Loading**: Load the A/B testing script asynchronously to ensure it doesn’t block other content from loading.
+  
+- **Pre-loader Implementation**: Add a snippet that keeps the page hidden until the variations are applied. This avoids any content flashing between the original and the variation.
+  
+- **Timeout Fallback**: In cases where Gleef’s services are unavailable, the page should load after a brief delay. This is a built-in feature of Gleef’s pre-loader, and we recommend keeping the default delay to avoid unnecessary load time.
+
+---
+
+## Best Practices to Prevent Flickering
+
+### Why is script placement crucial?
+Placing the Gleef script in the `<head>` section ensures that it loads before any content is rendered on the page. This helps in applying the variation early and prevents visitors from seeing the original version of the page, thereby avoiding flicker.
+
+### Can I use a tag manager for Gleef scripts?
+It is not recommended to use a tag manager for loading the Gleef script. Tag managers can introduce a delay in script execution, increasing the likelihood of flickering. For best results, directly place the script in the `<head>` of your webpage.
+
+### What is the pre-loader and how does it work?
+A pre-loader prevents the page from rendering until the variations are ready. This is done by keeping the webpage content hidden momentarily until the A/B test variation has been applied. This method avoids any visible flickering.
+
+---
+
+## Troubleshooting Flickering
+
+### 1. **Flickering Still Occurs—What Now?**
+If flickering persists despite following the recommendations:
+- **Double-check script placement:** Ensure the Gleef script is within the `<head>` section and loaded correctly.
+- **Check for delays in execution:** Use developer tools to monitor the script loading time and ensure it's being executed before the page displays.
+  
+### 2. **What if Gleef's services are temporarily down?**
+If Gleef's services are unavailable for any reason, the fallback mechanism ensures that your page loads after a set timeout. This prevents users from being stuck on a blank or partially loaded page.
+
+<Info>
+    By default, Gleef sets a reasonable delay for the timeout, but you can customize this delay if needed. However, we recommend sticking to the default setting for optimal performance.
+</Info>
 
 ```html
 <script>
