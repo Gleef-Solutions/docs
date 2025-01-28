@@ -2,31 +2,39 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Developer Guide",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/gleef_logo-light.svg",
+    "light": "/logo/gleef_logo-dark.svg"
   },
   
-  "favicon": "/favicon.svg",
+  "favicon": "/logo/gleef_favicon.svg",
   
+  "primaryTab":{
+    "name": "Figma plugin"
+  },
+
   "colors": {
-    "primary": "#C58B01",
-    "light": "#f6da67",
-    "dark": "#C58B01",
+    "primary": "#d66234",
+    "light": "#f1bca6",
+    "dark": "#8b371c",
     "anchors": {
-      "from": "#C58B01",
-      "to": "#f6da67"
+      "from": "#d66234",
+      "to": "#f1bca6"
     }
   },
 
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:support@gleef.eu"
+      "url": "tel:+33644609754"
+    },
+    {
+      "name": "Chrome extension",
+      "url": "http://get.gleef.eu"
     }
   ],
   "topbarCtaButton":{
-    "name": "Chrome extension",
-    "url": "https://chromewebstore.google.com/detail/gleef/dhaimaljdicccaplppipfiikonpdgeel"
+    "name": "Figma plugin",
+    "url": "http://figma.gleef.eu"
   },
 
   "feedback": {
@@ -35,44 +43,155 @@
   },
   "tabs": [
     {
-      "name": "Support",
-      "url": "Q&A"
+      "name": "A/B testing",
+      "url": "ab-testing"
     },
     {
-      "name": "Integrations",
-      "url": "integrations"
+      "name": "Under The Hood",
+      "url": "under-the-hood"
     }
   ],
 
   "navigation": [
     {
-      "group": "Getting Started",
+      "group": "Configurations",
       "pages": [
-        "introduction",
-        "quickstart",
-        "use-cases",
-        "cms-integrations"
+        {
+          "group": "Getting Started",
+          "icon": "rocket",
+          "iconType": "light",
+          "pages": [
+            "figma-plugin/getting-started/introduction",
+            "figma-plugin/getting-started/quickstart"
+          ]
+        },
+        {
+          "group": "Integrations",
+          "icon": "code-branch",
+          "iconType": "light",
+          "pages": [
+            "figma-plugin/integrations/integrations",
+            "figma-plugin/integrations/crowdin",
+            "figma-plugin/integrations/lokalise",
+            "figma-plugin/integrations/phrase",
+            "figma-plugin/integrations/transifex"
+          ]
+        },
+        {
+          "group": "Using Gleef",
+          "icon": "figma",
+          "iconType": "light",
+          "pages": [
+            "figma-plugin/how-to/install",
+            "figma-plugin/how-to/signup",
+            "figma-plugin/how-to/import-keys",
+            "figma-plugin/how-to/generate-keys",
+            "figma-plugin/how-to/manage-keys",
+            "figma-plugin/how-to/export-keys"
+          ]
+        }
       ]
     },
     {
-      "group": "Using Gleef",
+      "group": "Advanced",
       "pages": [
-        "how-to/install",
-        "how-to/signup",
-        "how-to/create",
-        "how-to/monitor",
-        "how-to/success-event"
+        {
+          "group": "Best Practices",
+          "icon": "shield-check",
+          "iconType": "light",
+          "pages": [
+            "figma-plugin/best-practices/overview-concepts",
+            "figma-plugin/best-practices/goals-metrics",
+            "figma-plugin/best-practices/creating-variations",
+            "figma-plugin/best-practices/running-experiments",
+            "figma-plugin/best-practices/analyzing-results",
+            "figma-plugin/best-practices/common-pitfalls"
+          ]
+        },
+        {
+          "group": "Support",
+          "icon": "triangle-exclamation",
+          "iconType": "light",
+          "pages": [
+            "figma-plugin/support/QA",
+            "figma-plugin/support/best-practices",
+            "figma-plugin/support/embeddings",
+            "figma-plugin/support/trouble-shooting",
+            "figma-plugin/support/security-privacy"
+          ]
+        }
+      ]
+    },
+
+    {
+      "group": "Configurations",
+      "pages": [
+        {
+          "group": "Getting Started",
+          "icon": "rocket",
+          "iconType": "light",
+          "pages": [
+            "ab-testing/getting-started/introduction",
+            "ab-testing/getting-started/quickstart",
+            "ab-testing/getting-started/use-cases"
+          ]
+        },
+        {
+          "group": "Integrations",
+          "icon": "code-branch",
+          "iconType": "light",
+          "pages": [
+            "ab-testing/integrations/webflow",
+            "ab-testing/integrations/wordpress",
+            "ab-testing/integrations/shopify",
+            "ab-testing/integrations/wix",
+            "ab-testing/integrations/bubble",
+            "ab-testing/integrations/framer"
+          ]
+        },
+        {
+          "group": "Using Gleef",
+          "icon": "vials",
+          "iconType": "light",
+          "pages": [
+            "ab-testing/how-to/install",
+            "ab-testing/how-to/signup",
+            "ab-testing/how-to/create",
+            "ab-testing/how-to/monitor",
+            "ab-testing/how-to/success-event"
+          ]
+        }
       ]
     },
     {
-      "group": "Best Practices",
+      "group": "Advanced",
       "pages": [
-        "best-practices/overview-concepts",
-        "best-practices/goals-metrics",
-        "best-practices/creating-variations",
-        "best-practices/running-experiments",
-        "best-practices/analyzing-results",
-        "best-practices/common-pitfalls"
+        {
+          "group": "Best Practices",
+          "icon": "shield-check",
+          "iconType": "light",
+          "pages": [
+            "ab-testing/best-practices/overview-concepts",
+            "ab-testing/best-practices/goals-metrics",
+            "ab-testing/best-practices/creating-variations",
+            "ab-testing/best-practices/running-experiments",
+            "ab-testing/best-practices/analyzing-results",
+            "ab-testing/best-practices/common-pitfalls"
+          ]
+        },
+        {
+          "group": "Support",
+          "icon": "triangle-exclamation",
+          "iconType": "light",
+          "pages": [
+            "ab-testing/support/QA",
+            "ab-testing/support/best-practices",
+            "ab-testing/support/installing",
+            "ab-testing/support/statistics-data",
+            "ab-testing/support/flickering",
+            "ab-testing/support/trouble-shooting"
+          ]
+        }
       ]
     },
     {
@@ -83,35 +202,8 @@
         "under-the-hood/terms",
         "under-the-hood/acceptable-use-policy"
       ]
-    },
-    {
-      "group": "Support",
-      "pages": [
-        "Q&A/QA",
-        "Q&A/best-practices",
-        "Q&A/installing",
-        "Q&A/statistics-data",
-        "Q&A/flickering",
-        "Q&A/trouble-shooting"
-      ]
-    },
-    {
-      "group": "Integrations",
-      "pages": [
-        "integrations/integrations",
-        {
-          "group": "Integrations",
-          "pages": [
-            "integrations/webflow",
-            "integrations/wordpress",
-            "integrations/shopify",
-            "integrations/wix",
-            "integrations/bubble",
-            "integrations/framer"
-          ]
-        }
-      ]
     }
+    
   ],
   "footerSocials": {
     "x": "https://x.com/gleef_ai",

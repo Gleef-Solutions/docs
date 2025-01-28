@@ -1,0 +1,80 @@
+---
+title: Troubleshooting
+"og:title": "Gleef - Knowledge base - Troubleshooting"
+"og:description": "Solutions for common issues when working with Gleef's localization system and embeddings."
+"og:image": "https://gleef.eu/images/gleef-og-image.png"
+"og:url": "https://gleef.eu/"
+"og:type": "website"
+"og:locale": "en_US"
+---
+
+*This guide helps you resolve common issues you might encounter while using Gleef. If you can't find a solution to your problem, don't hesitate to contact our support team.*
+
+## Common import issues
+### File parsing errors
+Verify your file respects common CSV, XML or JSON formatting.
+Here are the format we use:
+   - **CSV**:
+      ```CSV
+         key, value
+      ```
+   - **JSON**: given a key named: parent.subparent.element with the value: value
+      ```JSON
+      {
+      "parent": {
+         "subparent": {
+            "element": "value"
+         }
+      }
+      ```
+   - **XML**:
+      ```xml
+      <resources>
+      <string name="key1">value1</string>
+      <string name="key2">value2</string>
+      </resources>
+      ```
+   <Warning>Values are expected to be the same language as the one used to design your files</Warning>
+
+### File too large
+Split the file into smaller chunks
+
+### File encoding issues
+Ensure the file is encoded in UTF-8, so that special characters are properly interpreted
+
+### File format not supported
+Gleef supports CSV, JSON, and XML files. If you need another file formatting, please try converting your file in another format, or [contact us](contact@gleef.eu).
+
+## Plugin issues
+### Plugin not loading
+It can sometimes happen, mainly due to Figma. Try running it online (on your browser) or switching to Figma's app. Sometimes deleting the plugin and re-downloading it might also solve this issue.
+
+### Slow performance
+As you may have already experience using AI, it sometimes takes longer than usual to generate answers.
+
+### Authentication errors
+If you encounter any authentication errors, try logging out and logging back in. If the issue persists, please [contact us](contact@gleef.eu).
+
+## Error while generating keys
+### During generation
+Try not to select another frame than the one you want to generate keys for. If the issue persists, please [contact us](contact@gleef.eu).
+
+### Key duplication
+It can sometimes happen that a key is duplicated in your screen while generating. It means that the element is the same and so only one key should be used.
+You can edit the key name, but won't be able to get back to the duplicated status manually, as Gleef doesn't enable manual key duplication.
+No worries, export files will only have one key.
+
+### Existing Keys
+- **Missing keys:** If some keys should be marked down as `existing` but are not, it might mean that they are not in the current knowledge base.
+Try importing these keys and regenerate this frame, [see more on key import](/figma-plugin/how-to/import-keys).
+- **Key value conflict:** A key can be tagged as existing, with a different value than the one in the knowledge base. If it is the case, the export file will have the value from the current Frame.
+
+### Solutions
+1. Check internet connection
+2. Clear Figma plugin cache
+3. Reload Figma
+4. Check Gleef status page
+5. Contact support if issues persist
+
+## Getting help
+- [Contact support](mailto:support@gleef.eu)

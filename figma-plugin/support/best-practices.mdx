@@ -1,0 +1,40 @@
+---
+title: Best Practices
+"og:title" : "Gleef - Best Practices"
+"og:description" : "Best practices to use Gleef's Figma Plugin to automatically generate and manage localization keys, right in Figma."
+"og:image" : "https://gleef.eu/images/gleef-og-image.png"
+"og:url" : "https://gleef.eu/"
+"og:type" : "website"
+"og:locale" : "en_US"
+---
+
+<Info>Have any question or feedback? Call the team! <a href="tel:+33644609754">+33 6 44 60 97 54</a> or [email us](mailto:contact@gleef.eu).</Info>
+
+## Update knowledge base permanently
+### What is the knowledge base?
+The knowledge base is a vector database that stores all your keys and their translations. It is used to find the most similar keys to the one you are trying to translate. The similarity is calculated using the cosine similarity between the embeddings of the keys.
+It is useful to get **existing keys** as well as generating new keys while avoiding duplicates and ensuring a consistent pattern.
+
+### How to update the knowledge base?
+The knowledge base is **not updated after generation**, because there is no evidence that the generated keys are used in your code base.
+Updating the knowledge base is a manual process that takes 20 seconds. Check out the [process here](/figma-plugin/how-to/import-keys).
+
+### Why is it important to update the knowledge base?
+Updating the knowledge base is important because it allows you to:
+1. **Find existing keys** that are similar to the one you are trying to translate.
+2. **Avoid duplicates** by detecting similar existing keys.
+3. **Ensure a consistent pattern** by using the most similar existing keys as context.
+
+## Don't waste time naming your Figma's elements
+As Gleef doesn't rely on the name of any elements, you can name them as you want. It will not impact the generation of your keys.
+On top of that, it means that you don't have to bother much naming elements if you don't need to.
+
+## Toggle back the display
+If you're not the only one working on Figma, you should toggle back to text elements after displaying keys, so that any other user will find the same experience as you.
+
+## Use consistent language
+As you might know, you have selected a language during the onboarding process ([contact us to change it if needed](emailto:contact@gleef.eu)). [See more](/figma-plugin/getting-started/quickstart)
+This language will be used to match keys and work with the embeddings. Make sure every elements in your Figma are in this language.
+
+## Collaborate with your colleagues
+You might want to generate keys, edit them and then grant access to your colleagues to share this with them. It's already possible, but you need to [contact us](mailto:contact@gleef.eu)

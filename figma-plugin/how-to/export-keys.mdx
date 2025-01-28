@@ -1,0 +1,56 @@
+---
+title: Export keys
+"og:title" : "Gleef - Export keys"
+"og:description" : "Easily export generated keys in CSV, JSON or XML to integrate your localization flow."
+"og:image" : "https://gleef.eu/images/gleef-og-image.png"
+"og:url" : "https://gleef.eu/"
+"og:type" : "website"
+"og:locale" : "en_US"
+---
+
+Currently, Gleef does not provide any native integration with localization software. [See more here](/figma-plugin/integrations/integrations).
+
+Once you have [managed keys](/figma-plugin/how-to/manage-keys) for a specific frame, you might want to export **keys in sync**. 
+
+## How to export keys?
+<Frame>
+  <img width="300" src="/images/figma-plugin_export-keys.png" alt="Export keys"/>
+</Frame>
+
+1. Select the frame you want to export keys from.
+2. Enter the list keys in sync.
+3. Click on the **Export keys** button in the Plugin.
+4. Click on the **Download the export** button.
+5. Choose the format you want to export keys in.
+
+## Export formats
+You can choose between 3 main formats, the most commonly used in localization:
+- CSV
+- XML
+- JSON
+
+### Exporting in CSV
+CSV is the most commonly used format in localization. It is easy to read and write, and can be opened with any spreadsheet software.
+It is easy to integrate in any localization software, as well as localization flows if you don't have a software.
+
+### Exporting in XML
+XML is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable. It is often used in localization to export keys in a structured format.
+Format will be:
+```xml
+<resources>
+  <string name="key1">value1</string>
+  <string name="key2">value2</string>
+</resources>
+```
+
+### Exporting in JSON
+JSON is a lightweight data-interchange format. It is easy for humans to read and write and easy for machines to parse and generate. It is often used in localization to export keys in a structured format.
+
+You have 2 options here:
+1. **Merge with an existing file (.json)**: If you already have a JSON file with keys, you can merge the keys from the Plugin with the existing file. The Plugin will add the new keys to the existing file, and will not overwrite the existing keys.
+2. **Export as a new file (.json)**: If you don't have a JSON file with keys, you can export the keys from the Plugin as a new file. Or if you want to integrate manually these new keys in your current file.
+
+## Import back
+When exporting keys, as you might or not used the keys in your project, it is highly recommended to **import back the updated whole file**, so that the knowledge is updated with existing keys.
+
+See how to update the knowledge base by importing keys [here](/figma-plugin/how-to/import-keys).

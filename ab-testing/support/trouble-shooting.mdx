@@ -1,0 +1,117 @@
+---
+title: 'Troubleshooting'
+description: "Solutions to common issues you might encounter while using Gleef"
+---
+
+## Experiments
+
+### My experiment seems to have stopped running
+This could be due to several reasons:
+
+1. **Someone may have paused the experiment.**
+   You can check the experiment status on your dashboard. If the experiment is marked as 'Paused', you can click on 'Restart the experiment'.
+   <img src="/images/QA-paused-experiment.png" width="200" alt="Experiment paused" align="center"/>
+
+2. **The experiment was automatically paused by Gleef.**
+   Sometimes, Gleef may automatically pause an experiment. The primary reason for this could be the detection of an abnormal implementation.
+
+   This could be due to:
+   - **No variation shown:** Your test was still running, but no variation was displayed on your page because Gleef could not find the text to replace. This is mostly due to changes on your webpage since the experiment's implementation, making it difficult for Gleef to identify the targeted text.
+   <Warning>You won't be able to change the experiment's target, as it may introduce bias. You can either reverse the changes on your website or launch a new experiment. Please refer to our [best practices](/Q&A/best-practices).</Warning>
+
+   - **No success events triggered:** Your success event is likely broken. This could be due to an incorrect URL or because the button being tracked has been changed or removed.
+   <Warning>You won't be able to change the success event for your experiment, as it may introduce bias. You can either reverse the changes on your website or launch a new experiment. Please refer to our [best practices](/Q&A/best-practices).</Warning>
+
+  3. **Our snippet is no longer supported by your website.**
+   If our snippet has been removed from your website, or specific pages (due to reused elements not applied throughout the entire website), you will still see the experiments in your dashboard, but they will no longer be running. Ensure that our snippet is still active on your website.
+   
+
+### Why isn’t my experiment evolving anymore?
+Refer to the previous section. This issue may occur because the text you are trying to test is no longer findable or has been altered.
+
+### My experiment is still not significant; why?
+Achieving statistical significance depends on various parameters and can require anywhere from a few hundred to hundreds of thousands of visitors. It is essential to review these parameters to understand what might be affecting your experiment's significance. For more details, please see our [statistical analysis guide](/Q&A/statistics-data#statistical-significance).
+
+### What happens if the text under an experiment is changed?
+No worries, your website will continue functioning seamlessly! However, the experiment associated with that text will no longer run because Gleef won't be able to apply the variations on page load. Consequently, all visitors will see the default text as defined by your developers.
+
+To restart the experiment, revert the changes made to the affected page and ensure the experiment is not paused.
+
+<Warning>
+  Avoid making changes to a webpage during an experiment, as it can disrupt and bias the experiment. <br/>
+  For more information, please refer to our [best practices](/Q&A/best-practices).
+</Warning>
+
+#### Why can't I select some text on my website?
+The main reason could be that the text you're trying to select is not considered "text" in web development terminology. Here are some specific reasons:
+
+- **Text embedded in an image:** If the text is embedded directly into an image, it is not considered text for SEO purposes, is not localized (requiring entire image localization), and is not responsive. We recommend asking your developers to rewrite this part of the page to display it as actual text.
+
+- **Text within inappropriate HTML tags:** If the text is nested in code tags not meant to handle content directly, such as `<div>`, the text may not be selectable. Gleef natively recognizes and supports standard HTML tags designed to handle content, such as:
+    - `<b>Bold text</b>`
+    - `<strong>Strong text</strong>`
+    - `<i>Italic text</i>`
+    - `<em>Emphasized text</em>`
+    - `<u>Underlined text</u>`
+    - `<del>Deleted text</del>`
+    - `<ins>Inserted text</ins>`
+    - `<mark>Highlighted text</mark>`
+    - `<small>Smaller text</small>`
+    - `<sub>Subscript text</sub>`
+    - `<sup>Superscript text</sup>`
+    - `<a href="url">Link text</a>`
+    - `<code>Inline code</code>`
+    - `<pre>Preformatted text</pre>`
+    - `<blockquote>Blockquote text</blockquote>`
+    - `<ul>lists<li>lists</li></ul>`
+    - `<ol><li>Ordered list item</li></ol>`
+    - `<hx>Heading x</hx>`
+    - `<p>Paragraph text</p>`
+
+### Why can't I find one of my experiments anymore?
+In rare cases, it is possible for an experiment to disappear from your dashboard. Please contact us at support@gleef.eu so we can assist in re-integrating it.
+
+### Why do visitors only see one experiment at a time when I've defined multiple experiments on the same page?
+Running multiple A/B tests on the same page is generally discouraged, as outlined in our [best practices](/Q&A/best-practices). However, if you choose to run different experiments on the same page, note that we only show one variation to a visitor at a time. This ensures consistency in our analysis and avoids any bias.
+
+This means that a visitor will only be part of one A/B test and won't see variations from the other experiments. For example, if you are testing three different components on the same page, the visitor will only see a variation of one component while the other two will display their default text.
+
+### What happens if I select a component to A/B test wording, but it’s shown more than once on the page?
+When you define an experiment on a component’s wording, we assume you want to experiment on all instances of that component on the specific page. This means we will apply the experiment to all components that contain the specified wording and share the same code structure, ensuring that your page remains consistent.
+
+
+## Gleef's Technology
+
+### Is Gleef slowing down my website?
+
+It's unusual, but it can happen. Gleef is an efficient, seamless JavaScript that should load in a few ms. We have even implemented measures to ensure no flickering occurs on your website.
+
+If you are still experiencing loading issues, it might be related to how your website prioritizes content loading. Please email us at support@gleef.eu, and we will assist you in resolving this issue.
+
+### Why do I still see live variations on my website after pausing an experiment?
+This is expected behavior. We store the variation displayed to each visitor in their browser’s local storage for a period of one hour. This mechanism helps avoid repeated queries. This not only saves resources, but also ensures a smoother and faster user experience.
+
+By doing this, we maintain consistency in what the users see, preventing flickering and latency issues that can arise from frequent database calls.
+
+However, a consequence of this approach is that even if an experiment is paused, the stored variation remains active for the one hour period. This means that visitors, including yourself, will continue to see the same variation regardless of the experiment’s current status.
+
+### Is Gleef GDPR compliant?
+Yes, absolutely! We do not use cookies or non-anonymized data to run experiments. We store data only in the cache and local storage of the visitor's browser. This approach ensures no flickering due to cookie acceptance and complies with GDPR regulations. Rest assured, the only cookies we have are the ones we eat.
+
+### Why do I always see the same variation on my website?
+We store the variation a visitor sees in their local storage for one week. This means that on each page involved in an experiment, a visitor will see the same variation for an entire week, maintaining a consistent experience.
+
+### What is the time limit for performing the success event?
+We have set a time limit of 3 days for performing the success event. Currently, this limit cannot be changed, but this feature might become customizable in the near future.
+
+
+## User Management
+
+### Why can I open Gleef on any website but can't set up experiments?
+You might be able to open Gleef's Chrome Extension on websites you don't manage. However, once logged in, you won't be able to set up any experiments on these sites because you are not authorized to do so. Rest assured, only users authorized by you will have access to your experiments and be able to interact with your website.
+
+### How can I manage Gleef's users?
+We do not currently offer in-app user management features. However, you can contact our support team directly to manage users at support@gleef.eu. Support can assist you with the following:
+- Edit user credentials
+- Add new users
+- Delete user accounts

@@ -1,0 +1,45 @@
+---
+title: Generate keys
+"og:title" : "Gleef - Generate keys"
+"og:description" : "Automatically generate and retrieve existing localization keys directly in Figma, thanks to our Figma Plugin"
+"og:image" : "https://gleef.eu/images/gleef-og-image.png"
+"og:url" : "https://gleef.eu/"
+"og:type" : "website"
+"og:locale" : "en_US"
+---
+
+Generating localization keys is a breeze with Gleef. Here is how it works:
+
+<Steps>
+    <Step title="Open Gleef's Figma Plugin">
+        Open the Gleef plugin in Figma. You can find it in the Plugins menu.
+    </Step>
+
+    <Step title="Select the Frame you want to generate keys for">
+        <Frame>
+            <img width="300" src="/images/figma-plugin_select-frame.png" alt="Select the frame you want to generate keys for"/>
+       </Frame>
+
+        Select the frame you want to generate keys for.
+        
+        <Warning>It is highly recommended to select a frame containing your **whole screen** to maximize the context, enabling efficient key generation. </Warning>
+
+        
+        If you select a frame containing only a part of the screen, Gleef will generate keys for that part only. This can lead to missing keys or keys that are not relevant to the whole screen.
+        
+        If you select a frame containing multiple screens, Gleef will generate keys for all of them. This can lead to duplicate keys or keys that are not relevant to the whole screen.
+
+        Here is an example at what should be selected: Checkout_AddAddress frame
+        <Frame>
+            <img width="300" src="/images/figma-plugin_selected-frame.png" alt="Select the whole frame"/>
+        </Frame>
+
+        Check out [our documentation](/figma-plugin/support/QA#generating-keys) to understand how does frame selection and generation works.
+    </Step>
+
+    <Step title="Manage keys">
+        Once keys are generated, you can manage them in the Gleef plugin. You can edit and ignore keys as well as display them dynamically in your Figma, and export them.
+
+        [Check it out here](/figma-plugin/how-to/manage).
+    </Step>
+</Steps>

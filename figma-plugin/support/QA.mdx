@@ -1,0 +1,170 @@
+---
+title: Q&A
+"og:title": "Gleef - Frequently Asked Questions"
+"og:description": "Get answers to the most frequently asked questions. How to generate keys, how does it work, how to export files, how to link keys with my localization software..."
+"og:image": "https://gleef.eu/images/gleef-og-image.png"
+"og:url": "https://gleef.eu/"
+"og:type": "website"
+"og:locale": "en_US"
+---
+
+<Info>Have any question or feedback? Call the team! <a href="tel:+33644609754">+33 6 44 60 97 54</a> or [email us](mailto:contact@gleef.eu).</Info>
+
+## General Questions
+
+### What is Gleef?
+Gleef is on its way to revolutionize the way localization is made and handle.
+
+### What's Gleef's mission?
+Discover it directly on [our website](https://gleef.eu/about).
+
+### What's next?
+Stay up to date with our roadmap & product update by subscribing to our [monthly newsletter](https://www.gleef.eu/).
+
+### How does Gleef's Figma Plugin work?
+The Gleef Figma Plugin is a tool designed to streamline the process of extracting text from Figma designs and preparing it for translation.
+It uses AI to generate localization keys automatically, understanding your company, key pattern and overall context. It will soon integrate automatic translation.
+See [our tutorial](/figma-plugin/how-to/install) to begin using the Plugin.
+
+### What is the Gleef Figma plugin, and who is it for?
+The Gleef Figma plugin is designed for teams to efficiently manage translation keys and streamline localization tasks directly in Figma. It’s ideal for designers, developers, and product teams working on global products that require consistent and professional localization.
+
+### How does Gleef save time for teams? What are the benefits?
+The plugin automates with AI time-consuming tasks like key naming, searching, and managing translation files. By reducing manual work, it helps teams focus on delivering polished, localized designs faster and more efficiently.
+
+### How does Gleef Figma help maintain project organization?
+The plugin allows you to easily track translated and pending keys, ensuring your localization projects stay on schedule. It also adheres to your project’s naming conventions, preventing duplication and maintaining clarity across files.
+
+### What are the key features of the Figma Plugin?
+- **Time-saving automation**: Automates naming and searching of translation keys.
+- **Workflow optimization**: Ensures consistent naming conventions and avoids duplicate keys.
+- **Project organization**: Tracks the status of translations (translated vs. pending).
+- **Code quality**: Maintains formatting consistency across localization files for a professional finish.
+
+### How does Gleef Figma Plugin integrate into your Figma workflow?
+Here’s how you can use Gleef Figma:
+
+1. **Import your localization files**: Upload your existing files to get started.
+2. **Select the source language**: Set the language used in your designs as the source.
+3. **Choose screens/frames**: Pick the specific Figma frames or screens you want to localize.
+4. **Adjust keys**: Review and refine the generated or re-used keys for accuracy.
+5. **Export ready files**: Export keys to your preferred localization tool or copy them into your IDE.
+
+### Is Gleef Figma Plugin compatible with all localization tools?
+Yes! The plugin generates ready-to-use localization files that can be imported into any localization software or directly copied into your IDE for seamless integration into your development process.
+Direct integrations with most used localization software such as Phrase or Lokalise. Find more info [here](/figma-plugin/integrations).
+
+### How much does it cost?
+The plugin offers a free version with core features of key management. It includes a token limitation with an hourly rate.
+For advanced functionalities, such as bulk processing, enhanced key management, premium support and removing the token limitation please [reach out](contact@gleef.eu).
+
+---
+
+## Knowledge base
+<Tip>Knowledge base is made of existing localization keys and their value. It's stored as embeddings in Gleef's vector database, enabling accurate key generation. Find more info about data usage [here](/figma-plugin/support/security-privacy#Data-retention)</Tip>
+
+### How does Gleef Figma handle localization keys?
+Gleef Figma generates localization keys based on your design’s text content and the knowledge base. It uses AI to understand and suggest appropriate keys, ensuring consistency and reducing manual effort. You can also manually adjust these keys to fit your project’s naming conventions.
+
+### How to update the knowledge base?
+<Warning>When generating keys or exporting files, the knowledge base isn't updated. Because there's no insurance these keys will be integrated in your code base.</Warning>
+The only way to update the knwoledge base is by importing file containing up to date localization keys. [See how](/figma-plugin/how-to/import-keys).
+
+### Can existing localization keys be reused?
+Yes, existing keys - the one in the knowledge base ([see how to import keys here](/figma-plugin/how-to/import-keys)) -  can be automatically reused when generating new keys with Gleef's AI. This ensures consistency and reduces manual effort.
+You can edit a key name after generation to unlink the key and make sure it creates a new key for this specific text element.
+
+### Which value will be used when re-using an existing key?
+When reusing an existing key, Gleef will use the value from the current frame, and not the one saved in the knowledge base.
+In order to update the knowledge base, you'll have to [import a file containing the updated keys](/figma-plugin/how-to/import-keys).
+
+### Is my project data secure when using the plugin?
+Yes, data security is a top priority. The plugin processes your localization data securely and does not retain any sensitive information. [Learn more about our security measures here](/figma-plugin/support/security-privacy).
+
+### Can I use the plugin with a team?
+Yes, the plugin is designed to be used by teams. This means sharing the same knowledge base and see what others people in your team have already generated.
+You can share the knowledge base with your team members, and they can use the plugin to generate localization keys and export files. [Contact us to collaborate](contact@gleef.eu).
+
+### Can the plugin prevent key duplication?
+Gleef Figma automatically checks for duplicate keys and ensures consistent naming conventions across your files, reducing the risk of runtime errors and making your localization workflow more efficient.
+It might sometimes detect a repeating key while genearting, but only the export files won't contain any duplicated key.
+
+
+---
+
+## Generating keys
+
+### How does the plugin generate keys?
+The plugin generates keys based on the text content of the selected text elements. It uses a combination of the text content and the frame name to generate a unique key.
+The plugin also checks for duplicate keys and ensures consistent naming conventions across your files, reducing the risk of runtime errors and making your localization workflow more efficient.
+
+### How does the plugin handle nested frames?
+The plugin handles nested frames by generating keys based on the text content of the selected text elements included in the **top-parent frame**.
+This means that you can not see a subframe keys, but will generate and see all the keys included in the global frame.
+
+### Do I need to name frame and elements in Figma?
+Conversely to many current localization keys generator, you don't need to name your elements in Figma. The plugin will generate keys based on the text content of the selected text elements, as well as the overall context.
+Let the magic happens, don't bother naming frames.
+
+### Why frame & element names are not taken into account?
+Mostly because in Figma, when you duplicate a frame, the name stays unchanged. This means it could be misleading if 2 frames have the same name but different content.
+
+### Why some text elements have no keys linked?
+It may happens if you generate keys for a specific frame, and then add a new text element in the frame.
+
+### Why Gleef does not say `Existing key` whereas I've already generated these keys?
+Existing keys is a tag referring to keys **saved in the knowledge base**. Meaning that you have imported these keys in the Figma Plugin ([see how](/figma-plugin/how-to/import-keys)).
+Generating keys won't save them in the knowledge base as there is no evidence you used these keys somewhere in your code base. That is why you have to regularly update your knowledge base with your code base.
+
+### Does element order has an impact?
+Gleef doesn't rely on the order of your elements. It will generate keys based on the structure of your design, not the order of your elements.
+This means that you can move elements around without worrying about the generation of your keys. It will not impact the generation of your keys.
+
+### Does element size has an impact?
+Gleef doesn't rely on the size of your elements. It will generate keys based on the structure of your design, not the size of your elements.
+This means that you can resize elements without worrying about the generation of your keys. It will not impact the generation of your keys.
+
+<Info>Frames containing a great number of text element (20+) might takes up more than 20 seconds to generate. </Info>
+
+### It takes too long, should I use it on smaller frames?
+No, it is not recommended to use Gleef on smaller frames as it will not be able to generate keys that are meaningful. Gleef is designed to work on frames containing multiple text elements.
+Though, it is highly recommended **not to group screens** in a global frame as it might take too long to generate, if there are too many text elements.
+
+---
+
+## Managing keys
+
+### How to delete a key?
+You cannot delete keys, the only possibility is to `ignore` the key. This means the key won't be taken in the export.
+
+### How to edit a key?
+You can easily edit a key name by clicking on the edit button (pencil icon) next to the key name. This will open a modal where you can edit the key name.
+Please, be aware you won't be able to rename the key with a key name that already exists in the selected frame.
+
+### How to see to which element a key is linked?
+By clicking on the key, it will focus the element in your Figma frame.
+
+## Exporting keys
+
+### How to export keys?
+You can export keys by clicking on the export button in the bottom right corner of the plugin. This will open a modal where you can select the format you want to export your keys in. You can choose between JSON, CSV and XML.
+For now, there is no direct integration with any localization software
+
+### How to automatically integrates keys in my code base?
+If you're using JSON as a reference, during the export, you can choose to merge files with an existing JSON. [See more](/figma-plugin/how-to/export-keys)
+<Warning>The file you upload for the merge won't be used to update the knowledge base. It will only be used to merge the new keys with the existing JSON file.</Warning>
+
+---
+
+## Displaying keys
+
+### How to display keys?
+You can display keys by clicking on the display button of the plugin. This will automatically switch in the selected Frame from text values to keys.
+No worries, data is stored.
+
+As we do not duplicate Frame, you have to toggle back the same button, or use `ctrl + Z` or `cmd + Z` if you're a Mac user, to get back to the previous stage.
+
+Nonetheless, no worries, Gleef's save everything in database, meaning you can't lose any text content when displaying keys.
+
+---
+For any additional questions or support, feel free to [contact us](mailto:support@gleef.eu).

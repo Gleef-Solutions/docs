@@ -1,0 +1,44 @@
+---
+title: Embeddings
+"og:title" : "Gleef - Knowledge base - Embeddings"
+"og:description" : "How localization keys are stored by Gleef and how the AI works with them."
+"og:image" : "https://gleef.eu/images/gleef-og-image.png"
+"og:url" : "https://gleef.eu/"
+"og:type" : "website"
+"og:locale" : "en_US"
+---
+
+*Embeddings are representations of values or objects like text, images, and audio that are designed to be consumed by machine learning models and semantic search algorithms.*
+
+Gleef uses embeddings to store existing localization keys.
+If you want to add existing keys to your project, please refer to [our tutorial](/figma-plugin/how-to/import-keys)
+
+## Storing existing keys
+### How existing keys are stored
+Existing keys are stored in a vector database. This database is used to find the most similar keys to the one you are trying to translate. The similarity is calculated using the cosine similarity between the embeddings of the keys.
+
+### How the AI works with existing keys
+The AI leverages embeddings to:
+1. Find semantically similar existing keys using cosine similarity
+2. Use these similar keys as context to generate accurate translations
+3. Prevent duplicate key creation by detecting similar existing keys
+
+### Accessing embeddings
+If you want to have access to your embeddings, please [contact us](mailto:support@gleef.eu).
+
+### Updating embeddings
+When you import a new file in the knowledge base, it automatically updates the knowledge base linked to your company. This has 2 impacts:
+1. New potential existing keys will be detected in the next generations, meaning you won't have duplicated keys.
+2. Future keys will be more accurate, as the knowledge base will be more complete.
+
+### Removing embeddings
+If you want to remove embeddings from your knowledge base, please [contact us](mailto:support@gleef.eu).
+
+## Manage embeddings
+### Removing embeddings
+If you want to remove embeddings from your knowledge base, please [contact us](mailto:support@gleef.eu).
+
+### Monitor previous import
+Gleef doesn't show the different files you've uploaded to update the knowledge base. For 2 reasons:
+1. Gleef doesn't store the files you upload.
+2. Gleef doesn't store the embeddings of the files you upload. This means that if you want to remove a file from the knowledge base, you need to contact us.

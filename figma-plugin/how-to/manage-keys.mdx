@@ -1,0 +1,81 @@
+---
+title: Manage keys
+"og:title" : "Gleef - Manage keys"
+"og:description" : "How to manage keys using the Gleef Figma Plugin. Edit, ignore and display keys. Export generated keys."
+"og:image" : "https://gleef.eu/images/gleef-og-image.png"
+"og:url" : "https://gleef.eu/"
+"og:type" : "website"
+"og:locale" : "en_US"
+---
+
+You'll first need to generate keys for the selected frame. If you don't know how to, please [read this guide](/figma-plugin/how-to/generate-keys).
+Once you have generated keys, you can manage them using the Gleef Plugin.
+
+## Get an overview of your frame
+<Frame>
+    <img width="300" src="/images/figma-plugin_manage-keys_dashboard.png" alt="Overview"/>
+</Frame>
+
+<Warning>Make sure you have selected the frame you want to manage keys for. By default, we'll be showing generated keys of the **top-level frame (or root)**.</Warning>
+
+## Overview Details
+
+The overview show 3 different things:
+1. **Frame Name:** The name of the frame you have selected.
+2. **Display keys:** A toggle option that enables you to display keys on the selected frame (instead of the current text).
+3. **Generated Keys:** All keys and text elements taken into account.
+
+## Displaying keys
+<Frame>
+    <div style={{ paddingRight: "20px" }}>
+        <img width="300" src="/images/figma-plugin_display_not-displayed.png" alt="Display keys"/>
+    </div>
+    <img width="300" src="/images/figma-plugin_display_displayed.png" alt="Display keys"/>
+</Frame>
+
+The Gleef Figma Plugin allows you to display keys on the selected frame. This is useful for debugging purposes as well as when coding the frame.
+You can toggle this option on and off using the toggle option in the overview.
+
+<Warning>If you don't toggle back, keys will stay until you toggle again. Keys are **hard written** in the frame, meaning you can't access original text below.</Warning>
+
+You can't lose content using Gleef, as everything is saved in the database. you just need to use toggle in order to go back to the previous step.
+
+<Tip>You can also use **ctrl + Z** (or **cmd + Z** for Mac users) to go back to previous state.</Tip>
+
+No worries, everything is saved in Figma, if you want to know more, [check this out](/figma-plugin/support/QA#displaying-keys).
+
+## Managing generated keys
+Once generated, you'll be able to access the generated lists. You can access 4 different lists:
+1. **All keys:** All keys and text elements taken into account. This is the default list.
+2. **Keys in sync:** Text elements that have a key assigned, and that are currently in sync (meaning taken into account for the display and in the export).
+3. **Text elements ignored:** Text elements (with or without a key assigned) that are ignored (meaning **not** taken into account for the display and in the export).
+4. **Text elements not in sync:** Text elements that have no key assigned. *This can happen when you generate keys, then add a text element to the frame, meaning this element has no keys generated.*
+
+<Frame>
+    <img width="300" src="/images/figma-plugin_manage-keys.png" alt="Manage keys"/>
+</Frame>
+
+### Existing keys
+Existing keys - meaning keys that you have uploaded in Gleef with an import ([see more here](/figma-plugin/how-to/import-keys)) - are displayed in the list with a tag 'Existing'.
+It's a reminder that this key already exists in the database, and thus, the value linked to that key will be the one saved in the knowledge base.
+
+<Tip>If you want to add new keys in the knowledge base, [see this topic](/figma-plugin/how-to/import-keys).</Tip>
+
+### Edit key name
+You can edit the key name by clicking on the edit button (pencil), choose a new key name and then save.
+
+<Warning>You can't have duplicated keys in one screen. Therefore you won't be able to save the key name if it's already used in the same screen.</Warning>
+
+### Ignore key
+If you don't want to take into account a text element for the display and the export, you can ignore it. To do so, click on the ignore button (syncro button crossed out).
+
+### Focus a key
+By clicking on a key name, you can focus and select the corresponding text element in the canvas. This is useful when you have a lot of text elements in your screen.
+
+### Define missing keys
+If after having generated your screen you add new text element, they won't have any key assigned. Therefore, you have 2 options:
+1. Define new keys manually.
+2. Generate new key for the missing ones, considering the whole screen.
+
+### Export keys
+You can export your keys by clicking on the export button. [Click here](/figma-plugin/how-to/export-keys) to know more about export options.
