@@ -5,14 +5,14 @@ description: "Understanding the mathematics behind Gleef"
 
 
 Statistical significance is based on various parameters. Gleef uses an automatic calculation to determine whether your results are significant.
-For detailed insight on how this is done, refer to our [statistics Q&A](/Q&A/statistics-data).
+For detailed insight on how this is done, refer to our [statistics Q&A](/Q&A/statistics-data/#common-questions-about-statistics).
 
 Continue running the experiment until you achieve statistical significance. Ending the experiment prematurely could hinder the reliability of your results. Remember, significance is closely related to the magnitude of the conversion difference between variations.
 For example, if you have a 10% conversion difference between two variations, your experiment may reach significance much faster than if the difference were only 1%.
 
-<Note>Significance is fixed at 95% for all experiments, and currently, it is not customizable.</Note>
+<Note>All significance parameters can be customized for your company.</Note>
 
-For the moment, Gleef does not offer the possibility of managing the significance parameters of experiments. This is automatically triggered when the 95% confidence level is reached (p-value of 0.05). You can see the critical Z value directly in the console when you open the dashboard on a specific experiment. As a reminder, the values are as follows:
+ As a reminder, the confidence interval is calculated as follows:
 
 | Confidence Level | Critical Value, 𝑍𝑐 |
 | -------- | -------------------------- |
@@ -21,15 +21,15 @@ For the moment, Gleef does not offer the possibility of managing the significanc
 | 90%      | 1.645                      |
 | 80%      | 1.28                       |
 
-The console displays the critical Z value and the p-value.
+The console displays the critical Z value and the p-value, if needed.
 
-<Tip>Please note that the significance of experiments is calculated purely from a mathematical point of view for the time being, and no other rule is involved in changing the dot determining the significance of the experiment.
-However, we recommend that you achieve the following values to ensure the validity of the experiment.</Tip>
-
-Value to look at on top of statistical significance, before taking any decision on your wording:
-- At least 5,000 unique visitors per variation;
-- To run the test for at least 14 days (two business cycles);
-- Achieve 250 conversions.
+<Tip>
+    The following default values are recommended for a fully significant experiment:
+    - A confidence interval above or equal to 0.95
+    - At least 250 conversions per variation;
+    - At least 5,000 unique visitors per variation;
+    - At least 14 days of experimentation (two business cycles);
+</Tip>
 
 ### Conversion & growth
 <img width="200" src="/images/monitor_results.png" alt="Results"/>
@@ -39,12 +39,6 @@ At any time, you can access and monitor the results of your experiment, observin
     Hover over the conversion or growth metrics for detailed figures.
     <img width="200" src="/images/monitor_hover.png" alt="Hover conversion"/>
 </Tip>
-
-
-
-
-
-
 
 ## Common Questions About Statistics
 
@@ -59,7 +53,7 @@ At any time, you can access and monitor the results of your experiment, observin
     - Account for seasonal or time-based variations in traffic and user behavior.
 
 3. **Multiple Variants:**
-    - If testing more than two variants, make sure to adjust the sample size calculation accordingly to maintain statistical validity.
+    - If testing more than two variants, the sample size calculation is updated to maintain statistical validity.
 
 
 ### Do I have enough traffic on my website to run A/B tests?
@@ -143,8 +137,8 @@ By ensuring you have enough traffic and using the correct calculations, you can 
 ### How are variations split among visitors?
 Currently, variations are equally distributed among visitors. For example, if you have three different variations in an experiment (including the baseline), one out of every three visitors will randomly see each variation.
 
-### How can I change the significance level of my experiment?
-At the moment, you cannot change the significance level of your experiment. It is fixed at 95%. This means the confidence level for determining the statistical significance of your results is set at 95%, ensuring robustness and reliability for your experiments.
+### How can I change the significance thresholds for my company?
+You can contact the team at support@gleef.eu.
 
 ### How can I segment the traffic and determine who sees an experiment?
 Currently, we do not provide built-in segmentation capabilities. However, you can conduct your own segmentation by directing visitors to different URLs and implementing experiments on each specific URL.
@@ -152,9 +146,7 @@ Currently, we do not provide built-in segmentation capabilities. However, you ca
 ### Can I remove the default text?
 To conduct effective A/B testing, you should keep the text you're experimenting with as the baseline. This serves as the reference point for all other variations tested.
 
-
 ### What kinds of success events can be set up?
-
 <Info>We provide extensive information on success events on this page: [Success events](/Q&A/success-event)</Info>
 
 The type of success event depends on the experiment you're running:
@@ -168,19 +160,17 @@ The type of success event depends on the experiment you're running:
 
 
 ## Retrieving Data from Experiments
-
 We strive to provide all the essential information directly on your dashboard.
 
 ### How do I interpret the results of an A/B experiment?
-Compare the performance metrics (e.g., conversion rates) of each variation against the control to determine the most effective text. Gleef highlights the best-performing variation directly below the 'baseline', which represents the text you selected for the experiment.
+Compare the performance metrics (e.g., conversion rates) of each variation against the control to determine the most effective copy. Gleef highlights the best-performing variation directly below the 'baseline', which represents the text you selected for the experiment.
 
 ### Does Gleef provide detailed statistical information on experiments?
-<Info>We now include `p-value` and `Z-value` for all experiments.</Info>
-
+<Info>We now display `p-value` and `Z-value` for all experiments, as well as extensive data points we use to compute significance.</Info>
 We aim to deliver all necessary statistical data to provide a comprehensive overview of your experiments. Our intention is to keep Gleef smooth and easy to operate by avoiding information overload. However, if you need more detailed statistics, please contact us at support@gleef.eu, and we will be happy to provide additional information.
 
 ### Is it possible to download full experiment data?
-While we currently do not offer a built-in option for downloading complete experiment data, we can send you a comprehensive CSV file with all necessary details upon request. Simply email us at support@gleef.eu.
+While we currently do not offer a built-in option for downloading complete experiment data, we can send you a comprehensive data export file with all necessary details upon request. Simply email us at support@gleef.eu.
 
-### How do I use the results to optimize my website?
+### How do I apply the best performing wording to my website?
 Gleef does not currently offer the capability to directly implement changes on your website. Therefore, you will need to follow your internal processes to submit the wording changes based on the best-performing variation.
