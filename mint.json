@@ -6,7 +6,7 @@
     "light": "/logo/gleef_logo-dark.svg"
   },
   
-  "favicon": "/logo/gleef_favicon.svg",
+  "favicon": "/logo/favicon_gleef.svg",
   
   "primaryTab":{
     "name": "Figma plugin"
