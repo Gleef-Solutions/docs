@@ -96,19 +96,6 @@
       "group": "Advanced",
       "pages": [
         {
-          "group": "Best Practices",
-          "icon": "shield-check",
-          "iconType": "light",
-          "pages": [
-            "figma-plugin/best-practices/overview-concepts",
-            "figma-plugin/best-practices/goals-metrics",
-            "figma-plugin/best-practices/creating-variations",
-            "figma-plugin/best-practices/running-experiments",
-            "figma-plugin/best-practices/analyzing-results",
-            "figma-plugin/best-practices/common-pitfalls"
-          ]
-        },
-        {
           "group": "Support",
           "icon": "triangle-exclamation",
           "iconType": "light",
