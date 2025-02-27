@@ -29,8 +29,10 @@ You can choose between 3 main formats, the most commonly used in localization:
 - XML
 - JSON
 
+<Info>During the beta phase, `CSV` is the only supported format to export translations.</Info>
+
 ### Exporting in CSV
-CSV is the most commonly used format in localization. It is easy to read and write, and can be opened with any spreadsheet software.
+CSV is the most commonly used format in localization software. It is easy to read and write, and can be opened with any spreadsheet software.
 It is easy to integrate in any localization software, as well as localization flows if you don't have a software.
 
 ### Exporting in XML
@@ -42,13 +44,16 @@ Format will be:
   <string name="key2">value2</string>
 </resources>
 ```
+<Info>As translation features are still in beta, this will only export localization keys and their source language.</Info>
 
 ### Exporting in JSON
-JSON is a lightweight data-interchange format. It is easy for humans to read and write and easy for machines to parse and generate. It is often used in localization to export keys in a structured format.
+JSON is a lightweight data-interchange format. It is easy for humans to read and write and easy for machines to parse and generate. It is often used by localization libraries to manage keys in a structured format.
 
 You have 2 options here:
 1. **Merge with an existing file (.json)**: If you already have a JSON file with keys, you can merge the keys from the Plugin with the existing file. The Plugin will add the new keys to the existing file, and will not overwrite the existing keys.
 2. **Export as a new file (.json)**: If you don't have a JSON file with keys, you can export the keys from the Plugin as a new file. Or if you want to integrate manually these new keys in your current file.
+
+<Info>As translation features are still in beta, this will only export localization keys and their source language.</Info>
 
 ## Import back
 When exporting keys, as you might or not used the keys in your project, it is highly recommended to **import back the updated whole file**, so that the knowledge is updated with existing keys.
