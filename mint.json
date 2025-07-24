@@ -46,7 +46,7 @@
     },
     {
       "name": "Gleef Studio",
-      "icon": "web",
+      "icon": "monitor",
       "url":"studio"
     },
     {
@@ -108,13 +108,21 @@
     },
     {
       "group": "Gleef Studio",
-      "icon": "terminal",
+      "icon": "tv",
       "pages": [
-        "studio/review"
+        "studio/introduction",
+        "studio/quickstart",
+        "studio/translations",
+        "studio/review",
+        "studio/rules",
+        "studio/search",
+        "studio/settings",
+        "studio/troubleshooting"
       ]
     },
     {
-      "group": "Configurations",
+      "group": "Figma Plugin",
+      "icon": "figma",
       "pages": [
         {
           "group": "Getting Started",
@@ -149,12 +157,7 @@
             "figma-plugin/how-to/manage-keys",
             "figma-plugin/how-to/export-keys"
           ]
-        }
-      ]
-    },
-    {
-      "group": "Advanced",
-      "pages": [
+        },
         {
           "group": "Support",
           "icon": "triangle-exclamation",
@@ -169,7 +172,6 @@
         }
       ]
     },
-
     {
       "group": "Configurations",
       "pages": [
