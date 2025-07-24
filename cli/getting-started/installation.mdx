@@ -1,0 +1,170 @@
+---
+title: Installation
+description: 'Install and set up Gleef CLI on your development environment'
+---
+
+<Tip>Gleef CLI requires Node.js 18.0.0 or higher to run properly.</Tip>
+
+## Installation
+
+We recommend using `npx` to run Gleef CLI without global installation. This ensures you always use the latest version and avoids permission issues.
+
+<Steps titleSize="h3">
+  <Step title="Recommended: Use npx">
+    Run Gleef CLI directly with npx (no installation required):
+    
+    ```bash
+    npx @gleef/cli --version
+    ```
+    
+    For easier access, create an alias in your shell profile:
+    
+    ```bash
+    # Add to ~/.bashrc, ~/.zshrc, or your shell config
+    alias gleef="npx @gleef/cli"
+    
+    # Then use normally
+    gleef --version
+    gleef init
+    gleef translate
+    ```
+  </Step>
+
+  <Step title="Alternative: Global installation">
+    If you prefer global installation for frequent use:
+    
+    <Warning>The Gleef CLI is updated frequently with new features and bug fixes. With global installation, you'll need to manually update to get the latest version.</Warning>
+    
+    ```bash
+    npm install -g @gleef/cli
+    ```
+    
+    Or using yarn:
+    
+    ```bash
+    yarn global add @gleef/cli
+    ```
+    
+    Then verify the installation:
+    
+    ```bash
+    gleef --version
+    ```
+  </Step>
+
+  <Step title="Get your API key">
+    Before using the CLI, you'll need a Gleef API key:
+    
+    1. Visit [https://app.gleef.eu/settings/api-keys](https://app.gleef.eu/settings/api-keys)
+    2. Generate a new API key for CLI access
+    3. Copy the key for the next step
+  </Step>
+
+  <Step title="Authenticate with Gleef">
+    Log in to Gleef using your API key:
+    
+    ```bash
+    gleef login
+    ```
+    
+    You'll be prompted to enter your API key. Alternatively, you can provide it directly:
+    
+    ```bash
+    gleef login --key YOUR_API_KEY
+    ```
+  </Step>
+</Steps>
+
+## Verification
+
+To verify everything is set up correctly, run:
+
+```bash
+gleef --help
+```
+
+You should see the list of available commands:
+
+```
+USAGE
+  $ gleef COMMAND
+
+COMMANDS
+  help       Display help for gleef
+  init       Initialize Gleef in your project
+  login      Authenticate with Gleef
+  pull       Get latest translations from Gleef
+  translate  Generate and push translations to Gleef
+```
+
+## Updating the CLI
+
+**If using npx (recommended):** No action needed! You automatically get the latest version each time you run the command.
+
+**If using global installation:** Update to the latest version:
+
+```bash
+npm update -g @gleef/cli
+```
+
+Or with yarn:
+
+```bash
+yarn global upgrade @gleef/cli
+```
+
+## Troubleshooting Installation
+
+### Permission Issues (macOS/Linux)
+
+**Recommended solution:** Use `npx @gleef/cli` instead of global installation to avoid permission issues entirely.
+
+**If you need global installation:** You may need to use `sudo`:
+
+```bash
+sudo npm install -g @gleef/cli
+```
+
+**Better alternative:** Configure npm to use a different directory for global packages:
+
+```bash
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
+source ~/.profile
+```
+
+### Windows Installation
+
+On Windows, you may need to run the command prompt as Administrator:
+
+1. Right-click on Command Prompt or PowerShell
+2. Select "Run as Administrator"
+3. Run the installation command
+
+### Node.js Version Issues
+
+If you see errors about Node.js version compatibility:
+
+1. Check your Node.js version: `node --version`
+2. Update Node.js to version 18.0.0 or higher
+3. Consider using a Node.js version manager like `nvm`
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Quick Start"
+        icon="rocket"
+        href="/cli/getting-started/quickstart"
+    >
+        Get started with your first project
+    </Card>
+    <Card
+        title="Project Setup"
+        icon="folder"
+        href="/cli/workflow/project-setup"
+    >
+        Learn how to initialize Gleef in your project
+    </Card>
+</CardGroup>

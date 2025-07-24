@@ -1,0 +1,217 @@
+---
+title: gleef login
+description: 'Authenticate with Gleef using your API key'
+---
+
+The `gleef login` command authenticates your CLI with Gleef using your API key. This is required before using any other commands.
+
+## Usage
+
+```bash
+gleef login
+```
+
+Or provide the API key directly:
+
+```bash
+gleef login --key YOUR_API_KEY
+```
+
+## Options
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--key` | `-k` | API key for Gleef (skips interactive prompt) |
+
+## Interactive Authentication
+
+When you run `gleef login` without the `--key` flag, you'll be guided through an interactive process:
+
+```bash
+$ gleef login
+? Do you already have a Gleef API key? (Y/n)
+```
+
+### If you don't have an API key:
+
+```bash
+? Do you already have a Gleef API key? No
+Please generate a key at https://app.gleef.eu/settings/api-keys (Click to open).
+? What's your Gleef API key? **********************
+API key successfully set
+```
+
+### If you have an API key:
+
+```bash
+? Do you already have a Gleef API key? Yes
+? What's your Gleef API key? **********************
+API key successfully set
+```
+
+## Direct Authentication
+
+For automation or scripts, provide the key directly:
+
+```bash
+gleef login --key gl_1a2b3c4d5e6f7g8h9i0j
+```
+
+## Getting Your API Key
+
+<Steps titleSize="h3">
+  <Step title="Access Gleef Dashboard">
+    Visit [https://app.gleef.eu/settings/api-keys](https://app.gleef.eu/settings/api-keys) and log in to your account.
+  </Step>
+  
+  <Step title="Generate API Key">
+    Click "Generate New API Key" and provide a description (e.g., "Simo's CLI Access").
+  </Step>
+  
+  <Step title="Copy the Key">
+    Copy the generated API key. You won't be able to see it again once you close the dialog.
+  </Step>
+  
+  <Step title="Store Securely">
+    Store the key securely - it provides full access to your Gleef account.
+  </Step>
+</Steps>
+
+## Authentication Storage
+
+Once authenticated, your API key is stored globally in your user configuration directory:
+
+- **macOS:** `~/.config/gleef/config.json`
+- **Linux:** `~/.config/gleef/config.json`  
+- **Windows:** `%APPDATA%\gleef\config.json`
+
+The stored configuration looks like:
+
+```json
+{
+  "auth": {
+    "apiKey": "your-api-key-here"
+  }
+}
+```
+
+## Security Considerations
+
+<Warning>Your API key provides full access to your Gleef account. Keep it secure!</Warning>
+
+### Best Practices
+
+1. **Never commit API keys** - Don't include them in version control
+2. **Use environment variables** - For CI/CD and automation
+3. **Rotate keys regularly** - Generate new keys periodically
+4. **Limit key access** - Use separate keys for different environments
+5. **Revoke unused keys** - Remove keys that are no longer needed
+
+### Environment Variables
+
+For CI/CD pipelines, you can set the API key as an environment variable:
+
+```bash
+export GLEEF_API_KEY=your-api-key-here
+```
+
+The CLI will automatically use this environment variable if no key is stored locally.
+
+## Verification
+
+To verify your authentication is working:
+
+```bash
+gleef init
+```
+
+If authentication fails, you'll see an error message:
+
+```bash
+The given API key doesn't seem to be valid. Please check your key and try again.
+```
+
+## Re-authentication
+
+To change your API key or re-authenticate:
+
+1. **Run login again:** `gleef login` will overwrite the existing key
+2. **Use direct flag:** `gleef login --key NEW_API_KEY`
+3. **Delete config:** Remove the config file and run `gleef login`
+
+## Troubleshooting
+
+### Invalid API Key Error
+
+```bash
+The given API key doesn't seem to be valid. Please check your key and try again.
+```
+
+**Solutions:**
+- Verify the key was copied correctly (no extra spaces)
+- Check if the key has been revoked in the Gleef dashboard
+- Ensure you're using the correct account/workspace
+
+### Network Connection Issues
+
+If you can't reach the Gleef servers:
+
+- Check your internet connection
+- Verify corporate firewall settings
+- Try using a VPN if behind restrictive network policies
+
+### Permission Issues
+
+If you get file permission errors:
+
+- **macOS/Linux:** Check permissions on `~/.config/gleef/`
+- **Windows:** Ensure you have write access to `%APPDATA%\gleef\`
+
+## Examples
+
+### Basic Login
+
+```bash
+$ gleef login
+? Do you already have a Gleef API key? Yes
+? What's your Gleef API key? gl_1a2b3c4d5e6f7g8h9i0j
+API key successfully set
+```
+
+### Direct Login
+
+```bash
+$ gleef login --key gl_1a2b3c4d5e6f7g8h9i0j
+API key successfully set
+```
+
+### Script Usage
+
+```bash
+#!/bin/bash
+echo "Setting up Gleef CLI..."
+gleef login --key $GLEEF_API_KEY
+gleef init
+echo "Gleef CLI ready!"
+```
+
+## Next Steps
+
+After successful authentication:
+
+<CardGroup cols={2}>
+    <Card
+        title="Initialize Project"
+        icon="play"
+        href="/cli/commands/init"
+    >
+        Set up Gleef in your project
+    </Card>
+    <Card
+        title="Quick Start"
+        icon="rocket"
+        href="/cli/getting-started/quickstart"
+    >
+        Complete your first translation workflow
+    </Card>
+</CardGroup>

@@ -1,0 +1,690 @@
+---
+title: Best Practices
+description: 'Master advanced techniques for team collaboration and workflow optimization with Gleef CLI'
+---
+
+This guide covers proven best practices for using Gleef CLI effectively in team environments, from project organization to automation strategies.
+
+## Project Organization
+
+### Directory Structure
+
+Organize your localization files consistently across projects:
+
+**Recommended Structure:**
+```
+your-project/
+├── src/
+│   └── locales/
+│       ├── en-US.json     # Base language
+│       ├── fr-FR.json     # Additional languages
+│       ├── es-ES.json
+│       └── de-DE.json
+├── .gleef/
+│   └── config.json        # Gleef configuration
+└── package.json
+```
+
+**Multi-namespace Structure:**
+```
+your-project/
+├── src/
+│   └── locales/
+│       ├── en-US/
+│       │   ├── common.json      # Shared translations
+│       │   ├── auth.json        # Feature-specific
+│       │   └── components.json  # UI components
+│       └── fr-FR/
+│           ├── common.json
+│           ├── auth.json
+│           └── components.json
+└── .gleef/
+    └── config.json
+```
+
+### Key Naming Conventions
+
+**Use hierarchical naming:**
+```json
+{
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "email": "Email Address",
+      "password": "Password",
+      "button": "Sign In"
+    },
+    "register": {
+      "title": "Create Account",
+      "email": "Email Address",
+      "button": "Create Account"
+    }
+  }
+}
+```
+
+**Namespace by feature:**
+```json
+{
+  "navigation": {...},
+  "auth": {...},
+  "dashboard": {...},
+  "profile": {...},
+  "settings": {...}
+}
+```
+
+**Use descriptive names:**
+```json
+{
+  // Good
+  "auth.login.email.placeholder": "Enter your email address",
+  "dashboard.welcome.title": "Welcome back, {{name}}!",
+  
+  // Avoid
+  "text1": "Enter your email",
+  "msg": "Welcome back!"
+}
+```
+
+## Content Management
+
+### Writing Translation-Friendly Content
+
+**Use complete sentences:**
+```json
+{
+  // Good
+  "welcome.message": "Welcome to our application, {{name}}!",
+  
+  // Avoid - fragments are hard to translate
+  "welcome.part1": "Welcome to our",
+  "welcome.part2": "application"
+}
+```
+
+**Provide context:**
+```json
+{
+  // Good - context is clear
+  "button.save.document": "Save Document",
+  "button.save.profile": "Save Profile",
+  
+  // Avoid - ambiguous
+  "save": "Save"
+}
+```
+
+**Handle pluralization properly:**
+```json
+{
+  // Good - separate keys for different forms
+  "items.count.zero": "No items",
+  "items.count.one": "1 item", 
+  "items.count.other": "{{count}} items",
+  
+  // Avoid - doesn't work in all languages
+  "items.count": "{{count}} item(s)"
+}
+```
+
+### Variable Handling
+
+**Use descriptive variable names:**
+```json
+{
+  // Good
+  "welcome.message": "Hello {{userName}}, you have {{messageCount}} new messages",
+  
+  // Avoid
+  "welcome.message": "Hello {{a}}, you have {{b}} new messages"
+}
+```
+
+**Document variable types:**
+```json
+{
+  // Add comments for complex variables
+  "order.summary": "Order #{{orderNumber}} placed on {{orderDate}} for {{orderTotal}}",
+  // orderNumber: string, orderDate: formatted date, orderTotal: currency
+}
+```
+
+## Team Collaboration
+
+### Workflow Coordination
+
+**Daily routine:**
+```bash
+# Morning: Start with latest translations
+gleef pull
+
+# Work on features with targeted pushes
+gleef translate --match "feature-name.*"
+
+# Evening: Sync approved translations
+gleef pull
+```
+
+**Feature development:**
+```bash
+# 1. Create feature branch
+git checkout -b feature/user-dashboard
+
+# 2. Add translation keys as you develop
+# Edit locale files...
+
+# 3. Push translations for review
+gleef translate --match "dashboard.*"
+
+# 4. Continue development while team reviews
+# 5. Pull approved translations before merging
+gleef pull --match "dashboard.*"
+```
+
+### Review Process
+
+**Set up review assignments:**
+- **Product team:** Reviews messaging and tone
+- **Native speakers:** Reviews language accuracy
+- **Developers:** Reviews technical terminology
+
+**Review workflow:**
+1. Developer pushes translations: `gleef translate`
+2. Notifications sent to review team
+3. Reviews conducted in Gleef Studio
+4. Developer pulls approved content: `gleef pull`
+
+### Communication Templates
+
+**Feature completion notification:**
+```markdown
+🌍 Translation Review Required
+
+**Feature:** User Dashboard
+**Keys:** dashboard.*, user.profile.*
+**Languages:** EN, FR, ES, DE
+**Review by:** Friday EOD
+**Reviewers:** @product @native-speakers
+
+**Context:** New user dashboard with profile management
+**Screenshots:** [Link to designs]
+**Priority:** Medium
+```
+
+**Release preparation:**
+```markdown
+📋 Translation Freeze - Release v2.1
+
+**Status:** All features complete, translations in review
+**Deadline:** Monday 9 AM for release prep
+**Outstanding:** 
+- ✅ Auth flow (approved)
+- ⏳ Payment flow (in review)
+- ❌ Settings page (pending)
+
+**Action needed:** Please prioritize settings page review
+```
+
+## Development Integration
+
+### Git Integration
+
+**Pre-commit hooks:**
+```bash
+#!/bin/bash
+# .git/hooks/pre-commit
+
+# Check if locale files were modified
+if git diff --cached --name-only | grep -E "\.(json|xml|yaml|strings)$" > /dev/null; then
+  echo "🌍 Locale files modified. Checking translation status..."
+  
+  # Ensure translations are up to date
+  if ! gleef pull --check; then
+    echo "⚠️  Translations are outdated. Run 'gleef pull' first."
+    exit 1
+  fi
+fi
+```
+
+**Post-merge hooks:**
+```bash
+#!/bin/bash
+# .git/hooks/post-merge
+
+# If locale files were updated in merge, sync translations
+if git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep -E "\.(json|xml|yaml|strings)$" > /dev/null; then
+  echo "🌍 Locale files updated. Syncing translations..."
+  gleef translate --skip-review
+  gleef pull
+fi
+```
+
+### NPM Scripts
+
+**Package.json integration:**
+```json
+{
+  "scripts": {
+    "i18n:sync": "gleef pull && gleef translate && gleef pull",
+    "i18n:check": "gleef pull --check",
+    "i18n:push": "gleef translate",
+    "i18n:pull": "gleef pull",
+    "i18n:pull:all": "gleef pull --all",
+    "i18n:status": "gleef pull --check && echo 'Translations up to date' || echo 'Updates available'",
+    "dev": "npm run i18n:pull && next dev",
+    "build": "npm run i18n:check && next build",
+    "deploy": "npm run i18n:pull:all && npm run build && npm run deploy:actual"
+  }
+}
+```
+
+### CI/CD Integration
+
+**GitHub Actions example:**
+```yaml
+name: Translation Management
+on:
+  push:
+    branches: [main, develop]
+    paths: ['src/locales/**']
+  pull_request:
+    paths: ['src/locales/**']
+
+jobs:
+  check-translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install Gleef CLI
+        run: npm install -g @gleef/cli
+      
+      - name: Authenticate
+        run: gleef login --key ${{ secrets.GLEEF_API_KEY }}
+      
+      - name: Check translation status
+        run: gleef pull --check
+        
+      - name: Push new translations
+        if: github.ref == 'refs/heads/main'
+        run: gleef translate --skip-review
+        
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🌍 Translation changes detected. Please ensure all strings are properly translated before merging.'
+            })
+```
+
+## Automation Strategies
+
+### Automated Translation Workflows
+
+**Development environment:**
+```bash
+# Auto-translate and publish for development
+gleef translate --skip-review --match "dev.*|staging.*"
+```
+
+**Production environment:**
+```bash
+# Require review for production content
+gleef translate --match "prod.*|user-facing.*"
+```
+
+**Feature flags integration:**
+```bash
+# Only translate enabled features
+if feature_enabled "new_dashboard"; then
+  gleef translate --match "dashboard.*"
+fi
+```
+
+### Batch Processing
+
+**Process by priority:**
+```bash
+# High priority first
+gleef translate --match "critical.*|error.*|security.*"
+
+# Then standard content
+gleef translate --match "ui.*|nav.*"
+
+# Finally, nice-to-have content
+gleef translate --match "marketing.*|help.*"
+```
+
+**Process by language importance:**
+```bash
+# Core languages first
+gleef pull --match "en.*|es.*|fr.*"
+
+# Then additional languages
+gleef pull --all
+```
+
+## Quality Assurance
+
+### Validation Strategies
+
+**Automated validation:**
+```bash
+#!/bin/bash
+# validate-translations.sh
+
+echo "🔍 Validating translation files..."
+
+# Check JSON syntax
+for file in src/locales/*.json; do
+  if ! jq empty "$file" 2>/dev/null; then
+    echo "❌ Invalid JSON: $file"
+    exit 1
+  fi
+done
+
+# Check for missing interpolations
+if grep -r "{{.*}}" src/locales/ | grep -v "{{[a-zA-Z_][a-zA-Z0-9_]*}}"; then
+  echo "❌ Invalid interpolation syntax found"
+  exit 1
+fi
+
+# Check for consistent keys across languages
+BASE_KEYS=$(jq -r 'paths(scalars) as $p | $p | join(".")' src/locales/en.json | sort)
+for file in src/locales/*.json; do
+  if [ "$file" != "src/locales/en.json" ]; then
+    FILE_KEYS=$(jq -r 'paths(scalars) as $p | $p | join(".")' "$file" | sort)
+    if ! diff <(echo "$BASE_KEYS") <(echo "$FILE_KEYS") > /dev/null; then
+      echo "⚠️  Key mismatch in $file"
+    fi
+  fi
+done
+
+echo "✅ Validation complete"
+```
+
+**Testing translations:**
+```bash
+# Test with pseudo-localization
+LANG=xx npm start  # xx = pseudo-locale for testing
+
+# Visual regression testing
+npm run test:visual -- --locale=fr
+npm run test:visual -- --locale=es
+```
+
+### Performance Optimization
+
+**File size optimization:**
+```json
+{
+  "formatOptions": {
+    "json": {
+      "nested": true,
+      "indent": 0,        // Minimize file size
+      "sortKeys": true    // Better compression
+    }
+  }
+}
+```
+
+**Loading optimization:**
+```bash
+# Split large files by feature
+gleef pull --match "auth.*" --output-pattern "src/locales/{{locale}}/auth.json"
+gleef pull --match "dashboard.*" --output-pattern "src/locales/{{locale}}/dashboard.json"
+```
+
+**Caching strategies:**
+```bash
+# Cache translations in CI/CD
+- name: Cache translations
+  uses: actions/cache@v3
+  with:
+    path: src/locales/
+    key: translations-${{ hashFiles('.gleef/config.json') }}-${{ github.sha }}
+    restore-keys: translations-${{ hashFiles('.gleef/config.json') }}-
+```
+
+## Security Best Practices
+
+### API Key Management
+
+**Environment variables:**
+```bash
+# .env (never commit this file)
+GLEEF_API_KEY=gl_your_api_key_here
+
+# Use in scripts
+gleef login --key $GLEEF_API_KEY
+```
+
+**CI/CD secrets:**
+```yaml
+# GitHub Actions
+- name: Authenticate
+  run: gleef login --key ${{ secrets.GLEEF_API_KEY }}
+
+# GitLab CI
+script:
+  - gleef login --key $GLEEF_API_KEY
+```
+
+**Key rotation:**
+```bash
+# Regular key rotation script
+#!/bin/bash
+echo "🔄 Rotating Gleef API key..."
+
+# Generate new key via API or manually
+NEW_KEY="gl_new_key_here"
+
+# Update in all environments
+kubectl patch secret gleef-credentials -p '{"data":{"api-key":"'$(echo -n $NEW_KEY | base64)'"}}'
+
+# Test new key
+gleef login --key $NEW_KEY
+gleef pull --check
+
+echo "✅ Key rotation complete"
+```
+
+### Content Security
+
+**Sensitive content filtering:**
+```bash
+# Pre-commit hook to check for sensitive data
+if grep -r -i "password\|secret\|token\|key" src/locales/; then
+  echo "❌ Possible sensitive content in translations"
+  echo "Review and remove any secrets before committing"
+  exit 1
+fi
+```
+
+**Content validation:**
+```bash
+# Check for suspicious content
+if grep -r -E "(http|ftp)://|@[a-zA-Z0-9]" src/locales/; then
+  echo "⚠️  URLs or emails found in translations - review for security"
+fi
+```
+
+## Monitoring and Observability
+
+### Translation Status Monitoring
+
+**Health checks:**
+```bash
+#!/bin/bash
+# translation-health-check.sh
+
+# Check API connectivity
+if ! curl -s https://api.gleef.eu/health > /dev/null; then
+  echo "❌ Gleef API unreachable"
+  exit 1
+fi
+
+# Check translation status
+if ! gleef pull --check > /dev/null 2>&1; then
+  echo "⚠️  Translations are outdated"
+  # Send notification
+  curl -X POST "$SLACK_WEBHOOK" -d '{"text":"🌍 Translations need updating"}'
+fi
+
+echo "✅ Translations are up to date"
+```
+
+**Metrics collection:**
+```bash
+# Track translation coverage
+TOTAL_KEYS=$(jq -r 'paths(scalars) | length' src/locales/en.json)
+for lang in fr es de; do
+  LANG_KEYS=$(jq -r 'paths(scalars) | length' src/locales/$lang.json)
+  COVERAGE=$((LANG_KEYS * 100 / TOTAL_KEYS))
+  echo "$lang: $COVERAGE% coverage ($LANG_KEYS/$TOTAL_KEYS keys)"
+done
+```
+
+### Alerting
+
+**Set up notifications:**
+```bash
+# Slack notification for outdated translations
+if ! gleef pull --check; then
+  curl -X POST $SLACK_WEBHOOK -d '{
+    "text": "🌍 Translation Update Required",
+    "attachments": [{
+      "color": "warning",
+      "fields": [{
+        "title": "Project",
+        "value": "'"$PROJECT_NAME"'",
+        "short": true
+      }, {
+        "title": "Status", 
+        "value": "Translations outdated",
+        "short": true
+      }]
+    }]
+  }'
+fi
+```
+
+## Troubleshooting Prevention
+
+### Proactive Measures
+
+**Regular maintenance:**
+```bash
+#!/bin/bash
+# weekly-maintenance.sh
+
+echo "🔧 Weekly translation maintenance..."
+
+# Update CLI
+npm update -g @gleef/cli
+
+# Validate configuration
+gleef init --dry-run
+
+# Check for unused keys
+# (custom script to analyze your codebase)
+./scripts/find-unused-translations.sh
+
+# Sync everything
+gleef pull --all
+
+echo "✅ Maintenance complete"
+```
+
+**Configuration validation:**
+```bash
+# Add to CI pipeline
+- name: Validate Gleef configuration
+  run: |
+    # Check config file syntax
+    jq empty .gleef/config.json
+    
+    # Verify patterns match files
+    gleef init --dry-run
+    
+    # Test authentication
+    gleef pull --check
+```
+
+### Documentation
+
+**Team documentation:**
+```markdown
+# Translation Workflow
+
+## Daily Operations
+- Morning: `npm run i18n:pull`
+- Before commit: `npm run i18n:check` 
+- After feature: `npm run i18n:push`
+
+## Emergency Procedures
+- Hotfix: `gleef translate --skip-review --match "error.*"`
+- Recovery: See troubleshooting guide
+- Rollback: `git revert <commit>` + `gleef pull`
+
+## Contacts
+- Translation issues: @i18n-team
+- Technical issues: @dev-team
+- Emergency: support@gleef.eu
+```
+
+## Success Metrics
+
+### Measuring Effectiveness
+
+**Translation velocity:**
+- Time from key creation to translation completion
+- Review turnaround time
+- Deployment to production time
+
+**Quality metrics:**
+- Translation accuracy scores
+- User feedback on translations
+- Revision frequency
+
+**Team efficiency:**
+- Developer time spent on translation tasks
+- Automated vs manual operations
+- Conflict resolution time
+
+**Example tracking:**
+```bash
+# Track translation pipeline performance
+echo "📊 Translation Metrics (Last 30 days)"
+echo "New keys added: $(git log --since="30 days ago" --grep="i18n" --oneline | wc -l)"
+echo "Translations updated: $(git log --since="30 days ago" -- src/locales/ --oneline | wc -l)"
+echo "Average review time: $(gleef analytics --metric=review-time --period=30d)"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Troubleshooting"
+        icon="wrench"
+        href="/cli/support/troubleshooting"
+    >
+        Learn how to solve common issues and problems
+    </Card>
+    <Card
+        title="Configuration Guide"
+        icon="cog"
+        href="/cli/configuration/config-file"
+    >
+        Master advanced configuration options for complex projects
+    </Card>
+</CardGroup>

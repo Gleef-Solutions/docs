@@ -1,0 +1,182 @@
+---
+title: Commands Overview
+description: 'Complete reference for all Gleef CLI commands'
+---
+
+Gleef CLI provides a simple set of commands to manage your translation workflow. Each command is designed to handle a specific aspect of the localization process.
+
+## Available Commands
+
+<CardGroup cols={2}>
+    <Card
+        title="gleef init"
+        icon="play"
+        href="/cli/commands/init"
+    >
+        Initialize Gleef in your project by detecting locale files and creating configuration
+    </Card>
+    <Card
+        title="gleef login"
+        icon="key"
+        href="/cli/commands/login"
+    >
+        Authenticate with Gleef using your API key
+    </Card>
+    <Card
+        title="gleef translate"
+        icon="language"
+        href="/cli/commands/translate"
+    >
+        Push translation keys to Gleef for AI-powered translation
+    </Card>
+    <Card
+        title="gleef pull"
+        icon="download"
+        href="/cli/commands/pull"
+    >
+        Get the latest translations from Gleef and update local files
+    </Card>
+</CardGroup>
+
+## Command Reference
+
+### Core Commands
+
+| Command | Purpose | When to Use |
+|---------|---------|-------------|
+| `gleef init` | Project setup | First time setting up Gleef in a project |
+| `gleef login` | Authentication | When setting up CLI or changing API keys |
+| `gleef translate` | Push translations | When you have new or modified translation keys |
+| `gleef pull` | Sync translations | When you want to get latest translations from your team |
+
+### Command Aliases
+
+Some commands have convenient aliases:
+
+| Command | Alias | Description |
+|---------|-------|-------------|
+| `gleef translate` | `gleef push` | Both commands perform the same function |
+
+## Global Flags
+
+All commands support these global flags:
+
+| Flag | Description |
+|------|-------------|
+| `--help` | Show help information for the command |
+| `--version` | Display the CLI version |
+
+## Getting Help
+
+Get help for any command using the `--help` flag:
+
+```bash
+gleef --help              # General help
+gleef init --help         # Help for init command
+gleef translate --help    # Help for translate command
+gleef pull --help         # Help for pull command
+```
+
+You can also use the dedicated help command:
+
+```bash
+gleef help                # General help
+gleef help init           # Help for init command
+gleef help translate      # Help for translate command
+```
+
+## Command Workflow
+
+Here's the typical workflow using Gleef CLI commands:
+
+<Steps titleSize="h3">
+  <Step title="Initial Setup">
+    ```bash
+    gleef login              # Authenticate once
+    gleef init               # Set up project configuration
+    ```
+  </Step>
+  
+  <Step title="Push New Content">
+    ```bash
+    gleef translate          # Send new keys for translation
+    ```
+  </Step>
+  
+  <Step title="Sync Updates">
+    ```bash
+    gleef pull               # Get latest translations
+    ```
+  </Step>
+  
+  <Step title="Ongoing Development">
+    ```bash
+    gleef translate          # Push changes
+    gleef pull               # Sync updates
+    ```
+  </Step>
+</Steps>
+
+## Command Examples
+
+### Basic Usage
+
+```bash
+# Set up a new project
+gleef init
+
+# Push translations for AI processing
+gleef translate
+
+# Get latest translations
+gleef pull
+```
+
+### Advanced Usage
+
+```bash
+# Push only specific keys matching a pattern
+gleef translate --match "button.*"
+
+# Get all translations including new keys
+gleef pull --all
+
+# Check for new translations without updating
+gleef pull --check
+
+# Skip review process and publish immediately
+gleef translate --skip-review
+```
+
+## Error Handling
+
+All commands provide clear error messages and exit codes:
+
+- **Exit code 0:** Command completed successfully
+- **Exit code 1:** Command failed with an error
+
+Common error scenarios:
+
+- **Authentication errors:** Run `gleef login` to re-authenticate
+- **Configuration errors:** Check your `.gleef/config.json` file
+- **Network errors:** Verify your internet connection and API access
+- **File errors:** Ensure your locale files are properly formatted
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Workflow Guide"
+        icon="workflow"
+        href="/cli/workflow/project-setup"
+    >
+        Learn best practices for using these commands together
+    </Card>
+    <Card
+        title="Configuration"
+        icon="cog"
+        href="/cli/configuration/config-file"
+    >
+        Customize CLI behavior with configuration options
+    </Card>
+</CardGroup>

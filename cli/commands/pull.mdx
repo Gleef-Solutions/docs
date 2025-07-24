@@ -1,0 +1,304 @@
+---
+title: gleef pull
+description: 'Get the latest translations from Gleef and update your local files'
+---
+
+The `gleef pull` command downloads the latest approved translations from Gleef and updates your local localization files.
+
+## Usage
+
+```bash
+gleef pull
+```
+
+## Options
+
+| Flag      | Short | Description                                                                                   |
+|-----------|-------|-----------------------------------------------------------------------------------------------|
+| `--all`   | `-a`  | Creates new localization keys if they are not in the current locale files                     |
+| `--check` | `-c`  | Checks for new translations without updating them (returns error if translations are missing) |
+| `--match` | `-m`  | Filter incoming translations by key pattern                      |
+
+## What it does
+
+The `pull` command:
+
+1. **Fetches remote state** - Gets the latest translations from Gleef
+2. **Compares changes** - Identifies modified and new translations
+3. **Shows preview** - Displays what will be updated (unless using `--check`)
+4. **Updates files** - Applies changes to your local localization files
+
+## Basic Usage
+
+### Pull Updates Only
+
+```bash
+gleef pull
+```
+
+This updates existing keys with new translations but doesn't add new keys.
+
+### Add New Translations
+
+```bash
+gleef pull --all
+```
+
+This updates existing keys AND adds new translation keys that were created remotely.
+
+### Filter
+
+```bash
+gleef pull (--all) --match "feature.*"
+```
+
+Only pulls keys matching the pattern (supports wildcards and regex).
+
+### Check for Updates
+
+```bash
+gleef pull --check
+```
+
+This checks if updates are available without applying them. Useful for CI/CD to verify translation status.
+
+## Example Output
+
+### Updates Available
+
+```bash
+$ gleef pull
+The following translations will be updated:
+en-US
+  welcome.title
+  welcome.subtitle
+fr-FR
+  welcome.title
+  welcome.subtitle
+
+? Do you wish to continue? This might overwrite your local changes. (Y/n)
+Translation files updated successfully.
+```
+
+### New Keys Available (with --all)
+
+```bash
+$ gleef pull --all
+The following translations will be updated:
+en-US
+  welcome.title
+fr-FR
+  welcome.title
+
+5 translations will be added.
+
+? Do you wish to continue? This might overwrite your local changes. (Y/n)
+Translation files updated successfully.
+```
+
+### Nothing to Update
+
+```bash
+$ gleef pull
+Nothing to update. Your translations are up to date.
+```
+
+### Check Mode
+
+```bash
+$ gleef pull --check
+Translations check: 3 translations are outdated. Please run `gleef pull` to update them.
+```
+
+## The --all Flag
+
+By default, `pull` only updates existing keys. Use `--all` to also add new keys:
+
+### Without --all (default)
+
+- ✅ Updates existing translation values
+- ❌ Ignores new keys created remotely
+- ✅ Safe for stable releases
+
+### With --all
+
+- ✅ Updates existing translation values  
+- ✅ Adds new keys created remotely
+- ⚠️ May require code changes to handle new keys
+
+## Pattern Matching with --all
+
+When using `--all`, you can filter which new keys to add:
+
+```bash
+# Only add new keys matching the pattern
+gleef pull --all --match "components.*"
+
+# Add new keys for specific features
+gleef pull --all --match "auth.*|profile.*"
+```
+
+## Multiple File Namespaces
+
+If your project has multiple files per locale, you'll be prompted to choose where new keys should be added:
+
+```bash
+$ gleef pull --all
+Multiple files found for some locales. Choose which file pattern to add new translations to:
+> Files matching: src/locales/*.json
+  Files matching: src/components/*.json
+```
+
+This ensures new keys are added to the correct files based on your project structure.
+
+## Conflict Prevention
+
+The `pull` command is designed to be safe:
+
+1. **Shows preview** - Always shows what will change before applying
+2. **Requires confirmation** - Asks before overwriting local changes
+3. **Preserves formatting** - Maintains your file structure and indentation
+4. **Atomic updates** - Either all changes apply or none do
+
+## Examples
+
+### Feature Integration
+
+```bash
+# Pull new keys added by other team members
+gleef pull --all --match "newfeature.*"
+
+# Integrate the keys into your code
+# Then push your own translations
+gleef translate
+```
+
+### Release Preparation (No CI)
+
+```bash
+# Get latest validated updates before release
+gleef pull
+```
+
+
+### CI/CD Integration
+
+```bash
+# Check if translations are up to date
+if ! gleef pull --check; then
+  echo "Translations are outdated. Please run 'gleef pull' locally."
+  exit 1
+fi
+
+# Or automatically update in CI
+gleef pull --all --skip-confirm
+```
+
+## Error Handling
+
+### Common Errors
+
+**No Changes Error:**
+```bash
+Nothing to update. Your translations are up to date.
+```
+*This is normal - no action needed*
+
+**Network Error:**
+```bash
+Error: Network request failed
+```
+*Solution:* Check internet connection and try again
+
+**File Permission Error:**
+```bash
+Error: Cannot write to locale file
+```
+*Solution:* Check file permissions and ensure files aren't locked
+
+**Configuration Error:**
+```bash
+Error: No locale files found
+```
+*Solution:* Run `gleef init` or check your `.gleef/config.json`
+
+## Troubleshooting
+
+### Large Number of Changes
+
+If you see many unexpected changes:
+
+1. **Check recent activity** - Review what happened in Gleef Studio
+2. **Use patterns** - Pull specific sections with `--match`
+3. **Coordinate with team** - Ensure you're not missing context
+
+### Missing Translations
+
+If expected translations aren't appearing:
+
+1. **Use --all flag** - New keys require the `--all` flag
+2. **Check patterns** - Ensure your `--match` pattern is correct
+3. **Verify approval** - Translations must be approved in Gleef Studio
+
+### File Conflicts
+
+If you have local changes that conflict:
+
+1. **Commit local changes** - Save your work before pulling
+2. **Review differences** - Understand what changed remotely
+3. **Merge carefully** - Decide which version to keep
+
+## Integration Examples
+
+### NPM Scripts
+
+```json
+{
+  "scripts": {
+    "i18n:pull": "gleef pull",
+    "i18n:pull:all": "gleef pull --all",
+    "i18n:check": "gleef pull --check"
+  }
+}
+```
+
+### Git Hooks
+
+```bash
+#!/bin/bash
+# pre-push hook - ensure translations are up to date
+if ! gleef pull --check; then
+  echo "Translations are outdated. Run 'gleef pull' before pushing."
+  exit 1
+fi
+```
+
+### GitHub Actions
+
+```yaml
+- name: Check translations
+  run: |
+    gleef login --key ${{ secrets.GLEEF_API_KEY }} # Or use the env variable directly
+    gleef pull --check
+```
+
+## Next Steps
+
+After pulling translations:
+
+<CardGroup cols={2}>
+    <Card
+        title="Push Changes"
+        icon="upload"
+        href="/cli/commands/translate"
+    >
+        Send your new translation keys to Gleef
+    </Card>
+    <Card
+        title="Configuration"
+        icon="cog"
+        href="/cli/configuration/config-file"
+    >
+        Customize how files are processed
+    </Card>
+</CardGroup>

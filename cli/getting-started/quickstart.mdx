@@ -1,0 +1,183 @@
+---
+title: Quick Start
+description: 'Get up and running with Gleef CLI in minutes'
+---
+
+This guide will walk you through setting up your first translation project with Gleef CLI in just a few minutes.
+
+## Prerequisites
+
+Before starting, make sure you have:
+- [Installed Gleef CLI](/cli/getting-started/installation)
+- [Authenticated with your API key](/cli/getting-started/installation#authenticate-with-gleef)
+- A project with existing localization files (JSON, XML, YAML, or .strings)
+
+## Step-by-Step Setup
+
+<Steps titleSize="h3">
+  <Step title="Navigate to your project">
+    Open your terminal and navigate to your project directory:
+    
+    ```bash
+    cd /path/to/your/project
+    ```
+  </Step>
+
+  <Step title="Initialize Gleef">
+    Run the initialization command to set up Gleef in your project:
+    
+    ```bash
+    gleef init
+    ```
+    
+    This command will:
+    - Scan your project for localization files
+    - Create a `.gleef/config.json` configuration file
+    - Set up file patterns for your locale files
+    
+    <Info>The init command respects your `.gitignore` file and skips common configuration files.</Info>
+  </Step>
+
+  <Step title="Review detected files">
+    After initialization, you'll see output similar to:
+    
+    ```
+    ✔ 2 new patterns added successfully
+    locales/*.json,src/i18n/*.json
+    Run `gleef translate` to start translating
+    ```
+    
+    Check the generated `.gleef/config.json` file to verify the detected patterns are correct.
+  </Step>
+
+  <Step title="Push your first translations">
+    Upload your existing translation keys to Gleef for AI translation:
+    
+    ```bash
+    gleef translate --skip-review
+    ```
+    
+    This will:
+    - Analyze your local translation files
+    - Send new keys to Gleef for AI translation
+    - Publish all translations without asking your team for review (similar to an initial commit)
+    
+    You'll see progress output like:
+    ```
+    Processing 15 new translations
+    ✔ Your files were translated successfully. Your team can review them from Gleef Studio.
+    ```
+  </Step>
+
+  <Step title="Pull translated content">
+    After translations are reviewed and approved in Gleef Studio, sync them back:
+    
+    ```bash
+    gleef pull
+    ```
+    
+    This updates your local files with the latest approved translations.
+  </Step>
+</Steps>
+
+## Example Project Structure
+
+Here's an example of how Gleef CLI works with a typical project structure:
+
+```
+my-app/
+├── src/
+│   └── locales/
+│       ├── en-US.json
+│       ├── fr-FR.json
+│       └── es-ES.json
+├── .gleef/
+│   └── config.json
+└── .gitignore
+```
+
+**Before initialization:** Only the locale files exist
+
+**After `gleef init`:** Configuration is created
+
+**After `gleef translate`:** Keys are sent to Gleef for translation
+
+**After `gleef pull`:** Local files are updated with new translations
+
+## Configuration File Example
+
+After running `gleef init`, you'll have a `.gleef/config.json` file like this:
+
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    }
+  }
+}
+```
+
+## Common Workflows
+<Info>All commands can be added to your CI/CD or build scripts to automate updating or creating translations.</Info>
+
+### Adding New Translation Keys
+
+1. Add new keys to your base language file (e.g., `en-US.json`)
+2. Run `gleef translate` to send them for translation
+3. Review translations in Gleef Studio
+4. Run `gleef pull` to sync approved translations
+
+### Updating Existing Translations
+
+1. Modify existing keys in your local files
+2. Run `gleef translate` to update the translations
+3. Review changes in Gleef Studio
+4. Run `gleef pull --all` to sync all updates
+
+### Working with Multiple Developers
+
+1. Each developer runs `gleef pull` before starting work
+2. Make translation changes locally
+3. Run `gleef translate` to push changes
+4. Coordinate reviews in Gleef Studio
+5. Run `gleef pull` to get the latest approved translations
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Learn All Commands"
+        icon="terminal"
+        href="/cli/commands/overview"
+    >
+        Explore all available CLI commands and their options
+    </Card>
+    <Card
+        title="Workflow Guide"
+        icon="workflow"
+        href="/cli/workflow/project-setup"
+    >
+        Understand advanced workflows and best practices
+    </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+    <Card
+        title="Configuration Options"
+        icon="cog"
+        href="/cli/configuration/config-file"
+    >
+        Customize Gleef CLI for your project needs
+    </Card>
+    <Card
+        title="Troubleshooting"
+        icon="wrench"
+        href="/cli/support/troubleshooting"
+    >
+        Solve common issues and get help
+    </Card>
+</CardGroup>

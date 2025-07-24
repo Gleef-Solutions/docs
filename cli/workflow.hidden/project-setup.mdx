@@ -1,0 +1,433 @@
+---
+title: Project Setup Workflow
+description: 'Complete guide to setting up Gleef CLI in your project'
+---
+
+This guide walks through the complete process of setting up Gleef CLI in your project, from initial installation to first successful translation workflow.
+
+## Prerequisites
+
+Before starting, ensure you have:
+
+<Steps titleSize="h3">
+  <Step title="System Requirements">
+    - Node.js 18.0.0 or higher
+    - npm or yarn package manager
+    - A Gleef account with API access
+    - Existing localization files in your project
+  </Step>
+  
+  <Step title="Project Structure">
+    Your project should have localization files in one of these formats:
+    - JSON files (e.g., `en-US.json`, `fr-FR.json`)
+    - XML files (e.g., `strings-en.xml`, `strings-fr.xml`)
+    - YAML files (e.g., `en.yaml`, `fr.yml`)
+    - iOS .strings files (e.g., `en-US.strings`, `fr-FR.strings`)
+  </Step>
+</Steps>
+
+## Complete Setup Process
+
+### Step 1: Install Gleef CLI
+
+Install the CLI globally on your system:
+
+```bash
+npm install -g @gleef/cli
+```
+
+Verify the installation:
+
+```bash
+gleef --version
+```
+
+### Step 2: Get Your API Key
+
+<Steps titleSize="h4">
+  <Step title="Access Gleef Dashboard">
+    Go to [https://app.gleef.eu/settings/api-keys](https://app.gleef.eu/settings/api-keys)
+  </Step>
+  
+  <Step title="Generate API Key">
+    Click "Generate New API Key" and provide a description like "Simo's CLI Access"
+  </Step>
+  
+  <Step title="Copy and Store">
+    Copy the generated key and store it securely
+  </Step>
+</Steps>
+
+### Step 3: Authenticate
+
+Navigate to your project directory and authenticate:
+
+```bash
+cd /path/to/your/project
+gleef login
+```
+
+Follow the interactive prompts or provide the key directly:
+
+```bash
+gleef login --key your-api-key-here
+```
+
+### Step 4: Initialize Gleef
+
+Run the initialization command to set up your project:
+
+```bash
+gleef init
+```
+
+This will:
+- Scan your project for localization files
+- Create `.gleef/config.json` configuration
+- Set up file patterns for your locale files
+- Respect your `.gitignore` patterns
+
+## Example Project Setups
+
+### React/Next.js Project
+
+**Project Structure:**
+```
+my-react-app/
+├── public/
+│   └── locales/
+│       ├── en/
+│       │   └── common.json
+│       └── fr/
+│           └── common.json
+├── package.json
+└── .gitignore
+```
+
+**Initialization:**
+```bash
+$ gleef init
+✔ 1 new pattern added successfully
+public/locales/*/common.json
+Run `gleef translate` to start translating
+```
+
+**Generated Config:**
+```json
+{
+  "localeFilePatterns": [
+    "public/locales/*/common.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    }
+  }
+}
+```
+
+### Vue.js Project
+
+**Project Structure:**
+```
+my-vue-app/
+├── src/
+│   └── i18n/
+│       ├── en-US.json
+│       ├── fr-FR.json
+│       └── es-ES.json
+└── vue.config.js
+```
+
+**Initialization:**
+```bash
+$ gleef init
+✔ 1 new pattern added successfully
+src/i18n/*.json
+Run `gleef translate` to start translating
+```
+
+### Mobile App (React Native)
+
+**Project Structure:**
+```
+my-mobile-app/
+├── assets/
+│   └── i18n/
+│       ├── en.json
+│       ├── fr.json
+│       └── es.json
+├── ios/
+│   └── MyApp/
+│       ├── en.lproj/
+│       │   └── Localizable.strings
+│       └── fr.lproj/
+│           └── Localizable.strings
+└── android/
+    └── app/src/main/res/
+        ├── values/
+        │   └── strings.xml
+        └── values-fr/
+            └── strings.xml
+```
+
+**Initialization:**
+```bash
+$ gleef init
+✔ 3 new patterns added successfully
+assets/i18n/*.json, ios/MyApp/*.lproj/*.strings, android/app/src/main/res/values*/*.xml
+Run `gleef translate` to start translating
+```
+
+### Monorepo Setup
+
+**Project Structure:**
+```
+my-monorepo/
+├── apps/
+│   ├── web/
+│   │   └── src/locales/
+│   │       ├── en.json
+│   │       └── fr.json
+│   └── mobile/
+│       └── assets/i18n/
+│           ├── en.json
+│           └── fr.json
+└── packages/
+    └── shared/
+        └── locales/
+            ├── en.json
+            └── fr.json
+```
+
+**Per-App Setup:**
+```bash
+# Set up each app separately
+cd apps/web
+gleef init
+
+cd ../mobile  
+gleef init
+
+cd ../../packages/shared
+gleef init
+```
+
+## Configuration Customization
+
+After initialization, you may need to customize your configuration:
+
+### File Pattern Adjustments
+
+Edit `.gleef/config.json` to modify detected patterns:
+
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",
+    "public/i18n/*.json",
+    "!src/locales/config.json"  // Exclude specific files
+  ]
+}
+```
+
+### Format Options
+
+Configure how different file types are handled:
+
+```json
+{
+  "formatOptions": {
+    "json": {
+      "nested": true  // Use nested JSON structure
+    },
+    "xml": {
+      "nested": false  // Use flat XML structure
+    },
+    "yaml": {
+      "nested": true
+    }
+  }
+}
+```
+
+### Custom File Names
+
+Map locales to specific filenames:
+
+```json
+{
+  "customFileNames": {
+    "en-US": "english.json",
+    "fr-FR": "french.json",
+    "es-ES": "spanish.json"
+  }
+}
+```
+
+## First Translation Workflow
+
+### Step 1: Push Initial Content
+
+Send your existing translation keys for AI processing:
+
+```bash
+gleef translate
+```
+
+Example output:
+```bash
+Processing 25 new translations
+⠋ Translating with Gleef AI
+✔ Your files were translated successfully. Your team can review them from Gleef Studio.
+```
+
+### Step 2: Review in Gleef Studio
+
+1. Open [Gleef Studio](https://studio.gleef.eu)
+2. Review the AI-generated translations
+3. Approve translations that look good
+4. Edit any that need adjustments
+
+### Step 3: Pull Approved Translations
+
+Sync the approved translations back to your project:
+
+```bash
+gleef pull
+```
+
+Example output:
+```bash
+The following translations will be updated:
+fr-FR
+  welcome.title
+  welcome.subtitle
+es-ES  
+  welcome.title
+  welcome.subtitle
+
+? Do you wish to continue? This might overwrite your local changes. (Y/n)
+Translation files updated successfully.
+```
+
+## Team Collaboration Setup
+
+### Version Control
+
+Add the configuration to version control but not credentials:
+
+```gitignore
+# .gitignore
+.gleef/config.json  # Include this
+.gleef/credentials  # Exclude this if it exists
+```
+
+### Team Onboarding
+
+Create setup instructions for your team:
+
+```markdown
+# Translation Setup
+
+1. Install Gleef CLI: `npm install -g @gleef/cli`
+2. Get API key from [https://app.gleef.eu/settings/api-keys](https://app.gleef.eu/settings/api-keys)
+3. Login: `gleef login`
+4. Pull latest translations: `gleef pull`
+```
+
+### CI/CD Integration
+
+Add translation checks to your CI pipeline:
+
+```yaml
+# .github/workflows/translations.yml
+name: Check Translations
+on: [push, pull_request]
+
+jobs:
+  translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - run: npm install -g @gleef/cli
+      - run: gleef login --key ${{ secrets.GLEEF_API_KEY }}
+      - run: gleef pull --check
+```
+
+## Troubleshooting Setup Issues
+
+### No Files Detected
+
+If `gleef init` doesn't find your files:
+
+1. **Check file extensions** - Ensure files use `.json`, `.xml`, `.yaml`, `.yml`, or `.strings`
+2. **Review .gitignore** - Files might be excluded by git patterns
+3. **Manual configuration** - Add patterns manually to `.gleef/config.json`. More info [here](/cli/support/troubleshooting#configuration-issues)
+
+### Permission Issues
+
+If you encounter permission errors:
+
+```bash
+# macOS/Linux
+sudo npm install -g @gleef/cli
+
+# Or configure npm to use a user directory
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
+source ~/.profile
+```
+
+### Network/API Issues
+
+If authentication or API calls fail:
+
+1. **Check API key** - Verify it's copied correctly
+2. **Network access** - Ensure you can reach Gleef servers
+3. **Firewall settings** - Check corporate firewall rules
+
+## Best Practices
+
+<Tip>Set up Gleef CLI early in your project to establish good translation workflows from the start.</Tip>
+
+### Project Organization
+
+1. **Consistent structure** - Use clear, predictable file naming
+2. **Namespace your keys** - Use prefixes like `auth.`, `nav.`, `components.`
+3. **Document conventions** - Create guidelines for your team
+
+### Workflow Integration
+
+1. **Pre-commit hooks** - Check translation status before commits
+2. **NPM scripts** - Add convenience scripts for common operations
+3. **Documentation** - Include translation workflow in your README
+
+### Security
+
+1. **Protect API keys** - Never commit them to version control
+2. **Use environment variables** - For CI/CD and automation
+3. **Regular rotation** - Update API keys periodically
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Translation Workflow"
+        icon="language"
+        href="/cli/workflow/pushing-content"
+    >
+        Learn how to efficiently push translation content
+    </Card>
+    <Card
+        title="Sync Workflow"
+        icon="refresh"
+        href="/cli/workflow/syncing-changes"
+    >
+        Master the process of syncing translations with your team
+    </Card>
+</CardGroup>

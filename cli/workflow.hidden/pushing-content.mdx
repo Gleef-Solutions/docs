@@ -1,0 +1,485 @@
+---
+title: Pushing Translation Content
+description: 'Master the workflow for sending translation keys to Gleef for AI processing'
+---
+
+This guide covers the complete workflow for pushing translation content to Gleef, from preparing your keys to handling the AI translation process and team review.
+
+## Understanding the Push Workflow
+
+The translation push process involves several key steps:
+
+1. **Local Analysis** - CLI detects new and modified translation keys
+2. **Conflict Detection** - Checks for conflicts with remote changes
+3. **AI Processing** - Sends keys to Gleef for AI translation
+4. **Draft Creation** - Creates translation drafts for team review
+5. **Local Update** - Updates your files with generated translations
+
+## Basic Push Workflow
+
+### Simple Push
+
+For basic usage, simply run:
+
+```bash
+gleef translate
+```
+
+This processes all detected changes in your project.
+
+### What Gets Pushed
+
+The CLI automatically detects:
+
+**New Keys:**
+```json
+// Before
+{
+  "welcome": "Welcome"
+}
+
+// After - new key detected
+{
+  "welcome": "Welcome",
+  "goodbye": "Goodbye"  // ← This will be pushed
+}
+```
+
+**Modified Keys:**
+```json
+// Before
+{
+  "welcome": "Welcome"
+}
+
+// After - modification detected  
+{
+  "welcome": "Welcome to our app"  // ← This will be pushed
+}
+```
+
+## Advanced Push Patterns
+
+### Pattern-Based Pushing
+
+Use the `--match` flag to push specific keys:
+
+```bash
+# Push only authentication-related keys
+gleef translate --match "auth.*"
+
+# Push UI components
+gleef translate --match "components.*"
+
+# Push multiple patterns
+gleef translate --match "auth.*|nav.*|footer.*"
+```
+
+### Feature-Based Development
+
+When working on specific features:
+
+```bash
+# Working on checkout flow
+gleef translate --match "checkout.*"
+
+# Working on user profile
+gleef translate --match "profile.*|settings.*"
+
+# Working on notifications
+gleef translate --match "notifications.*|alerts.*"
+```
+
+## Review vs. Publish Workflows
+
+### Default: Review Workflow
+
+By default, translations create drafts for team review:
+
+```bash
+gleef translate
+```
+
+**Process:**
+1. AI generates translations
+2. Drafts created in Gleef Studio
+3. Team reviews and approves
+4. You pull approved translations with `gleef pull`
+
+### Skip Review: Direct Publish
+
+For trusted content or development environments:
+
+```bash
+gleef translate --skip-review
+```
+
+**Process:**
+1. AI generates translations
+2. Translations published immediately
+3. Available immediately via `gleef pull`
+
+**Use Cases:**
+- Development/staging environments
+- Non-critical content updates
+- Automated workflows
+- When you trust AI output completely
+
+## Handling Different Content Types
+
+### UI Text
+
+**Keys:**
+```json
+{
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit"
+  }
+}
+```
+
+**Best Practice:**
+```bash
+gleef translate --match "buttons.*"
+```
+
+### Form Labels and Validation
+
+**Keys:**
+```json
+{
+  "forms": {
+    "email": {
+      "label": "Email Address",
+      "placeholder": "Enter your email",
+      "validation": {
+        "required": "Email is required",
+        "invalid": "Please enter a valid email"
+      }
+    }
+  }
+}
+```
+
+**Best Practice:**
+```bash
+gleef translate --match "forms.*"
+```
+
+### Marketing Content
+
+**Keys:**
+```json
+{
+  "marketing": {
+    "hero": {
+      "title": "Transform Your Business",
+      "subtitle": "Discover the power of AI-driven solutions"
+    }
+  }
+}
+```
+
+**Best Practice:**
+```bash
+# Marketing content should always be reviewed
+gleef translate --match "marketing.*"
+# Don't use --skip-review for marketing content
+```
+
+## Real-World Examples
+
+### Feature Development Workflow
+
+<Steps titleSize="h3">
+  <Step title="Start Feature Development">
+    ```bash
+    git checkout -b feature/user-dashboard
+    ```
+  </Step>
+  
+  <Step title="Add Translation Keys">
+    ```json
+    {
+      "dashboard": {
+        "title": "User Dashboard",
+        "welcome": "Welcome back, {{name}}!",
+        "stats": {
+          "total_orders": "Total Orders",
+          "spent_this_month": "Spent This Month"
+        }
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Push Feature Translations">
+    ```bash
+    gleef translate --match "dashboard.*"
+    ```
+  </Step>
+  
+  <Step title="Review in Gleef Studio">
+    Team reviews the generated translations for the dashboard feature
+  </Step>
+  
+  <Step title="Pull and Test">
+    ```bash
+    gleef pull --match "dashboard.*"
+    # Test the feature with translations
+    ```
+  </Step>
+</Steps>
+
+### Hotfix Workflow
+
+<Steps titleSize="h3">
+  <Step title="Identify Critical Text Change">
+    ```json
+    {
+      "errors": {
+        "payment_failed": "Payment failed. Please try again."  // ← Critical fix
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Push with Skip Review">
+    ```bash
+    gleef translate --match "errors.payment_failed" --skip-review
+    ```
+  </Step>
+  
+  <Step title="Pull and Deploy">
+    ```bash
+    gleef pull --match "errors.payment_failed"
+    # Deploy hotfix immediately
+    ```
+  </Step>
+</Steps>
+
+### Release Preparation
+
+<Steps titleSize="h3">
+  <Step title="Feature Complete">
+    All features are code-complete, translations need to be finalized
+  </Step>
+  
+  <Step title="Push All New Content">
+    ```bash
+    gleef translate  # Push everything
+    ```
+  </Step>
+  
+  <Step title="Team Review Sprint">
+    Coordinate with team to review all pending translations in Gleef Studio
+  </Step>
+  
+  <Step title="Final Pull">
+    ```bash
+    gleef pull --all  # Get everything including new keys
+    ```
+  </Step>
+  
+  <Step title="Verification">
+    ```bash
+    gleef pull --check  # Verify nothing is missing
+    ```
+  </Step>
+</Steps>
+
+## Conflict Resolution
+
+### Understanding Conflicts
+
+Conflicts occur when the same key has been modified both locally and remotely:
+
+```bash
+$ gleef translate
+en-US
+  welcome.title
+    Local value: Welcome to our app
+    Remote value: Welcome to our application
+
+Conflict with remotely edited translations. Update keys with the remote value, or change them from the webapp.
+```
+
+### Resolution Strategies
+
+**Strategy 1: Accept Remote Changes**
+```bash
+gleef pull  # Get remote changes
+gleef translate  # Push your other changes
+```
+
+**Strategy 2: Keep Local Changes**
+1. Update the value in Gleef Studio to match your local version
+2. Run `gleef translate` again
+
+**Strategy 3: Merge Changes**
+1. Decide on the final value
+2. Update both local and remote to match
+3. Run `gleef translate`
+
+## Team Coordination
+
+### Communication Patterns
+
+**Before Pushing:**
+```bash
+# Check what you're about to push
+git diff src/locales/
+gleef translate --match "your-feature.*"
+```
+
+**After Pushing:**
+```markdown
+# Team notification
+🌍 Translation Update
+- Added checkout flow translations
+- Keys: checkout.*, payment.*
+- Please review in Gleef Studio
+- ETA for approval: EOD
+```
+
+### Review Assignments
+
+**Feature-Based Reviews:**
+- Frontend team reviews UI components
+- Marketing team reviews marketing content
+- Product team reviews user-facing messages
+
+**Language-Based Reviews:**
+- Native speakers review their languages
+- Regional teams review locale-specific content
+
+## Automation Examples
+
+### NPM Scripts
+
+```json
+{
+  "scripts": {
+    "i18n:push": "gleef translate",
+    "i18n:push:review": "gleef translate --skip-review",
+    "i18n:push:feature": "gleef translate --match",
+    "i18n:dev": "gleef translate --skip-review --match"
+  }
+}
+```
+
+Usage:
+```bash
+npm run i18n:push:feature -- "checkout.*"
+npm run i18n:dev -- "dev.*"
+```
+
+### Git Hooks
+
+**Pre-commit Hook:**
+```bash
+#!/bin/bash
+# .git/hooks/pre-commit
+
+# Get modified locale files
+MODIFIED_LOCALES=$(git diff --cached --name-only | grep -E '\.(json|xml|yaml|strings)$')
+
+if [ ! -z "$MODIFIED_LOCALES" ]; then
+  echo "Detected locale file changes. Pushing translations..."
+  gleef translate --skip-review
+fi
+```
+
+### GitHub Actions
+
+```yaml
+name: Push Translations
+on:
+  push:
+    branches: [main]
+    paths: ['src/locales/**']
+
+jobs:
+  translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - run: npm install -g @gleef/cli
+      - run: gleef login --key ${{ secrets.GLEEF_API_KEY }}
+      - run: gleef translate --skip-review
+```
+
+## Best Practices
+
+<Tip>Always pull latest changes before pushing to avoid conflicts.</Tip>
+
+### Content Preparation
+
+1. **Namespace consistently** - Use clear prefixes like `auth.`, `nav.`, `errors.`
+2. **Write clear base text** - AI translates better with clear, contextual source text
+3. **Use placeholders properly** - Format: `"Hello {{name}}, welcome back!"`
+4. **Avoid concatenation** - Write complete sentences, not fragments
+
+### Push Strategy
+
+1. **Feature-based pushes** - Use `--match` to push related content together
+2. **Review critical content** - Don't skip review for user-facing text
+3. **Coordinate with team** - Communicate what needs review and when
+4. **Test after pulling** - Verify translations work in your application
+
+### Quality Control
+
+1. **Review AI output** - Even with `--skip-review`, spot-check translations
+2. **Maintain glossaries** - Keep consistent terminology across your app
+3. **Cultural review** - Have native speakers review culturally sensitive content
+4. **Context matters** - Provide context in key names and comments
+
+## Troubleshooting
+
+### Common Issues
+
+**"Nothing new to translate"**
+- Check if you have uncommitted changes
+- Verify your locale files have new or modified keys
+- Try `gleef pull` first to sync latest state
+
+**"Network request failed"**
+- Check internet connection
+- Verify API key is valid
+- Check if Gleef servers are accessible
+
+**"Invalid JSON in locale file"**
+- Fix JSON syntax errors
+- Validate JSON format
+- Check for trailing commas or quotes
+
+### Performance Tips
+
+**Large Projects:**
+- Use `--match` to push smaller batches
+- Push frequently rather than large batches
+- Consider separate CLI instances for different features
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Syncing Changes"
+        icon="refresh"
+        href="/cli/workflow/syncing-changes"
+    >
+        Learn how to efficiently sync translations with your team
+    </Card>
+    <Card
+        title="Best Practices"
+        icon="star"
+        href="/cli/support/best-practices"
+    >
+        Master advanced techniques and team collaboration
+    </Card>
+</CardGroup>

@@ -1,0 +1,508 @@
+---
+title: Configuration File
+description: 'Complete reference for the .gleef/config.json configuration file'
+---
+
+The `.gleef/config.json` file controls how Gleef CLI processes your localization files. This file is created automatically by `gleef init` but can be customized for complex project setups.
+
+## Configuration Location
+
+The configuration file is always located at:
+```
+your-project/
+└── .gleef/
+    └── config.json
+```
+
+This file should be committed to version control so your team shares the same configuration.
+
+## Basic Configuration Structure
+
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",
+    "public/i18n/*.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    },
+    "xml": {
+      "nested": false
+    }
+  },
+  "customFileNames": {
+    "en-US": "english.json",
+    "fr-FR": "french.json"
+  }
+}
+```
+
+## Configuration Properties
+
+### localeFilePatterns
+
+**Type:** `string[]`  
+**Required:** Yes
+
+Defines glob patterns that match your localization files.
+
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",           // Basic pattern
+    "public/i18n/**/*.json",        // Recursive pattern
+    "assets/strings/*.strings",     // iOS strings files
+    "!src/locales/config.json"      // Exclusion pattern
+  ]
+}
+```
+
+**Pattern Examples:**
+
+| Pattern | Matches |
+|---------|---------|
+| `src/*.json` | `src/en.json`, `src/fr.json` |
+| `locales/**/*.json` | `locales/en/common.json`, `locales/fr/auth.json` |
+| `*.{json,yaml}` | `en.json`, `fr.yaml` |
+| `!**/test.json` | Excludes any `test.json` files |
+
+### formatOptions
+
+**Type:** `object`  
+**Required:** No
+
+Controls how different file formats are processed and generated.
+
+```json
+{
+  "formatOptions": {
+    "json": {
+      "nested": true,
+      "indent": 2
+    },
+    "xml": {
+      "nested": false,
+      "rootElement": "resources"
+    },
+    "yaml": {
+      "nested": true,
+      "flowStyle": false
+    },
+    "strings": {
+      "encoding": "utf-8"
+    }
+  }
+}
+```
+
+**Format-Specific Options:**
+
+#### JSON Options
+- `nested` (boolean): Use nested object structure vs flat keys
+- `indent` (number): Number of spaces for indentation (default: 2)
+
+#### XML Options  
+- `nested` (boolean): Use nested elements vs flat structure
+- `rootElement` (string): Root XML element name (default: "resources")
+
+#### YAML Options
+- `nested` (boolean): Use nested structure vs flat keys
+- `flowStyle` (boolean): Use flow style vs block style
+
+#### Strings Options
+- `encoding` (string): File encoding (default: "utf-8")
+
+### customFileNames
+
+**Type:** `object`  
+**Required:** No
+
+Maps locale codes to specific filenames when they don't follow standard naming conventions.
+
+```json
+{
+  "customFileNames": {
+    "en-US": "english.json",
+    "fr-FR": "french.json", 
+    "es-ES": "spanish.json",
+    "zh-CN": "chinese-simplified.json"
+  }
+}
+```
+
+**Use Cases:**
+- Legacy naming conventions
+- Descriptive filenames
+- Platform-specific naming requirements
+
+## Advanced Configuration Examples
+
+### Multi-Module Project
+
+```json
+{
+  "localeFilePatterns": [
+    "apps/web/src/locales/*.json",
+    "apps/mobile/assets/i18n/*.json", 
+    "packages/shared/locales/*.json",
+    "!**/*test*.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true,
+      "indent": 2
+    }
+  }
+}
+```
+
+### Mixed Format Project
+
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",
+    "ios/MyApp/*.lproj/*.strings",
+    "android/app/src/main/res/values*/*.xml"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    },
+    "strings": {
+      "encoding": "utf-8"
+    },
+    "xml": {
+      "nested": false,
+      "rootElement": "resources"
+    }
+  },
+  "customFileNames": {
+    "en-US": "Localizable.strings",
+    "fr-FR": "Localizable.strings"
+  }
+}
+```
+
+### Monorepo Configuration
+
+```json
+{
+  "localeFilePatterns": [
+    "packages/*/src/locales/*.json",
+    "apps/*/locales/**/*.json",
+    "shared/i18n/*.{json,yaml}"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true,
+      "indent": 2
+    },
+    "yaml": {
+      "nested": true,
+      "flowStyle": false
+    }
+  }
+}
+```
+
+## File Structure Examples
+
+### Nested JSON (Default)
+
+**Configuration:**
+```json
+{
+  "formatOptions": {
+    "json": {
+      "nested": true
+    }
+  }
+}
+```
+
+**Output:**
+```json
+{
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "email": "Email Address",
+      "password": "Password"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About"
+  }
+}
+```
+
+### Flat JSON
+
+**Configuration:**
+```json
+{
+  "formatOptions": {
+    "json": {
+      "nested": false
+    }
+  }
+}
+```
+
+**Output:**
+```json
+{
+  "auth.login.title": "Sign In",
+  "auth.login.email": "Email Address", 
+  "auth.login.password": "Password",
+  "navigation.home": "Home",
+  "navigation.about": "About"
+}
+```
+
+### XML Structure
+
+**Configuration:**
+```json
+{
+  "formatOptions": {
+    "xml": {
+      "nested": false,
+      "rootElement": "resources"
+    }
+  }
+}
+```
+
+**Output:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="auth_login_title">Sign In</string>
+  <string name="auth_login_email">Email Address</string>
+  <string name="navigation_home">Home</string>
+</resources>
+```
+
+## Configuration Validation
+
+### Checking Your Configuration
+
+Test your configuration without making changes:
+
+```bash
+# This will validate patterns and show what files are detected
+gleef init --dry-run
+```
+
+### Common Validation Errors
+
+**Invalid Pattern:**
+```
+Error: Pattern 'src/**.json' is invalid. Use 'src/**/*.json' for recursive matching.
+```
+
+**No Files Matched:**
+```
+Warning: Pattern 'locales/*.json' matched no files. Check your file structure.
+```
+
+**Format Conflict:**
+```
+Error: File 'en.json' matches multiple patterns with different format options.
+```
+
+## Environment-Specific Configuration
+
+### Development vs Production
+
+**Development:**
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",
+    "src/locales/dev/*.json"
+  ]
+}
+```
+
+**Production:**
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",
+    "!src/locales/dev/*.json"
+  ]
+}
+```
+
+### Platform-Specific Patterns
+
+**Web Application:**
+```json
+{
+  "localeFilePatterns": [
+    "public/locales/**/*.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true,
+      "indent": 2
+    }
+  }
+}
+```
+
+**Mobile Application:**
+```json
+{
+  "localeFilePatterns": [
+    "ios/*/Localizable.strings",
+    "android/app/src/main/res/values*/strings.xml",
+    "src/assets/i18n/*.json"
+  ],
+  "formatOptions": {
+    "strings": {
+      "encoding": "utf-8"
+    },
+    "xml": {
+      "rootElement": "resources"
+    },
+    "json": {
+      "nested": false
+    }
+  }
+}
+```
+
+## Migration and Updates
+
+### Updating Configuration
+
+When you need to change your configuration:
+
+1. **Update the config file**
+2. **Test the changes:** `gleef init --dry-run`
+3. **Commit the changes:** Add to version control
+4. **Notify team:** Ensure everyone pulls the updated config
+
+### Migration Example
+
+**Before (simple structure):**
+```json
+{
+  "localeFilePatterns": [
+    "locales/*.json"
+  ]
+}
+```
+
+**After (namespace structure):**
+```json
+{
+  "localeFilePatterns": [
+    "locales/*/common.json",
+    "locales/*/auth.json",
+    "locales/*/components.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    }
+  }
+}
+```
+
+**Migration Steps:**
+1. Restructure your files to match new patterns
+2. Update the configuration
+3. Test with `gleef init --dry-run`
+4. Run `gleef translate` to sync with new structure
+
+## Best Practices
+
+<Tip>Keep your configuration simple and consistent across environments.</Tip>
+
+### Pattern Design
+
+1. **Be specific** - Use precise patterns to avoid unwanted files
+2. **Use exclusions** - Exclude test files and temporary files  
+3. **Group logically** - Organize patterns by feature or platform
+4. **Document patterns** - Comment why specific patterns are used
+
+### Format Options
+
+1. **Stay consistent** - Use the same format options across your project
+2. **Match your tooling** - Align with your build tools and frameworks
+3. **Consider team preferences** - Choose formats your team is comfortable with
+
+### File Naming
+
+1. **Standard naming** - Use standard locale codes when possible
+2. **Document exceptions** - Explain custom file names in README
+3. **Be consistent** - Use the same naming pattern across locales
+
+### Version Control
+
+1. **Commit config** - Always commit `.gleef/config.json`
+2. **Review changes** - Carefully review config changes in PRs
+3. **Test changes** - Validate config changes before merging
+
+## Troubleshooting
+
+### Configuration Issues
+
+**No files detected:**
+- Check pattern syntax
+- Verify file paths are correct
+- Test patterns with file system tools
+
+**Wrong files included:**
+- Add exclusion patterns
+- Make patterns more specific
+- Check for conflicting patterns
+
+**Format errors:**
+- Validate JSON syntax
+- Check property names and values
+- Review format-specific options
+
+### Recovery
+
+**Reset configuration:**
+```bash
+rm -rf .gleef/
+gleef init
+```
+
+**Validate configuration:**
+```bash
+# Check what files are detected
+gleef init --dry-run
+
+# Verify patterns work
+ls -la $(pattern-here)
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="File Patterns"
+        icon="folder"
+        href="/cli/configuration/file-patterns"
+    >
+        Learn advanced file pattern matching techniques
+    </Card>
+    <Card
+        title="Format Options"
+        icon="file-code"
+        href="/cli/configuration/format-options"
+    >
+        Master format-specific configuration options
+    </Card>
+</CardGroup>

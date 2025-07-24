@@ -1,0 +1,217 @@
+---
+title: gleef init
+description: 'Initialize Gleef in your project by detecting locale files and creating configuration'
+---
+
+The `gleef init` command sets up Gleef in your project by automatically discovering localization files and creating the necessary configuration.
+
+## Usage
+
+```bash
+gleef init
+```
+
+## What it does
+
+The `init` command performs several important setup tasks:
+
+1. **Scans your project** for localization files (JSON, XML, YAML, .strings)
+2. **Respects .gitignore** patterns to avoid irrelevant files
+3. **Matches files with locales** using AI-powered detection
+4. **Creates configuration** in `.gleef/config.json`
+5. **Sets up file patterns** for future operations
+
+## File Detection
+
+The command automatically detects files with these extensions:
+- `.json` - JSON localization files
+- `.xml` - XML localization files  
+- `.yaml` / `.yml` - YAML localization files
+- `.strings` - iOS strings files
+
+### Exclusions
+
+Files and directories are automatically excluded based on:
+- **.gitignore patterns** - Respects your existing git exclusions
+- **Hidden files** - Files starting with `.` (except localization files)
+- **Common config files** - Files containing: package, git, config, prettier, lint, mocha, build, tsconfig, component
+
+## Example Output
+
+### Successful Initialization
+
+```bash
+$ gleef init
+✔ 3 new patterns added successfully
+src/locales/*.json, public/i18n/*.json, assets/strings/*.strings
+Run `gleef translate` to start translating
+To customize nested/flat output per format, edit the formatOptions in .gleef/config.json
+```
+
+### No Files Found
+
+```bash
+$ gleef init
+⚠ No locale files found in your project
+You can set your match patterns manually by editing the .gleef/config.json file
+Example patterns: "locales/*.json", "locales/*.xml", "locales/*.yaml", "locales/*.strings"
+Run `gleef translate` once you have set up your patterns
+```
+
+## Generated Configuration
+
+After running `init`, you'll find a `.gleef/config.json` file in your project:
+
+```json
+{
+  "localeFilePatterns": [
+    "src/locales/*.json",
+    "public/i18n/*.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    },
+    "xml": {
+      "nested": false
+    }
+  },
+  "customFileNames": {
+    "fr-FR": "french.json",
+    "de-DE": "german.json"
+  }
+}
+```
+
+### Configuration Properties
+
+| Property | Description |
+|----------|-------------|
+| `localeFilePatterns` | Glob patterns matching your localization files |
+| `formatOptions` | Output format settings for each file type |
+| `customFileNames` | Maps locales to specific filenames when they don't match the locale code |
+
+## Project Structure Examples
+
+### Standard Structure
+
+```
+my-app/
+├── src/
+│   └── locales/
+│       ├── en-US.json
+│       ├── fr-FR.json
+│       └── es-ES.json
+└── .gleef/
+    └── config.json
+```
+
+**Result:** Pattern `src/locales/*.json` is created
+
+### Multiple Directories
+
+```
+my-app/
+├── src/
+│   └── i18n/
+│       ├── en.json
+│       └── fr.json
+├── public/
+│   └── locales/
+│       ├── en.xml
+│       └── fr.xml
+└── mobile/
+    └── strings/
+        ├── en-US.strings
+        └── fr-FR.strings
+```
+
+**Result:** Multiple patterns are created:
+- `src/i18n/*.json`
+- `public/locales/*.xml`
+- `mobile/strings/*.strings`
+
+### Complex Structure
+
+```
+my-app/
+├── apps/
+│   ├── web/src/locales/
+│   │   ├── en-US.json
+│   │   └── fr-FR.json
+│   └── mobile/assets/
+│       ├── english.json
+│       └── french.json
+└── shared/i18n/
+    ├── common.en.yaml
+    └── common.fr.yaml
+```
+
+**Result:** Patterns and custom filenames:
+- `apps/web/src/locales/*.json`
+- `apps/mobile/assets/*.json` with custom names
+- `shared/i18n/*.yaml` with custom names
+
+## Troubleshooting
+
+### No Files Detected
+
+If no files are detected:
+
+1. **Check file extensions** - Ensure files use supported extensions
+2. **Review .gitignore** - Files might be excluded by git patterns
+3. **Verify file names** - Files with config-like names are excluded
+4. **Manual setup** - Add patterns manually to `.gleef/config.json`
+
+### Incorrect Patterns
+
+If the generated patterns are wrong:
+
+1. **Edit config file** - Modify `.gleef/config.json` manually
+2. **Re-run init** - Delete `.gleef` folder and run `gleef init` again
+3. **Check file structure** - Ensure files are in the expected locations
+
+### Custom File Names
+
+If your files don't follow locale naming conventions:
+
+```json
+{
+  "customFileNames": {
+    "en-US": "english.json",
+    "fr-FR": "french.json",
+    "es-ES": "spanish.json"
+  }
+}
+```
+
+## Best Practices
+
+<Tip>Run `gleef init` from your project root directory for best results.</Tip>
+
+1. **Organize files consistently** - Use clear directory structures
+2. **Follow naming conventions** - Use standard locale codes when possible
+3. **Check generated config** - Review `.gleef/config.json` after initialization
+4. **Commit configuration** - Add `.gleef/config.json` to version control
+5. **Document custom patterns** - If using manual patterns, document them for your team
+
+## Next Steps
+
+After initialization:
+
+<CardGroup cols={2}>
+    <Card
+        title="Push Translations"
+        icon="upload"
+        href="/cli/commands/translate"
+    >
+        Send your translation keys to Gleef for AI processing
+    </Card>
+    <Card
+        title="Configuration"
+        icon="cog"
+        href="/cli/configuration/config-file"
+    >
+        Learn about all configuration options
+    </Card>
+</CardGroup>

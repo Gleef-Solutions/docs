@@ -1,0 +1,525 @@
+---
+title: Troubleshooting
+description: 'Solve common issues and problems with Gleef CLI'
+---
+
+This guide covers common issues you might encounter when using Gleef CLI and provides step-by-step solutions to resolve them.
+
+## Installation Issues
+
+### Node.js Version Compatibility
+
+**Error:**
+```bash
+npm ERR! engine Unsupported engine
+npm ERR! Required: node >=18.0.0
+npm ERR! Actual: v16.14.0
+```
+
+**Solution:**
+1. **Check current version:** `node --version`
+2. **Update Node.js:** Download latest from [nodejs.org](https://nodejs.org)
+3. **Or use nvm:**
+   ```bash
+   # Install nvm (if not installed)
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+   
+   # Install and use Node.js 18+
+   nvm install 18
+   nvm use 18
+   ```
+
+### Permission Errors
+
+**Error:**
+```bash
+npm ERR! code EACCES
+npm ERR! syscall mkdir
+npm ERR! path /usr/local/lib/node_modules/@gleef
+```
+
+**Solution (macOS/Linux):**
+```bash
+# Option 1: Use sudo (not recommended)
+sudo npm install -g @gleef/cli
+
+# Option 2: Configure npm to use user directory (recommended)
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
+source ~/.profile
+npm install -g @gleef/cli
+```
+
+**Solution (Windows):**
+1. Run Command Prompt as Administrator
+2. Install the CLI: `npm install -g @gleef/cli`
+
+### Network/Firewall Issues
+
+**Error:**
+```bash
+npm ERR! network request to https://registry.npmjs.org/@gleef%2fcli failed
+```
+
+**Solution:**
+1. **Check internet connection**
+2. **Configure corporate proxy:**
+   ```bash
+   npm config set proxy http://proxy.company.com:8080
+   npm config set https-proxy http://proxy.company.com:8080
+   ```
+3. **Use different registry:**
+   ```bash
+   npm install -g @gleef/cli --registry https://registry.yarnpkg.com
+   ```
+
+## Authentication Issues
+
+### Invalid API Key
+
+**Error:**
+```bash
+The given API key doesn't seem to be valid. Please check your key and try again.
+```
+
+**Solution:**
+1. **Verify key format:** API keys start with `gl_` followed by alphanumeric characters
+2. **Check for extra characters:** Remove any spaces or newlines from the key
+3. **Generate new key:** Visit [https://app.gleef.eu/settings/api-keys](https://app.gleef.eu/settings/api-keys)
+4. **Re-authenticate:**
+   ```bash
+   gleef login --key YOUR_NEW_API_KEY
+   ```
+
+### Authentication Storage Issues
+
+**Error:**
+```bash
+Error: Could not save API key to configuration file
+```
+
+**Solution (macOS/Linux):**
+```bash
+# Check permissions on config directory
+ls -la ~/.config/gleef/
+
+# Fix permissions if needed
+mkdir -p ~/.config/gleef
+chmod 755 ~/.config/gleef
+```
+
+**Solution (Windows):**
+```cmd
+# Check if directory exists
+dir %APPDATA%\gleef
+
+# Create if missing
+mkdir %APPDATA%\gleef
+```
+
+### Network Authentication Issues
+
+**Error:**
+```bash
+Error: Network request failed - getaddrinfo ENOTFOUND api.gleef.eu
+```
+
+**Solution:**
+1. **Check DNS:** `nslookup api.gleef.eu`
+2. **Try different DNS:**
+   ```bash
+   # Use Google DNS
+   export DNS_SERVER=8.8.8.8
+   ```
+3. **Corporate firewall:** Contact IT to whitelist `*.gleef.eu`
+4. **VPN issues:** Try without VPN or with different VPN server
+
+## Configuration Issues
+
+### No Files Detected During Init
+
+**Error:**
+```bash
+⚠ No locale files found in your project
+```
+
+**Solutions:**
+
+1. **Check file extensions:**
+   ```bash
+   # Verify you have supported files
+   find . -name "*.json" -o -name "*.xml" -o -name "*.yaml" -o -name "*.strings"
+   ```
+
+2. **Check .gitignore exclusions:**
+   ```bash
+   # See what files are being ignored
+   git check-ignore -v src/locales/*.json
+   ```
+
+3. **Manual configuration:**
+   ```json
+   {
+     "localeFilePatterns": [
+       "path/to/your/locale/files/*.json"
+     ]
+   }
+   ```
+
+### Invalid Configuration File
+
+**Error:**
+```bash
+Error: Invalid configuration file at .gleef/config.json
+```
+
+**Solution:**
+1. **Validate JSON syntax:**
+   ```bash
+   cat .gleef/config.json | jq empty
+   ```
+2. **Common JSON errors:**
+   - Missing quotes around keys
+   - Trailing commas
+   - Unclosed brackets/braces
+3. **Reset configuration:**
+   ```bash
+   rm -rf .gleef/
+   gleef init
+   ```
+
+### Pattern Matching Issues
+
+**Error:**
+```bash
+Warning: Pattern 'src/**.json' matched no files
+```
+
+**Solution:**
+1. **Fix pattern syntax:**
+   ```json
+   {
+     "localeFilePatterns": [
+       "src/**/*.json"
+     ]
+   }
+   ```
+2. **Test patterns:**
+   ```bash
+   # Test with shell
+   ls src/**/*.json
+   
+   # Test with find
+   find . -path "src/**/*.json"
+   ```
+
+## Command Execution Issues
+
+### "Nothing to translate" When Expecting Changes
+
+**Issue:** Running `gleef translate` shows no changes despite having new keys.
+
+**Solutions:**
+
+1. **Check if files have actual changes:**
+   ```bash
+   git diff src/locales/
+   ```
+
+2. **Verify configuration patterns or run:**
+   ```bash
+   gleef init
+   ```
+
+3. **Check for conflicts:**
+   ```bash
+   gleef pull --check
+   ```
+
+4. **Reset and retry:**
+   ```bash
+   gleef pull
+   gleef translate
+   ```
+
+### Pull Command Not Updating Files
+
+**Issue:** `gleef pull` claims to update files but no changes appear locally.
+
+**Solutions:**
+
+1. **Check file permissions:**
+   ```bash
+   ls -la src/locales/
+   chmod 644 src/locales/*.json
+   ```
+
+2. **Verify files match patterns:**
+   ```bash
+   gleef init --list-files
+   ```
+
+3. **Check if translations are approved in Gleef Studio**
+
+4. **Force full sync:**
+   ```bash
+   gleef pull --all
+   ```
+5. **Remove `.gleef/lock.json`**
+
+### Conflict Resolution Issues
+
+**Error:**
+```bash
+Conflict with remotely edited translations. Update keys with the remote value, or change them from the webapp.
+```
+
+**Solutions:**
+
+1. **Accept remote changes:**
+   ```bash
+   gleef pull  # Get remote version
+   gleef translate  # Push remaining changes
+   ```
+
+2. **Keep local changes:**
+   - Update the conflicting key in Gleef Studio to match your local version
+   - Run `gleef translate` again
+
+3. **Manual resolution:**
+   - Decide on the correct value
+   - Update both locally and in Gleef Studio
+   - Run `gleef translate`
+
+## File Format Issues
+
+### JSON Syntax Errors
+
+**Error:**
+```bash
+Couldn't generate and push translations: Invalid JSON in locale file
+```
+
+**Solution:**
+1. **Find the problematic file:**
+   ```bash
+   # Check each JSON file
+   for file in src/locales/*.json; do
+     echo "Checking $file"
+     cat "$file" | jq empty || echo "Error in $file"
+   done
+   ```
+
+2. **Common JSON issues:**
+   - Trailing commas: `{"key": "value",}` → `{"key": "value"}`
+   - Unescaped quotes: `"He said "hello""` → `"He said \"hello\""`
+   - Missing commas: `{"a": "b" "c": "d"}` → `{"a": "b", "c": "d"}`
+
+3. **Fix with automated tools:**
+   ```bash
+   # Use jq to format properly
+   jq . src/locales/en.json > temp.json && mv temp.json src/locales/en.json
+   ```
+
+### XML Format Issues
+
+**Error:**
+```bash
+Error parsing XML file: src/locales/strings.xml
+```
+
+**Solution:**
+1. **Validate XML:**
+   ```bash
+   xmllint --noout src/locales/strings.xml
+   ```
+
+2. **Common XML issues:**
+   - Unclosed tags: `<string name="key">value` → `<string name="key">value</string>`
+   - Invalid characters: `&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`
+   - Missing declarations: Add `<?xml version="1.0" encoding="UTF-8"?>`
+
+### YAML Format Issues
+
+**Error:**
+```bash
+Error parsing YAML file: Invalid YAML syntax
+```
+
+**Solution:**
+1. **Validate YAML:**
+   ```bash
+   yq empty src/locales/en.yml
+   ```
+
+2. **Common YAML issues:**
+   - Indentation: Use consistent spaces (not tabs)
+   - Missing quotes: `key: value with: colon` → `key: "value with: colon"`
+   - List formatting: Ensure proper `-` spacing
+
+## Performance Issues
+
+### Slow Translation Processing
+
+**Issue:** `gleef translate` takes very long to complete.
+
+**Solutions:**
+
+1. **Use pattern matching:**
+   ```bash
+   # Process specific keys only
+   gleef translate --match "component.*"
+   ```
+
+2. **Check file sizes:**
+   ```bash
+   # Find large files that might slow processing
+   find src/locales -name "*.json" -exec wc -l {} + | sort -n
+   ```
+
+3. **Optimize patterns:**
+   ```json
+   {
+     "localeFilePatterns": [
+       "src/locales/*.json",
+       "!**/*test*.json",
+       "!**/node_modules/**"
+     ]
+   }
+   ```
+
+### High Memory Usage
+
+**Issue:** CLI uses excessive memory during processing.
+
+**Solutions:**
+
+1. **Process files in batches:**
+   ```bash
+   gleef translate --match "auth.*"
+   gleef translate --match "nav.*"
+   ```
+
+2. **Reduce file sizes:** Split large translation files into smaller ones
+
+3. **Close other applications:** Free up system memory
+
+## Recovery Procedures
+
+### Complete Reset
+
+If you encounter persistent issues, try a complete reset:
+
+```bash
+# 1. Backup your files
+cp -r src/locales src/locales.backup
+
+# 2. Remove configuration
+rm -rf .gleef/
+
+# 3. Clear authentication
+rm -rf ~/.config/gleef  # macOS/Linux
+# or
+rmdir /s %APPDATA%\gleef  # Windows
+
+# 4. Reinstall CLI
+npm uninstall -g @gleef/cli
+npm install -g @gleef/cli
+
+# 5. Re-authenticate and initialize
+gleef login
+gleef init
+
+# 6. Pull all translations
+gleef pull --all
+
+# 7. Restore files if needed
+cp -r src/locales.backup/* src/locales/
+```
+
+### Configuration Recovery
+
+If your configuration is corrupted:
+
+```bash
+# 1. Backup current config
+cp .gleef/config.json .gleef/config.json.backup
+
+# 2. Regenerate configuration
+rm .gleef/config.json
+gleef init
+
+# 3. Manually merge any custom settings from backup
+```
+
+### File Recovery
+
+If translation files are corrupted:
+
+```bash
+# 1. Check git history
+git log --oneline src/locales/
+
+# 2. Restore from git
+git checkout HEAD~1 -- src/locales/
+
+# 3. Or pull fresh from Gleef
+gleef pull --all
+```
+
+## Getting Help
+
+### Diagnostic Information
+
+When reporting issues, include this diagnostic info:
+
+```bash
+# System information
+gleef --version
+node --version
+npm --version
+
+# Configuration
+cat .gleef/config.json
+
+# File patterns test
+gleef init
+
+# Network test
+curl -I https://api.gleef.eu/
+```
+
+### Log Files
+
+Enable verbose logging for debugging:
+
+```bash
+gleef translate 2>&1 | tee gleef.log
+```
+<Info>Contact Gleef to enable verbose/debug mode.</Info>
+
+### Support Channels
+
+- **Documentation:** [docs.gleef.eu](https://docs.gleef.eu)
+- **Email:** [support@gleef.eu](mailto:support@gleef.eu)
+- **Chat:** [15 minutes](https://booking.gleef.eu/team/gleef/get-in-touch)
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Best Practices"
+        icon="star"
+        href="/cli/support/best-practices"
+    >
+        Learn techniques to prevent common issues and optimize your workflow
+    </Card>
+    <Card
+        title="Commands Reference"
+        icon="terminal"
+        href="/cli/commands/overview"
+    >
+        Review all available commands and their options
+    </Card>
+</CardGroup>

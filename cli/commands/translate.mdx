@@ -1,0 +1,320 @@
+---
+title: gleef translate
+description: 'Push translation keys to Gleef for AI-powered translation'
+---
+
+The `gleef translate` command (also available as `gleef push`) sends your translation keys to Gleef for AI-powered translation and makes them available to your team for review.
+
+## Usage
+
+```bash
+gleef translate
+```
+
+Or using the alias:
+
+```bash
+gleef push
+```
+
+## Options
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--match` | `-m` | Filter translations by key pattern |
+| `--skip-review` | `-s` | Publish translations immediately instead of creating drafts |
+
+## What it does
+
+The `translate` command:
+
+1. **Analyzes local files** - Compares your local translations with remote state
+2. **Detects changes** - Identifies new keys and modified translations
+3. **Handles conflicts** - Checks for conflicts with remote edits
+4. **Sends for translation** - Uploads keys to Gleef's AI translation service
+5. **Updates local files** - Merges generated translations back to your files
+6. **Creates drafts** - Sets up translations for team review (unless `--skip-review` is used)
+
+## Basic Usage
+
+### Push All Changes
+
+```bash
+gleef translate
+```
+
+This will process all new and modified translation keys in your project.
+
+### Filter by Pattern
+
+```bash
+gleef translate --match "button.*"
+```
+
+Only processes keys matching the pattern (supports wildcards and regex).
+
+### Skip Review Process
+
+```bash
+gleef translate --skip-review
+```
+
+Publishes translations immediately without creating drafts for review.
+
+## Example Output
+
+### Processing New Translations
+
+```bash
+$ gleef translate
+Processing 12 new translations
+⠋ Translating with Gleef AI
+✔ Your files were translated successfully. Your team can review them from Gleef Studio.
+```
+
+### Processing Mixed Changes
+
+```bash
+$ gleef translate
+Processing 8 new translations
+Pushing 3 edited translations
+⠋ Translating with Gleef AI
+✔ Your files were translated successfully. Your team can review them from Gleef Studio.
+```
+
+### No Changes to Process
+
+```bash
+$ gleef translate
+Nothing new to translate
+```
+
+## Pattern Matching
+
+The `--match` flag supports flexible pattern matching:
+
+### Wildcard Patterns
+
+```bash
+# Match all button-related keys
+gleef translate --match "button.*"
+
+# Match all keys in a specific namespace
+gleef translate --match "auth.*"
+
+# Match keys with specific suffixes
+gleef translate --match "*.title"
+```
+
+### Complex Patterns
+
+```bash
+# Match multiple patterns (OR logic)
+gleef translate --match "button.*|nav.*"
+
+# Match nested keys
+gleef translate --match "components.*.label"
+```
+
+## Conflict Resolution
+
+If there are conflicts with remotely edited translations, the command will stop and show details:
+
+```bash
+$ gleef translate
+en-US
+  welcome.title
+    Local value: Welcome to our app
+    Remote value: Welcome to our application
+  
+Conflict with remotely edited translations. Update keys with the remote value, or change them from the webapp.
+```
+
+### Resolving Conflicts
+
+1. **Update locally** - Change your local value to match the remote
+2. **Update remotely** - Change the value in Gleef Studio
+3. **Pull first** - Run `gleef pull` to get latest changes, then translate
+
+## Translation Process
+
+### New Keys
+
+When you add new translation keys:
+
+```json
+{
+  "welcome": {
+    "title": "Welcome to our app",
+    "subtitle": "Get started with our amazing features"
+  }
+}
+```
+
+The `translate` command will:
+1. Detect the new keys
+2. Send them to Gleef AI for translation
+3. Generate translations in all your target languages
+4. Update your local files with the generated translations
+
+### Modified Keys
+
+When you change existing translations:
+
+```json5
+{
+  "welcome": {
+    "title": "Welcome to our average app", // [!code --]
+    "title": "Welcome to our amazing app", // [!code ++]
+  }
+}
+```
+
+The command will:
+1. Detect the modification
+2. Push the edited translation as draft or directly publish it
+3. Preserve translations in other languages
+
+## Review Workflow
+
+### Default Behavior (Draft Mode)
+
+By default, translations are created as drafts for team review:
+
+1. **Translations generated** - AI creates translations for all target languages
+2. **Drafts created** - Translations are marked as drafts in Gleef Studio, where you can ask for a review
+3. **Team reviews** - Your team can review and approve in Gleef Studio
+4. **Pull approved** - Use `gleef pull` to sync approved translations
+
+### Skip Review Mode
+
+With `--skip-review`, translations are published immediately:
+
+```bash
+gleef translate --skip-review
+```
+
+This is useful for:
+- Automated workflows
+- Non-critical translations
+- When you trust the AI output completely
+
+## Examples
+
+### Development Workflow
+
+```bash
+# Add new keys to your base language file
+# Then push for translation
+gleef translate
+
+# Ask for review of the draft in the Gleef Studio
+# Pull approved translations
+gleef pull
+```
+
+### Feature Development
+
+```bash
+# Work on a specific feature
+gleef translate --match "checkout.*"
+
+# Test the translations
+gleef pull --match "checkout.*"
+```
+
+### Bulk Updates
+
+```bash
+# Translate all incomplete navigation-related text
+gleef translate --match "nav.*|menu.*|header.*"
+```
+
+## Error Handling
+
+### Common Errors
+
+**Authentication Error:**
+```bash
+Couldn't generate and push translations: Authentication failed
+```
+*Solution:* Run `gleef login` to re-authenticate
+
+**Configuration Error:**
+```bash
+Couldn't generate and push translations: No locale files found
+```
+*Solution:* Run `gleef init` or check your `.gleef/config.json`
+
+**Network Error:**
+```bash
+Couldn't generate and push translations: Network request failed
+```
+*Solution:* Check internet connection and try again
+
+**File Format Error:**
+```bash
+Couldn't generate and push translations: Invalid JSON in locale file
+```
+*Solution:* Fix JSON syntax errors in your locale files
+
+## Best Practices
+
+<Tip>Always pull latest changes before pushing new translations to avoid conflicts.</Tip>
+
+1. **Pull latest changes** - `gleef pull` to get recent updates
+2. **Use patterns for large translation jobs** - Filter with `--match` for focused updates
+3. **Review in Gleef Studio** - Check AI translations quality and ask for a review there or publish
+4. **Coordinate with team** - Ensure reviewers know about pending translations
+
+## Integration Examples
+
+### Git Hooks
+This hook would filter keys based on the committed file name, given that the new keys follow a precise naming convention.
+```bash
+#!/bin/bash
+# pre-commit hook
+gleef translate --match "$(git diff --name-only --cached | grep -E '\.(json|xml|yaml|strings)$' | head -1 | cut -d'/' -f1).*"
+```
+
+### NPM Scripts
+
+```json
+{
+  "scripts": {
+    "i18n:push": "gleef translate",
+    "i18n:push:publish": "gleef translate --skip-review",
+    "i18n:push:feature": "gleef translate --match"
+  }
+}
+```
+
+### GitHub Actions
+
+```yaml
+- name: Push translations
+  run: |
+    gleef login --key ${{ secrets.GLEEF_API_KEY }}
+    gleef translate --skip-review
+```
+
+## Next Steps
+
+After pushing translations:
+
+<CardGroup cols={2}>
+    <Card
+        title="Review in Studio"
+        icon="eye"
+        href=""
+    >
+        Review and approve translations in Gleef Studio
+    </Card>
+    <Card
+        title="Pull Updates"
+        icon="download"
+        href="/cli/commands/pull"
+    >
+        Sync approved translations back to your project
+    </Card>
+</CardGroup>

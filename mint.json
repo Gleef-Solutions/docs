@@ -5,12 +5,8 @@
     "dark": "/logo/gleef_logo-light.svg",
     "light": "/logo/gleef_logo-dark.svg"
   },
-  
+
   "favicon": "/logo/gleef_favicon.svg",
-  
-  "primaryTab":{
-    "name": "Figma plugin"
-  },
 
   "colors": {
     "primary": "#d66234",
@@ -24,8 +20,8 @@
 
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "tel:+33644609754"
+      "name": "Chat",
+      "url": "https://booking.gleef.eu/team/gleef/get-in-touch"
     },
     {
       "name": "Chrome extension",
@@ -41,18 +37,82 @@
     "thumbsRating": true,
     "raiseIssue": true
   },
+
   "tabs": [
     {
-      "name": "A/B testing",
-      "url": "ab-testing"
+      "name": "Gleef CLI",
+      "icon": "terminal",
+      "url":"cli"
     },
     {
-      "name": "Under The Hood",
-      "url": "under-the-hood"
+      "name": "Gleef Studio",
+      "icon": "web",
+      "url":"studio"
+    },
+    {
+      "name": "Gleef Figma",
+      "icon": "figma",
+      "url": "figma-plugin"
+    },
+    {
+      "name": "A/B testing",
+      "icon": "flask-conical",
+      "url": "ab-testing"
     }
   ],
 
   "navigation": [
+    {
+      "group": "Gleef CLI",
+      "icon": "terminal",
+      "pages": [
+        {
+          "group": "Getting Started",
+          "icon": "rocket",
+          "iconType": "light",
+          "pages": [
+            "cli/getting-started/introduction",
+            "cli/getting-started/installation",
+            "cli/getting-started/quickstart"
+          ]
+        },
+        {
+          "group": "Commands",
+          "icon": "terminal",
+          "iconType": "light",
+          "pages": [
+            "cli/commands/overview",
+            "cli/commands/init",
+            "cli/commands/login",
+            "cli/commands/translate",
+            "cli/commands/pull"
+          ]
+        },
+        {
+          "group": "Configuration",
+          "icon": "wrench",
+          "iconType": "light",
+          "pages": [
+            "cli/configuration/config-file"
+          ]
+        },
+        {
+          "group": "Support",
+          "icon": "triangle-exclamation",
+          "iconType": "light",
+          "pages": [
+            "cli/support/troubleshooting"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Gleef Studio",
+      "icon": "terminal",
+      "pages": [
+        "studio/review"
+      ]
+    },
     {
       "group": "Configurations",
       "pages": [
@@ -180,21 +240,24 @@
           ]
         }
       ]
-    },
-    {
-      "group": "Under the hood",
-      "pages": [
-        "under-the-hood/gdpr",
-        "under-the-hood/privacy-policy",
-        "under-the-hood/terms",
-        "under-the-hood/acceptable-use-policy"
-      ]
     }
-    
+
   ],
-  "footerSocials": {
-    "x": "https://x.com/gleef_ai",
-    "github": "https://github.com/Gleef-Solutions",
-    "linkedin": "https://www.linkedin.com/company/gleefai"
+  "footer": {
+    "socials": {
+      "x": "https://x.com/gleef_ai",
+      "github": "https://github.com/Gleef-Solutions",
+      "linkedin": "https://www.linkedin.com/company/gleefai"
+    },
+    "pages": [
+      {
+        "header":"T&Cs",
+        "pages": [
+          {
+            "label": "T&Cs",
+            "url": "under-the-hood/terms"
+          }]
+      }
+    ]
   }
 }

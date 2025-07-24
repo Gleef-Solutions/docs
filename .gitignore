@@ -1,0 +1,17 @@
+*-debug.log
+*-error.log
+**/.DS_Store
+/.idea
+/dist
+/tmp
+/node_modules
+/temp*
+oclif.manifest.json
+
+/.gleef
+
+.env
+.env.*
+
+yarn.lock
+pnpm-lock.yaml

@@ -1,0 +1,591 @@
+---
+title: Syncing Translation Changes
+description: 'Master the workflow for keeping your local translations in sync with your team'
+---
+
+This guide covers the complete workflow for syncing translation changes, from pulling team updates to handling conflicts and maintaining consistency across your development team.
+
+## Understanding the Sync Workflow
+
+Translation syncing involves coordinating between:
+
+- **Your local changes** - Translations you've added or modified
+- **Team changes** - Translations added or updated by colleagues  
+- **AI translations** - Generated translations from Gleef
+- **Approved content** - Translations reviewed and approved in Gleef Studio
+
+## Basic Sync Patterns
+
+### Daily Sync Routine
+
+**Morning routine:**
+```bash
+# Start your day with latest translations
+gleef pull
+
+# Check if everything is up to date
+gleef pull --check
+```
+
+**Before committing:**
+```bash
+# Ensure you have latest changes
+gleef pull
+
+# Push your changes
+gleef translate
+
+# Verify nothing is missing
+gleef pull --check
+```
+
+**End of day:**
+```bash
+# Get final approved translations
+gleef pull
+```
+
+### Team Coordination Sync
+
+**Before feature work:**
+```bash
+# Sync feature-specific translations
+gleef pull --all --match "feature-name.*"
+```
+
+**After feature completion:**
+```bash
+# Push your feature translations
+gleef translate --match "feature-name.*"
+
+# Wait for team review...
+
+# Pull approved translations
+gleef pull --match "feature-name.*"
+```
+
+## Pull Strategies
+
+### Safe Updates Only (Default)
+
+```bash
+gleef pull
+```
+
+**What it does:**
+- ✅ Updates existing translation values
+- ❌ Ignores new keys created remotely
+- ✅ Safe for stable releases
+- ✅ Won't break existing code
+
+**Use when:**
+- Working on stable releases
+- You don't want new keys added automatically
+- Focusing on translation updates only
+
+### Include New Keys
+
+```bash
+gleef pull --all
+```
+
+**What it does:**
+- ✅ Updates existing translation values
+- ✅ Adds new keys created remotely
+- ⚠️ May require code changes to handle new keys
+- ⚠️ Could introduce untested content
+
+**Use when:**
+- Integrating new features from team members
+- Preparing for releases
+- You want all available content
+
+### Verification Mode
+
+```bash
+gleef pull --check
+```
+
+**What it does:**
+- ❌ Doesn't update any files
+- ✅ Reports what would be updated
+- ✅ Returns error code if updates are available
+- ✅ Perfect for CI/CD validation
+
+**Use when:**
+- Validating translation state in CI/CD
+- Checking if updates are available
+- Verifying before deployments
+
+## Real-World Sync Scenarios
+
+### Scenario 1: Feature Integration
+
+You're integrating a feature branch that adds new translation keys:
+
+<Steps titleSize="h3">
+  <Step title="Check Current State">
+    ```bash
+    git checkout main
+    git pull origin main
+    gleef pull --check
+    ```
+    
+    This shows if translations are up to date on main branch.
+  </Step>
+  
+  <Step title="Merge Feature Branch">
+    ```bash
+    git merge feature/new-dashboard
+    ```
+    
+    The merge brings in new translation keys in your locale files.
+  </Step>
+  
+  <Step title="Push New Keys">
+    ```bash
+    gleef translate --match "dashboard.*"
+    ```
+    
+    Send the new keys for AI translation.
+  </Step>
+  
+  <Step title="Wait for Review">
+    Team reviews the translations in Gleef Studio.
+  </Step>
+  
+  <Step title="Pull Approved Translations">
+    ```bash
+    gleef pull --all --match "dashboard.*"
+    ```
+    
+    Get the approved translations for the new feature.
+  </Step>
+</Steps>
+
+### Scenario 2: Release Preparation
+
+Preparing for a release with multiple contributors:
+
+<Steps titleSize="h3">
+  <Step title="Feature Freeze">
+    All features are complete, time to finalize translations.
+    
+    ```bash
+    git checkout release/v2.0
+    gleef pull --all
+    ```
+  </Step>
+  
+  <Step title="Push Any Missing Content">
+    ```bash
+    gleef translate
+    ```
+    
+    Send any final translation keys for processing.
+  </Step>
+  
+  <Step title="Coordinate Team Review">
+    ```markdown
+    📝 Translation Review for v2.0
+    - All new content pushed to Gleef Studio
+    - Review deadline: Friday EOD
+    - Focus areas: checkout flow, user settings
+    - Questions? Ask in #translations
+    ```
+  </Step>
+  
+  <Step title="Final Sync">
+    ```bash
+    gleef pull --all
+    gleef pull --check  # Verify nothing is missing
+    ```
+  </Step>
+  
+  <Step title="Lock Translations">
+    ```bash
+    git add src/locales/
+    git commit -m "Final translations for v2.0"
+    git tag v2.0-translations
+    ```
+  </Step>
+</Steps>
+
+### Scenario 3: Hotfix with Translation
+
+Critical bug fix that requires translation updates:
+
+<Steps titleSize="h3">
+  <Step title="Create Hotfix Branch">
+    ```bash
+    git checkout -b hotfix/payment-error-message
+    ```
+  </Step>
+  
+  <Step title="Fix Translation">
+    ```json
+    {
+      "errors": {
+        "payment_failed": "Payment failed. Please contact support at support@company.com"
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Fast-track Translation">
+    ```bash
+    gleef translate --match "errors.payment_failed" --skip-review
+    ```
+    
+    Skip review for critical hotfix.
+  </Step>
+  
+  <Step title="Pull and Deploy">
+    ```bash
+    gleef pull --match "errors.payment_failed"
+    # Test the fix
+    git add src/locales/
+    git commit -m "Hotfix: Update payment error message"
+    # Deploy
+    ```
+  </Step>
+</Steps>
+
+## Handling Multiple File Namespaces
+
+When your project has multiple files per locale, syncing becomes more nuanced:
+
+**Project Structure:**
+```
+src/
+├── locales/
+│   ├── en-US/
+│   │   ├── common.json
+│   │   ├── auth.json
+│   │   └── dashboard.json
+│   └── fr-FR/
+│       ├── common.json
+│       ├── auth.json
+│       └── dashboard.json
+```
+
+**Namespace Selection:**
+```bash
+$ gleef pull --all
+Multiple files found for some locales. Choose which file pattern to add new translations to:
+> Files matching: src/locales/*/common.json
+  Files matching: src/locales/*/auth.json
+  Files matching: src/locales/*/dashboard.json
+```
+
+**Best Practices:**
+- **Plan namespaces** - Decide which files get which types of keys
+- **Document conventions** - Create guidelines for your team
+- **Use patterns strategically** - Pull specific namespaces when needed
+
+```bash
+# Pull only auth-related updates
+gleef pull --all --match "auth.*"
+
+# Pull only common translations
+gleef pull --all --match "common.*"
+```
+
+## Conflict Resolution Strategies
+
+### Understanding Conflicts
+
+Conflicts happen when both local and remote versions of the same key have changed:
+
+```bash
+$ gleef translate
+en-US
+  welcome.title
+    Local value: Welcome to our amazing app
+    Remote value: Welcome to our application
+
+Conflict with remotely edited translations.
+```
+
+### Resolution Strategy 1: Accept Remote Changes
+
+```bash
+# Get the remote version
+gleef pull
+
+# Then push your other changes
+gleef translate
+```
+
+**When to use:**
+- Remote change is better
+- You're okay with losing your local change
+- Quick resolution needed
+
+### Resolution Strategy 2: Keep Local Changes
+
+1. **Update in Gleef Studio** - Change the remote value to match your local version
+2. **Push again** - Run `gleef translate` to confirm no conflicts
+
+**When to use:**
+- Your local change is intentional and better
+- You have approval authority
+- Consistency with other changes matters
+
+### Resolution Strategy 3: Create New Version
+
+1. **Decide on best version** - Combine or create new text
+2. **Update both places** - Change locally and in Gleef Studio
+3. **Sync** - Run `gleef translate` to confirm
+
+**When to use:**
+- Both versions have merit
+- You can improve on both versions
+- Collaborative decision needed
+
+## Team Coordination Patterns
+
+### Communication Templates
+
+**Daily Standup:**
+```markdown
+🌍 Translation Status:
+- Pushed: user-profile.* keys for review
+- Pulled: latest payment flow translations  
+- Blocked: Waiting for marketing copy review
+- Next: Integration testing with new content
+```
+
+**Feature Handoff:**
+```markdown
+✅ Feature Complete: Shopping Cart
+- Translation keys: cart.*, checkout.*
+- Status: All keys pushed, pending review
+- Reviewers: @product-team @french-speakers
+- Target: Merge after translation approval
+```
+
+**Release Notes:**
+```markdown
+📋 Translation Changes in v2.1:
+- New: User onboarding flow (15 keys)
+- Updated: Error messages for clarity (8 keys)
+- Fixed: French gender agreement issues
+- Added: Spanish (Mexico) locale support
+```
+
+### Review Workflows
+
+**Feature Review Process:**
+1. **Developer** pushes translations with `gleef translate`
+2. **Product Manager** reviews for messaging consistency
+3. **Native Speakers** review for language quality
+4. **Developer** pulls approved translations
+5. **QA** tests with final translations
+
+**Express Review Process:**
+1. **Developer** pushes with `--skip-review` for non-critical content
+2. **Team** does async review in Gleef Studio
+3. **Corrections** made directly in Studio
+4. **Developer** pulls updates in next sync cycle
+
+## Automation Strategies
+
+### Git Hooks
+
+**Pre-push Hook:**
+```bash
+#!/bin/bash
+# .git/hooks/pre-push
+
+echo "Syncing translations before push..."
+if ! gleef pull --check; then
+  echo "⚠️  Translations are outdated. Run 'gleef pull' first."
+  exit 1
+fi
+```
+
+**Post-merge Hook:**
+```bash
+#!/bin/bash
+# .git/hooks/post-merge
+
+# Check if locale files were modified
+if git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD | grep -q "src/locales/"; then
+  echo "🌍 Locale files updated. Running translation sync..."
+  gleef translate --skip-review
+  gleef pull
+fi
+```
+
+### NPM Scripts
+
+```json
+{
+  "scripts": {
+    "i18n:sync": "gleef pull && gleef translate && gleef pull",
+    "i18n:check": "gleef pull --check",
+    "i18n:morning": "gleef pull && npm run test:i18n",
+    "i18n:evening": "gleef translate && gleef pull --check"
+  }
+}
+```
+
+### CI/CD Integration
+
+**Translation Validation:**
+```yaml
+name: Validate Translations
+on: [pull_request]
+
+jobs:
+  translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npm install -g @gleef/cli
+      - run: gleef login --key ${{ secrets.GLEEF_API_KEY }}
+      - run: gleef pull --check
+        name: Check if translations are up to date
+```
+
+**Auto-sync on Deploy:**
+```yaml
+name: Deploy with Translations
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    steps:
+      - uses: actions/checkout@v2
+      - run: gleef login --key ${{ secrets.GLEEF_API_KEY }}
+      - run: gleef pull --all
+        name: Get latest translations
+      - run: npm run build
+      - run: npm run deploy
+```
+
+## Best Practices
+
+<Tip>Establish a regular sync rhythm that matches your team's development cycle.</Tip>
+
+### Sync Timing
+
+**Development Phase:**
+- Pull at start of each day
+- Push after completing features
+- Check before committing code
+
+**Review Phase:**
+- Coordinate review assignments
+- Set review deadlines
+- Communicate approval status
+
+**Release Phase:**
+- Final pull with `--all` flag
+- Verify with `--check` flag
+- Lock translations in version control
+
+### Pattern Usage
+
+**Conservative Approach:**
+```bash
+# Only get updates to existing content
+gleef pull
+
+# Push specific features
+gleef translate --match "feature.*"
+```
+
+**Aggressive Approach:**
+```bash
+# Get everything available
+gleef pull --all
+
+# Push everything
+gleef translate
+```
+
+**Selective Approach:**
+```bash
+# Target specific content areas
+gleef pull --all --match "critical.*"
+gleef translate --match "new-feature.*"
+```
+
+### Quality Assurance
+
+1. **Test after syncing** - Verify your app works with new translations
+2. **Review key changes** - Understand what changed and why
+3. **Validate formatting** - Ensure file structure is preserved
+4. **Check interpolation** - Verify variable placeholders work correctly
+
+## Troubleshooting Sync Issues
+
+### Common Problems
+
+**"Nothing to update" when expecting changes:**
+- Check if translations are approved in Gleef Studio
+- Verify you're in the correct project directory
+- Try `gleef pull --all` to include new keys
+
+**File permission errors:**
+- Check write permissions on locale files
+- Ensure files aren't locked by other processes
+- Try running with appropriate permissions
+
+**Merge conflicts after pulling:**
+- Resolve git conflicts manually
+- Ensure JSON/XML is valid after resolution
+- Test with your application before committing
+
+### Recovery Strategies
+
+**Corrupted local state:**
+```bash
+# Reset to clean state
+git checkout HEAD -- src/locales/
+gleef pull --all
+```
+
+**Missing translations:**
+```bash
+# Force full resync
+gleef pull --all
+gleef translate  # Push anything missing
+gleef pull --all  # Get complete state
+```
+
+**Inconsistent team state:**
+```bash
+# Coordinate team reset
+# 1. All team members commit local changes
+# 2. One person does authoritative sync
+gleef pull --all
+gleef translate
+# 3. Others pull the updated state
+git pull
+gleef pull --all
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+    <Card
+        title="Configuration Guide"
+        icon="cog"
+        href="/cli/configuration/config-file"
+    >
+        Learn advanced configuration options for complex projects
+    </Card>
+    <Card
+        title="Best Practices"
+        icon="star"
+        href="/cli/support/best-practices"
+    >
+        Master team collaboration and workflow optimization
+    </Card>
+</CardGroup>
