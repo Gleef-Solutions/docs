@@ -164,7 +164,6 @@
           "iconType": "light",
           "pages": [
             "figma-plugin/support/QA",
-            "figma-plugin/support/best-practices",
             "figma-plugin/support/embeddings",
             "figma-plugin/support/trouble-shooting",
             "figma-plugin/support/security-privacy"

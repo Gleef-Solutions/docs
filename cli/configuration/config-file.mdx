@@ -21,8 +21,8 @@ This file should be committed to version control so your team shares the same co
 ```json
 {
   "localeFilePatterns": [
-    "src/locales/*.json",
-    "public/i18n/*.json"
+    "src/locales/{locale}.json",
+    "public/i18n/{locale}/{feature}.json"
   ],
   "formatOptions": {
     "json": {
@@ -32,9 +32,9 @@ This file should be committed to version control so your team shares the same co
       "nested": false
     }
   },
-  "customFileNames": {
-    "en-US": "english.json",
-    "fr-FR": "french.json"
+  "customLocaleNames": {
+    "en-US": "english",
+    "fr-FR": "french"
   }
 }
 ```
@@ -46,27 +46,35 @@ This file should be committed to version control so your team shares the same co
 **Type:** `string[]`  
 **Required:** Yes
 
-Defines glob patterns that match your localization files.
+Defines placeholder patterns that match your localization files. Each pattern **must** include the `{locale}` placeholder.
 
 ```json5
 {
   "localeFilePatterns": [
-    "src/locales/*.json",           // Basic pattern
-    "public/i18n/**/*.json",        // Recursive pattern
-    "assets/strings/*.strings",     // iOS strings files
-    "!src/locales/config.json"      // Exclusion pattern
+    "src/locales/{locale}.json",              // Simple locale files
+    "public/i18n/{locale}/{feature}.json",    // Namespaced by feature
+    "assets/strings/{locale}.strings",        // iOS strings files
+    "config/locales/{feature}.{locale}.yml"   // Feature-first naming
   ]
 }
 ```
 
+**Placeholder Syntax:**
+
+| Placeholder | Description | Example |
+|-------------|-------------|----------|
+| `{locale}` | **Required** - Locale identifier | `en`, `fr-FR`, `es-ES` |
+| `{feature}` | Optional - Feature/namespace name | `common`, `auth`, `dashboard` |
+| `{namespace}` | Optional - Alternative to feature | `header`, `footer`, `modal` |
+
 **Pattern Examples:**
 
-| Pattern | Matches |
-|---------|---------|
-| `src/*.json` | `src/en.json`, `src/fr.json` |
-| `locales/**/*.json` | `locales/en/common.json`, `locales/fr/auth.json` |
-| `*.{json,yaml}` | `en.json`, `fr.yaml` |
-| `!**/test.json` | Excludes any `test.json` files |
+| Pattern | Matches | Structure |
+|---------|---------|----------|
+| `src/{locale}.json` | `src/en.json`, `src/fr.json` | Simple structure |
+| `locales/{locale}/{feature}.json` | `locales/en/common.json`, `locales/fr/auth.json` | Locale-first namespacing |
+| `i18n/{feature}.{locale}.json` | `i18n/common.en.json`, `i18n/auth.fr.json` | Feature-first namespacing |
+| `assets/{locale}/strings.xml` | `assets/en/strings.xml`, `assets/fr/strings.xml` | Folder-based locales |
 
 ### formatOptions
 
@@ -105,41 +113,47 @@ Controls how different file formats are processed and generated.
 #### Strings Options
 None
 
-### customFileNames
+### customLocaleNames
 
 **Type:** `object`  
 **Required:** No
 
-Maps locale codes to specific file or folder names when they don't follow standard naming conventions.
+Maps your company's locale codes to the actual file or folder names in your project when they don't match.
 
 ```json
 {
-  "customFileNames": {
-    "en-US": "english.json",
-    "fr-FR": "french.json", 
-    "es-ES": "spanish.json",
-    "zh-CN": "chinese-simplified.json"
+  "customLocaleNames": {
+    "en-US": "english",
+    "fr-FR": "french", 
+    "es-ES": "spanish",
+    "zh-CN": "chinese-simplified"
   }
 }
 ```
 
 **Use Cases:**
-- Legacy naming conventions
+- Legacy naming conventions that can't be changed
 - Simplified locale names (`fr` instead of `fr-FR`)
-- Descriptive filenames
-- Platform-specific naming requirements
+- Descriptive filenames in existing projects
+- Platform-specific naming requirements (iOS: `en.lproj`)
+
+**How it works:**
+- Company locale `"fr-FR"` maps to file/folder name `"french"`  
+- Pattern `src/{locale}.json` resolves to `src/french.json`
+- Gleef treats this file as containing `fr-FR` translations
 
 ## Advanced Configuration Examples
 
 ### Multi-Module Project
 
-```json
+<CodeGroup>
+
+```json Configuration
 {
   "localeFilePatterns": [
-    "apps/web/src/locales/*.json",
-    "apps/mobile/assets/i18n/*.json", 
-    "packages/shared/locales/*.json",
-    "!**/*test*.json"
+    "apps/web/src/locales/{locale}.json",
+    "apps/mobile/assets/i18n/{locale}.json", 
+    "packages/shared/locales/{locale}/{feature}.json"
   ],
   "formatOptions": {
     "json": {
@@ -149,14 +163,35 @@ Maps locale codes to specific file or folder names when they don't follow standa
 }
 ```
 
-### Mixed Format Project
+```bash File Structure
+apps/
+├── web/src/locales/
+│   ├── en.json
+│   └── fr.json
+├── mobile/assets/i18n/
+│   ├── en.json
+│   └── fr.json
+packages/shared/locales/
+├── en/
+│   ├── common.json
+│   └── auth.json
+└── fr/
+    ├── common.json
+    └── auth.json
+```
 
-```json
+</CodeGroup>
+
+### Cross-Platform Project
+
+<CodeGroup>
+
+```json Configuration
 {
   "localeFilePatterns": [
-    "src/locales/*.json",
-    "ios/MyApp/*.lproj/*.strings",
-    "android/app/src/main/res/values*/*.xml"
+    "src/web/{locale}.json",
+    "ios/MyApp/{locale}.lproj/Localizable.strings",
+    "android/app/src/main/res/values-{locale}/strings.xml"
   ],
   "formatOptions": {
     "json": {
@@ -166,21 +201,46 @@ Maps locale codes to specific file or folder names when they don't follow standa
       "nested": false
     }
   },
-  "customFileNames": {
-    "en-US": "LocalizableEn.strings",
-    "fr-FR": "LocalizableFr.strings"
+  "customLocaleNames": {
+    "en-US": "en",
+    "fr-FR": "fr",
+    "es-ES": "es"
   }
 }
 ```
 
-### Monorepo Configuration
+```bash File Structure
+src/web/
+├── en.json
+├── fr.json
+└── es.json
+ios/MyApp/
+├── en.lproj/
+│   └── Localizable.strings
+├── fr.lproj/
+│   └── Localizable.strings
+└── es.lproj/
+    └── Localizable.strings
+android/app/src/main/res/
+├── values-en/
+│   └── strings.xml
+├── values-fr/
+│   └── strings.xml
+└── values-es/
+    └── strings.xml
+```
 
-```json
+</CodeGroup>
+
+### Namespace-Organized Project
+
+<CodeGroup>
+
+```json Configuration
 {
   "localeFilePatterns": [
-    "packages/*/src/locales/*.json",
-    "apps/*/locales/**/*.json",
-    "shared/i18n/*.{json,yaml}"
+    "i18n/{feature}.{locale}.yml",
+    "locales/{locale}/{feature}.json"
   ],
   "formatOptions": {
     "json": {
@@ -192,6 +252,23 @@ Maps locale codes to specific file or folder names when they don't follow standa
   }
 }
 ```
+
+```bash File Structure
+i18n/
+├── common.en.yml
+├── common.fr.yml
+├── auth.en.yml
+└── auth.fr.yml
+locales/
+├── en/
+│   ├── dashboard.json
+│   └── settings.json
+└── fr/
+    ├── dashboard.json
+    └── settings.json
+```
+
+</CodeGroup>
 
 ## File Structure Examples
 
@@ -276,19 +353,25 @@ Maps locale codes to specific file or folder names when they don't follow standa
 
 ### Common Validation Errors
 
-**Invalid Pattern:**
+**Missing Locale Placeholder:**
 ```
-Error: Pattern 'src/**.json' is invalid. Use 'src/**/*.json' for recursive matching.
+Error: No {locale} placeholder found in pattern: src/translations/*.json
 ```
 
 **No Files Matched:**
 ```
-Warning: Pattern 'locales/*.json' matched no files. Check your file structure.
+Warning: Pattern 'locales/{locale}.json' matched no files. Check your file structure.
 ```
 
-**Format Conflict:**
+**Invalid Pattern Syntax:**
 ```
-Error: File 'en.json' matches multiple patterns with different format options.
+Error: File path structure doesn't match pattern: src/en/common.json vs src/{locale}.json
+```
+
+**Locale Mapping Issues:**
+```
+Warning: Some translations for locale 'fr' have been generated but not written locally.
+Check your customLocaleNames configuration.
 ```
 
 ## Troubleshooting

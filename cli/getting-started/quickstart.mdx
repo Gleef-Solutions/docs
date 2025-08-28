@@ -31,30 +31,78 @@ Before starting, make sure you have:
     ```
     
     This command will:
-    - Scan your project for localization files
+    - Prompt you to enter your locale file pattern using `{locale}` placeholder
+    - Validate the pattern by loading your existing files
+    - Map file/folder names to company locales if needed
     - Create a `.gleef/config.json` configuration file
-    - Set up file patterns for your locale files
     
-    <Info>The init command respects your `.gitignore` file and skips common configuration files.</Info>
+    ### Common Patterns by Technology
+    
+    Here are typical patterns you might enter based on your stack:
+    
+    <CodeGroup>
+    
+    ```bash React/Next.js
+    public/locales/{locale}.json
+    # or for namespaced:
+    src/locales/{locale}/{feature}.json
+    ```
+    
+    ```bash Vue/Nuxt.js
+    locales/{locale}.json
+    # or for namespaced:
+    lang/{locale}/{feature}.json
+    ```
+    
+    ```bash Angular
+    src/assets/i18n/{locale}.json
+    # or for feature-based:
+    src/app/{feature}/i18n/{locale}.json
+    ```
+    
+    ```bash iOS (Swift)
+    ios/MyApp/{locale}/{feature}.strings
+    ```
+    
+    ```bash Android
+    android/app/src/main/res/{locale}/strings.xml
+    ```
+    
+    ```bash Rails
+    config/locales/{locale}.yml
+    # or for namespaced:
+    config/locales/{locale}/{feature}.yml
+    ```
+    
+    ```bash Laravel
+    lang/{locale}.json
+    # or for PHP arrays:
+    resources/lang/{locale}/{feature}.php
+    ```
+    
+    </CodeGroup>
+    
+    <Info>Always use the `{locale}` placeholder in your pattern - it's required for proper locale detection.</Info>
   </Step>
 
-  <Step title="Review detected files">
-    After initialization, you'll see output similar to:
+  <Step title="Complete the setup">
+    After entering your pattern and mapping any locales, you'll see output like:
     
-    ```
-    ✔ 2 new patterns added successfully
-    locales/*.json,src/i18n/*.json
+    ```bash
+    ✔ One pattern added successfully. You can add more in your config file.
+    src/locales/{locale}.json
     Run `gleef translate` to start translating
+    To customize nested/flat output per format, edit the formatOptions in .gleef/config.json
     ```
     
-    Check the generated `.gleef/config.json` file to verify the detected patterns are correct.
+    Check the generated `.gleef/config.json` file to verify the configuration matches your project structure.
   </Step>
 
   <Step title="Push your first translations">
     Upload your existing translation keys to Gleef for AI translation:
     
     ```bash
-    gleef translate --skip-review
+    gleef push --skip-review
     ```
     
     This will:
@@ -111,15 +159,24 @@ After running `gleef init`, you'll have a `.gleef/config.json` file like this:
 ```json
 {
   "localeFilePatterns": [
-    "src/locales/*.json"
+    "src/locales/{locale}.json"
   ],
   "formatOptions": {
     "json": {
       "nested": true
     }
+  },
+  "customLocaleNames": {
+    "en-US": "english",
+    "fr-FR": "french"
   }
 }
 ```
+
+The configuration includes:
+- **localeFilePatterns**: Your pattern with `{locale}` placeholder
+- **formatOptions**: Auto-detected based on your file types
+- **customLocaleNames**: Only added if your files don't match standard locale names
 
 ## Common Workflows
 <Info>All commands can be added to your CI/CD or build scripts to automate updating or creating translations.</Info>
