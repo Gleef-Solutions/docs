@@ -13,11 +13,12 @@ gleef pull
 
 ## Options
 
-| Flag      | Short | Description                                                                                   |
-|-----------|-------|-----------------------------------------------------------------------------------------------|
-| `--all`   | `-a`  | Creates new localization keys if they are not in the current locale files                     |
-| `--check` | `-c`  | Checks for new translations without updating them (returns error if translations are missing) |
-| `--match` | `-m`  | Filter incoming translations by key pattern                      |
+| Flag         | Short | Description                                                                                   |
+|--------------|-------|-----------------------------------------------------------------------------------------------|
+| `--add-new`  | `-a`  | Creates new localization keys if they are not in the current locale files                     |
+| `--check`    | `-c`  | Checks for new translations without updating them (returns error if translations are missing) |
+| `--match`    | `-m`  | Filter incoming translations by key pattern                                                   |
+| `--namespace`| `-n`  | Filter translations by namespace/file pattern (e.g., "auth" or "auth\|common")                |
 
 ## What it does
 
@@ -41,18 +42,26 @@ This updates existing keys with new translations but doesn't add new keys.
 ### Add New Translations
 
 ```bash
-gleef pull --all
+gleef pull --add-new
 ```
 
 This updates existing keys AND adds new translation keys that were created remotely.
 
-### Filter
+### Filter by Key Pattern
 
 ```bash
-gleef pull (--all) --match "feature.*"
+gleef pull --match "feature.*"
 ```
 
 Only pulls keys matching the pattern (supports wildcards and regex).
+
+### Filter by Namespace
+
+```bash
+gleef pull --namespace "auth"
+```
+
+Only pulls translations from files matching the namespace pattern. Useful for projects with multiple namespace/feature files.
 
 ### Check for Updates
 
@@ -80,10 +89,10 @@ fr-FR
 Translation files updated successfully.
 ```
 
-### New Keys Available (with --all)
+### New Keys Available (with --add-new)
 
 ```bash
-$ gleef pull --all
+$ gleef pull --add-new
 The following translations will be updated:
 en-US
   welcome.title
@@ -110,32 +119,72 @@ $ gleef pull --check
 Translations check: 3 translations are outdated. Please run `gleef pull` to update them.
 ```
 
-## The --all Flag
+## The --add-new Flag
 
-By default, `pull` only updates existing keys. Use `--all` to also add new keys:
+By default, `pull` only updates existing keys. Use `--add-new` to also add new keys:
 
-### Without --all (default)
+### Without --add-new (default)
 
 - ✅ Updates existing translation values
 - ❌ Ignores new keys created remotely
 - ✅ Safe for stable releases
 
-### With --all
+### With --add-new
 
-- ✅ Updates existing translation values  
+- ✅ Updates existing translation values
 - ✅ Adds new keys created remotely
 - ⚠️ May require code changes to handle new keys
 
-## Pattern Matching with --all
+## Filtering Options
 
-When using `--all`, you can filter which new keys to add:
+### Pattern Matching with --add-new
+
+When using `--add-new`, you can filter which new keys to add:
 
 ```bash
 # Only add new keys matching the pattern
-gleef pull --all --match "components.*"
+gleef pull --add-new --match "components.*"
 
 # Add new keys for specific features
-gleef pull --all --match "auth.*|profile.*"
+gleef pull --add-new --match "auth.*|profile.*"
+```
+
+### Namespace Filtering
+
+Filter translations by namespace/file pattern. This is useful when you have multiple namespaced files per locale:
+
+```bash
+# Pull only auth-related translations
+gleef pull --namespace "auth"
+
+# Pull multiple namespaces using pipe syntax
+gleef pull --namespace "auth|common"
+
+# Combine with --add-new to add keys only to specific namespaces
+gleef pull --add-new --namespace "auth"
+
+# Combine with --match for fine-grained control
+gleef pull --namespace "components" --match "button.*"
+```
+
+**Example Use Case:**
+
+If your project structure is:
+```
+locales/
+  en/
+    auth.json
+    common.json
+    components.json
+  fr/
+    auth.json
+    common.json
+    components.json
+```
+
+You can pull updates for just the auth namespace:
+```bash
+gleef pull --namespace "auth"
 ```
 
 ## Multiple File Namespaces
@@ -143,7 +192,7 @@ gleef pull --all --match "auth.*|profile.*"
 If your project has multiple files per locale, you'll be prompted to choose where new keys should be added:
 
 ```bash
-$ gleef pull --all
+$ gleef pull --add-new
 Multiple files found for some locales. Choose which file pattern to add new translations to:
 > Files matching: src/locales/*.json
   Files matching: src/components/*.json
@@ -166,11 +215,21 @@ The `pull` command is designed to be safe:
 
 ```bash
 # Pull new keys added by other team members
-gleef pull --all --match "newfeature.*"
+gleef pull --add-new --match "newfeature.*"
 
 # Integrate the keys into your code
 # Then push your own translations
 gleef translate
+```
+
+### Namespace-Specific Updates
+
+```bash
+# Pull updates only for authentication files
+gleef pull --namespace "auth"
+
+# Pull and add new keys for multiple namespaces
+gleef pull --add-new --namespace "auth|common"
 ```
 
 ### Release Preparation (No CI)
@@ -191,7 +250,7 @@ if ! gleef pull --check; then
 fi
 
 # Or automatically update in CI
-gleef pull --all --skip-confirm
+gleef pull --add-new --skip-confirm
 ```
 
 ## Error Handling
@@ -236,7 +295,7 @@ If you see many unexpected changes:
 
 If expected translations aren't appearing:
 
-1. **Use --all flag** - New keys require the `--all` flag
+1. **Use --add-new flag** - New keys require the `--add-new` flag
 2. **Check patterns** - Ensure your `--match` pattern is correct
 3. **Verify approval** - Translations must be approved in Gleef Studio
 
@@ -256,8 +315,9 @@ If you have local changes that conflict:
 {
   "scripts": {
     "i18n:pull": "gleef pull",
-    "i18n:pull:all": "gleef pull --all",
-    "i18n:check": "gleef pull --check"
+    "i18n:pull:all": "gleef pull --add-new",
+    "i18n:check": "gleef pull --check",
+    "i18n:pull:namespace": "gleef pull --namespace"
   }
 }
 ```

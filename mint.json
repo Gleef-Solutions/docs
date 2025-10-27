@@ -172,7 +172,8 @@
       ]
     },
     {
-      "group": "Configurations",
+      "group": "A/B Testing",
+      "icon": "flask-conical",
       "pages": [
         {
           "group": "Getting Started",
@@ -208,12 +209,7 @@
             "ab-testing/how-to/monitor",
             "ab-testing/how-to/success-event"
           ]
-        }
-      ]
-    },
-    {
-      "group": "Advanced",
-      "pages": [
+        },
         {
           "group": "Best Practices",
           "icon": "shield-check",

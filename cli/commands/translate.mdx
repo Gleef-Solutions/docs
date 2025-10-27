@@ -22,6 +22,7 @@ gleef push
 | Flag | Short | Description |
 |------|-------|-------------|
 | `--match` | `-m` | Filter translations by key pattern |
+| `--namespace` | `-n` | Filter translations by namespace/file pattern (e.g., "auth" or "auth\|common") |
 | `--skip-review` | `-s` | Publish translations immediately instead of creating drafts |
 
 ## What it does
@@ -45,13 +46,21 @@ gleef translate
 
 This will process all new and modified translation keys in your project.
 
-### Filter by Pattern
+### Filter by Key Pattern
 
 ```bash
 gleef translate --match "button.*"
 ```
 
 Only processes keys matching the pattern (supports wildcards and regex).
+
+### Filter by Namespace
+
+```bash
+gleef translate --namespace "auth"
+```
+
+Only processes translations from files matching the namespace pattern. Useful for projects with multiple namespace/feature files.
 
 ### Skip Review Process
 
@@ -230,6 +239,39 @@ gleef pull --match "checkout.*"
 gleef translate --match "nav.*|menu.*|header.*"
 ```
 
+### Namespace-Specific Translation
+
+```bash
+# Translate only authentication-related files
+gleef translate --namespace "auth"
+
+# Translate multiple namespaces
+gleef translate --namespace "auth|common"
+
+# Combine namespace and pattern filtering
+gleef translate --namespace "components" --match "button.*"
+```
+
+**Example Use Case:**
+
+If your project structure is:
+```
+locales/
+  en/
+    auth.json
+    common.json
+    components.json
+  fr/
+    auth.json
+    common.json
+    components.json
+```
+
+You can push translations for just the auth namespace:
+```bash
+gleef translate --namespace "auth"
+```
+
 ## Error Handling
 
 ### Common Errors
@@ -284,7 +326,8 @@ gleef translate --match "$(git diff --name-only --cached | grep -E '\.(json|xml|
   "scripts": {
     "i18n:push": "gleef translate",
     "i18n:push:publish": "gleef translate --skip-review",
-    "i18n:push:feature": "gleef translate --match"
+    "i18n:push:feature": "gleef translate --match",
+    "i18n:push:namespace": "gleef translate --namespace"
   }
 }
 ```

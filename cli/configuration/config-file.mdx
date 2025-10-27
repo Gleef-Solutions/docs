@@ -35,7 +35,8 @@ This file should be committed to version control so your team shares the same co
   "customLocaleNames": {
     "en-US": "english",
     "fr-FR": "french"
-  }
+  },
+  "prependNamespaceToKeys": false
 }
 ```
 
@@ -115,7 +116,7 @@ None
 
 ### customLocaleNames
 
-**Type:** `object`  
+**Type:** `object`
 **Required:** No
 
 Maps your company's locale codes to the actual file or folder names in your project when they don't match.
@@ -124,7 +125,7 @@ Maps your company's locale codes to the actual file or folder names in your proj
 {
   "customLocaleNames": {
     "en-US": "english",
-    "fr-FR": "french", 
+    "fr-FR": "french",
     "es-ES": "spanish",
     "zh-CN": "chinese-simplified"
   }
@@ -138,9 +139,55 @@ Maps your company's locale codes to the actual file or folder names in your proj
 - Platform-specific naming requirements (iOS: `en.lproj`)
 
 **How it works:**
-- Company locale `"fr-FR"` maps to file/folder name `"french"`  
+- Company locale `"fr-FR"` maps to file/folder name `"french"`
 - Pattern `src/{locale}.json` resolves to `src/french.json`
 - Gleef treats this file as containing `fr-FR` translations
+
+### prependNamespaceToKeys
+
+**Type:** `boolean`
+**Required:** No
+**Default:** `false`
+
+Automatically prepends the namespace/file name to translation keys when pushing to Gleef's remote storage. This is useful when you have multiple namespace files per locale and want to keep keys unique across files remotely while maintaining simple keys locally.
+
+```json
+{
+  "prependNamespaceToKeys": true
+}
+```
+
+**How it works:**
+
+When enabled, translation keys are transformed before being sent to Gleef:
+
+**Local file structure:**
+```
+locales/
+  en/
+    auth.json    → { "loginButton": "Log In" }
+    common.json  → { "loginButton": "Sign In" }
+```
+
+Without `prependNamespaceToKeys` (default):
+- Both files have key `loginButton`
+- Conflict: Remote storage can't distinguish between them
+
+With `prependNamespaceToKeys: true`:
+- `auth.json` → Remote key: `auth.loginButton`
+- `common.json` → Remote key: `common.loginButton`
+- No conflict: Keys are unique remotely
+
+**Use Cases:**
+- Projects with multiple namespace files per locale
+- Preventing key naming conflicts across different feature files
+- Maintaining simple local key names while having unique remote keys
+- Working with modular translation architectures
+
+**Important:**
+- Keys are only transformed for remote storage - local files remain unchanged
+- When pulling translations, namespace prefixes are automatically stripped
+- Works seamlessly with the `--namespace` flag for filtering
 
 ## Advanced Configuration Examples
 
@@ -269,6 +316,52 @@ locales/
 ```
 
 </CodeGroup>
+
+### Namespace Project with Key Prepending
+
+<CodeGroup>
+
+```json Configuration
+{
+  "localeFilePatterns": [
+    "locales/{locale}/{feature}.json"
+  ],
+  "formatOptions": {
+    "json": {
+      "nested": true
+    }
+  },
+  "prependNamespaceToKeys": true
+}
+```
+
+```bash File Structure
+locales/
+├── en/
+│   ├── auth.json       → { "loginButton": "Log In", "signupButton": "Sign Up" }
+│   ├── common.json     → { "loginButton": "Sign In", "cancel": "Cancel" }
+│   └── dashboard.json  → { "welcome": "Welcome" }
+└── fr/
+    ├── auth.json       → { "loginButton": "Se connecter", "signupButton": "S'inscrire" }
+    ├── common.json     → { "loginButton": "Connexion", "cancel": "Annuler" }
+    └── dashboard.json  → { "welcome": "Bienvenue" }
+```
+
+```json Remote Keys (with prependNamespaceToKeys)
+{
+  "en": {
+    "auth.loginButton": "Log In",
+    "auth.signupButton": "Sign Up",
+    "common.loginButton": "Sign In",
+    "common.cancel": "Cancel",
+    "dashboard.welcome": "Welcome"
+  }
+}
+```
+
+</CodeGroup>
+
+This configuration solves the duplicate key problem where `loginButton` appears in both `auth.json` and `common.json`. With `prependNamespaceToKeys: true`, they become unique remote keys: `auth.loginButton` and `common.loginButton`.
 
 ## File Structure Examples
 
