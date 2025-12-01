@@ -100,16 +100,18 @@ Before starting, make sure you have:
 
   <Step title="Push your first translations">
     Upload your existing translation keys to Gleef for AI translation:
-    
+
     ```bash
-    gleef push --skip-review
+    gleef translate --skip-review
     ```
-    
+
     This will:
     - Analyze your local translation files
     - Send new keys to Gleef for AI translation
     - Publish all translations without asking your team for review (similar to an initial commit)
-    
+
+    <Note>Use `gleef translate` for AI-powered translation. Use `gleef push` only when uploading manual edits without generating translation.</Note>
+
     You'll see progress output like:
     ```
     Processing 15 new translations

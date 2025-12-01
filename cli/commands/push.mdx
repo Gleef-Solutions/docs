@@ -1,0 +1,304 @@
+---
+title: gleef push
+description: 'Push translation changes to Gleef without triggering AI translation'
+---
+
+The `gleef push` command uploads your translation changes to Gleef without triggering AI translation. Use this command when you want to push manually edited translations or updates to existing keys.
+
+<Note>To push changes AND generate AI translations for new keys, use `gleef translate` instead.</Note>
+
+## Usage
+
+```bash
+gleef push
+```
+
+## Options
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--match` | `-m` | Filter translations by key pattern |
+| `--namespace` | `-n` | Filter translations by namespace/file pattern (e.g., "auth" or "auth\|common") |
+| `--skip-review` | `-s` | Publish translations immediately instead of creating drafts |
+
+## What it does
+
+The `push` command:
+
+1. **Analyzes local files** - Compares your local translations with remote state
+2. **Detects changes** - Identifies new keys and modified translations
+3. **Handles conflicts** - Checks for conflicts with remote edits
+4. **Uploads changes** - Pushes your translations to Gleef without AI translation
+5. **Creates drafts** - Sets up translations for team review (unless `--skip-review` is used)
+
+<Warning>This command does NOT trigger AI translation. It only uploads your manual changes. Use `gleef translate` to generate AI translations.</Warning>
+
+## Basic Usage
+
+### Push All Changes
+
+```bash
+gleef push
+```
+
+This will upload all new and modified translation keys in your project without generating AI translations.
+
+### Filter by Key Pattern
+
+```bash
+gleef push --match "button.*"
+```
+
+Only pushes keys matching the pattern (supports wildcards and regex).
+
+### Filter by Namespace
+
+```bash
+gleef push --namespace "auth"
+```
+
+Only pushes translations from files matching the namespace pattern. Useful for projects with multiple namespace/feature files.
+
+### Skip Review Process
+
+```bash
+gleef push --skip-review
+```
+
+Publishes translations immediately without creating drafts for review.
+
+## Example Output
+
+### Pushing Changes
+
+```bash
+$ gleef push
+Pushing 5 edited translations
+✔ Changes pushed successfully. Your team can review them from Gleef Studio.
+```
+
+### No Changes to Push
+
+```bash
+$ gleef push
+Nothing to push
+```
+
+## Pattern Matching
+
+The `--match` flag supports flexible pattern matching:
+
+### Wildcard Patterns
+
+```bash
+# Match all button-related keys
+gleef push --match "button.*"
+
+# Match all keys in a specific namespace
+gleef push --match "auth.*"
+
+# Match keys with specific suffixes
+gleef push --match "*.title"
+```
+
+### Complex Patterns
+
+```bash
+# Match multiple patterns (OR logic)
+gleef push --match "button.*|nav.*"
+
+# Match nested keys
+gleef push --match "components.*.label"
+```
+
+## Conflict Resolution
+
+If there are conflicts with remotely edited translations, the command will stop and show details:
+
+```bash
+$ gleef push
+en-US
+  welcome.title
+    Local value: Welcome to our app
+    Remote value: Welcome to our application
+
+Conflict with remotely edited translations. Update keys with the remote value, or change them from the webapp.
+```
+
+### Resolving Conflicts
+
+1. **Update locally** - Change your local value to match the remote
+2. **Update remotely** - Change the value in Gleef Studio
+3. **Pull first** - Run `gleef pull` to get latest changes, then push
+
+## When to Use Push vs Translate
+
+| Use `gleef push` when... | Use `gleef translate` when... |
+|--------------------------|-------------------------------|
+| You've manually edited translations | You have new keys that need AI translation |
+| You want to upload changes without translation | You want AI to generate translations |
+| You're updating existing translations | You're adding new content |
+| You have translations from another source | You want to leverage AI translation |
+
+## Review Workflow
+
+### Default Behavior (Draft Mode)
+
+By default, changes are pushed as drafts for team review:
+
+1. **Changes uploaded** - Your edits are pushed to Gleef
+2. **Drafts created** - Changes are marked as drafts in Gleef Studio
+3. **Team reviews** - Your team can review and approve in Gleef Studio
+4. **Pull approved** - Use `gleef pull` to sync approved translations
+
+### Skip Review Mode
+
+With `--skip-review`, changes are published immediately:
+
+```bash
+gleef push --skip-review
+```
+
+This is useful for:
+- Automated workflows
+- Non-critical updates
+- When you don't need team review
+
+## Examples
+
+### Development Workflow
+
+```bash
+# Edit translations in your local files
+# Then push changes without translation
+gleef push
+
+# Ask for review in Gleef Studio
+# Pull approved translations
+gleef pull
+```
+
+### Feature Development
+
+```bash
+# Push only specific feature translations
+gleef push --match "checkout.*"
+
+# Test the changes
+gleef pull --match "checkout.*"
+```
+
+### Namespace-Specific Push
+
+```bash
+# Push only authentication-related files
+gleef push --namespace "auth"
+
+# Push multiple namespaces
+gleef push --namespace "auth|common"
+
+# Combine namespace and pattern filtering
+gleef push --namespace "components" --match "button.*"
+```
+
+**Example Use Case:**
+
+If your project structure is:
+```
+locales/
+  en/
+    auth.json
+    common.json
+    components.json
+  fr/
+    auth.json
+    common.json
+    components.json
+```
+
+You can push changes for just the auth namespace:
+```bash
+gleef push --namespace "auth"
+```
+
+## Error Handling
+
+### Common Errors
+
+**Authentication Error:**
+```bash
+Couldn't push translations: Authentication failed
+```
+*Solution:* Run `gleef login` to re-authenticate
+
+**Configuration Error:**
+```bash
+Couldn't push translations: No locale files found
+```
+*Solution:* Run `gleef init` or check your `.gleef/config.json`
+
+**Network Error:**
+```bash
+Couldn't push translations: Network request failed
+```
+*Solution:* Check internet connection and try again
+
+**File Format Error:**
+```bash
+Couldn't push translations: Invalid JSON in locale file
+```
+*Solution:* Fix JSON syntax errors in your locale files
+
+## Best Practices
+
+<Tip>Always pull latest changes before pushing to avoid conflicts.</Tip>
+
+1. **Pull latest changes** - `gleef pull` to get recent updates
+2. **Use patterns for targeted updates** - Filter with `--match` for focused pushes
+3. **Review in Gleef Studio** - Check translations quality and ask for review
+4. **Coordinate with team** - Ensure reviewers know about pending changes
+
+## Integration Examples
+
+### NPM Scripts
+
+```json
+{
+  "scripts": {
+    "i18n:push": "gleef push",
+    "i18n:push:publish": "gleef push --skip-review",
+    "i18n:push:feature": "gleef push --match",
+    "i18n:push:namespace": "gleef push --namespace"
+  }
+}
+```
+
+### GitHub Actions
+
+```yaml
+- name: Push translations
+  run: |
+    gleef login --key ${{ secrets.GLEEF_API_KEY }}
+    gleef push --skip-review
+```
+
+## Next Steps
+
+After pushing changes:
+
+<CardGroup cols={2}>
+    <Card
+        title="Review in Studio"
+        icon="eye"
+        href=""
+    >
+        Review and approve translations in Gleef Studio
+    </Card>
+    <Card
+        title="Pull Updates"
+        icon="download"
+        href="/cli/commands/pull"
+    >
+        Sync approved translations back to your project
+    </Card>
+</CardGroup>

@@ -30,6 +30,13 @@ Gleef CLI provides a simple set of commands to manage your translation workflow.
         Push translation keys to Gleef for AI-powered translation
     </Card>
     <Card
+        title="gleef push"
+        icon="upload"
+        href="/cli/commands/push"
+    >
+        Push translation changes to Gleef without AI translation
+    </Card>
+    <Card
         title="gleef pull"
         icon="download"
         href="/cli/commands/pull"
@@ -46,16 +53,9 @@ Gleef CLI provides a simple set of commands to manage your translation workflow.
 |---------|---------|-------------|
 | `gleef init` | Project setup | First time setting up Gleef in a project |
 | `gleef login` | Authentication | When setting up CLI or changing API keys |
-| `gleef translate` | Push translations | When you have new or modified translation keys |
+| `gleef translate` | AI-powered translation | When you have new keys that need AI translation |
+| `gleef push` | Push changes only | When you want to upload manual edits without AI translation |
 | `gleef pull` | Sync translations | When you want to get latest translations from your team |
-
-### Command Aliases
-
-Some commands have convenient aliases:
-
-| Command | Alias | Description |
-|---------|-------|-------------|
-| `gleef translate` | `gleef push` | Both commands perform the same function |
 
 ## Global Flags
 
@@ -74,6 +74,7 @@ Get help for any command using the `--help` flag:
 gleef --help              # General help
 gleef init --help         # Help for init command
 gleef translate --help    # Help for translate command
+gleef push --help         # Help for push command
 gleef pull --help         # Help for pull command
 ```
 
@@ -83,6 +84,7 @@ You can also use the dedicated help command:
 gleef help                # General help
 gleef help init           # Help for init command
 gleef help translate      # Help for translate command
+gleef help push           # Help for push command
 ```
 
 ## Command Workflow
