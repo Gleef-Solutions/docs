@@ -189,6 +189,153 @@ With `prependNamespaceToKeys: true`:
 - When pulling translations, namespace prefixes are automatically stripped
 - Works seamlessly with the `--namespace` flag for filtering
 
+### placeholderTransformation
+
+**Type:** `string | "default" | "none"`
+**Required:** No
+**Default:** `"none"` (transformation disabled)
+
+Automatically converts placeholders between platform-specific formats and Gleef's universal ICU MessageFormat. This enables seamless cross-platform development where different platforms use different placeholder syntaxes.
+
+```json
+{
+  "placeholderTransformation": "default"
+}
+```
+
+**Configuration Options:**
+
+| Value | Description |
+|-------|-------------|
+| `"none"` | Disabled - No transformation (default) |
+| `"default"` | Use smart defaults based on file extension |
+| `"ios"` | Force iOS format (`%@`, `%d`, `%1$@`) |
+| `"android"` | Force Android format (`%s`, `%d`, `%1$s`) |
+| `"printf"` | Force printf format (`%s`, `%d`, `%f`) |
+| `"icu"` | Force ICU MessageFormat (`{variable}`, `{count:integer}`) |
+
+**Default Format Mappings:**
+
+When using `"default"`, file extensions automatically determine the format:
+
+| File Extension | Platform Format | Example Placeholder |
+|----------------|-----------------|---------------------|
+| `.json` | ICU MessageFormat | `{userName}`, `{count:integer}` |
+| `.strings` | iOS | `%@`, `%d`, `%1$@` |
+| `.xml` | Android | `%s`, `%d`, `%1$s` |
+| `.yaml`, `.yml` | printf | `%s`, `%d`, `%f` |
+
+**How it works:**
+
+Gleef stores all translations using ICU MessageFormat internally. When you push/pull:
+- **Push:** Converts your platform format → ICU format for remote storage
+- **Pull:** Converts ICU format → your platform format for local files
+
+**Platform Format Examples:**
+
+<CodeGroup>
+
+```swift iOS (.strings)
+// Local file format
+"greeting" = "Hello %@, you have %d messages";
+"profile" = "Welcome back, %1$@! Last login: %2$@";
+
+// Stored in Gleef as ICU
+"greeting" = "Hello {variable}, you have {variable2:integer} messages";
+"profile" = "Welcome back, {variable@1}! Last login: {variable@2}";
+```
+
+```xml Android (strings.xml)
+<!-- Local file format -->
+<string name="greeting">Hello %s, you have %d messages</string>
+<string name="profile">Welcome back, %1$s! Last login: %2$s</string>
+
+<!-- Stored in Gleef as ICU -->
+<string name="greeting">Hello {variable}, you have {variable2:integer} messages</string>
+<string name="profile">Welcome back, {variable@1}! Last login: {variable@2}</string>
+```
+
+```json Web (JSON with ICU)
+// Local file format (no transformation needed)
+{
+  "greeting": "Hello {userName}, you have {count:integer} messages",
+  "profile": "Welcome back, {userName}! Last login: {lastLogin}"
+}
+
+// Already in ICU format - stored as-is
+```
+
+```yaml Backend (YAML with printf)
+# Local file format
+greeting: "Hello %s, you have %d messages"
+profile: "Welcome back, %s! Last login: %s"
+
+# Stored in Gleef as ICU
+greeting: "Hello {variable}, you have {variable2:integer} messages"
+profile: "Welcome back, {variable}! Last login: {variable2}"
+```
+
+</CodeGroup>
+
+**Use Cases:**
+
+**Cross-Platform Projects:**
+```json
+{
+  "localeFilePatterns": [
+    "src/web/{locale}.json",
+    "ios/Resources/{locale}.lproj/Localizable.strings",
+    "android/app/res/values-{locale}/strings.xml"
+  ],
+  "placeholderTransformation": "default"
+}
+```
+
+With this configuration:
+- Web JSON files use `{userName}` syntax (ICU)
+- iOS strings use `%@` syntax (iOS format)
+- Android XML uses `%s` syntax (Android format)
+- All convert to ICU when stored in Gleef
+- Each pulls back in its native format
+
+**Forcing a Specific Format:**
+```json
+{
+  "localeFilePatterns": [
+    "locales/{locale}.json"
+  ],
+  "placeholderTransformation": "android"
+}
+```
+
+This forces JSON files to use Android placeholder syntax (`%s`, `%d`) instead of the default ICU format.
+
+**Type Annotations:**
+
+Placeholders can include type information for better validation:
+
+| Type | iOS | Android | ICU |
+|------|-----|---------|-----|
+| String | `%@` | `%s` | `{variable}` |
+| Integer | `%d`, `%i` | `%d` | `{variable:integer}` |
+| Float | `%f` | `%f` | `{variable:float}` |
+
+**Positional Arguments:**
+
+Reorder placeholders in translations using positional markers:
+
+| Format | Syntax | Example |
+|--------|--------|---------|
+| iOS | `%1$@` | `%1$@ logged in at %2$@` |
+| Android | `%1$s` | `%1$s logged in at %2$s` |
+| ICU | `{variable@1}` | `{variable@1} logged in at {variable@2}` |
+
+**Important Notes:**
+- Transformation happens automatically during push/pull operations
+- Local files always maintain their native platform format
+- Translators see the universal ICU format in Gleef's platform
+- Conversion is deterministic and reversible
+
 ## Advanced Configuration Examples
 
 ### Multi-Module Project
@@ -252,7 +399,8 @@ packages/shared/locales/
     "en-US": "en",
     "fr-FR": "fr",
     "es-ES": "es"
-  }
+  },
+  "placeholderTransformation": "default"
 }
 ```
 
