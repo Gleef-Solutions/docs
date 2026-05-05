@@ -369,7 +369,7 @@ Error parsing YAML file: Invalid YAML syntax
 1. **Use pattern matching:**
    ```bash
    # Process specific keys only
-   gleef push --match "component.*"
+   gleef push --match "^component\."
    ```
 
 2. **Check file sizes:**
@@ -397,8 +397,8 @@ Error parsing YAML file: Invalid YAML syntax
 
 1. **Process files in batches:**
    ```bash
-   gleef push --match "auth.*"
-   gleef push --match "nav.*"
+   gleef push --match "^auth\."
+   gleef push --match "^nav\."
    ```
 
 2. **Reduce file sizes:** Split large translation files into smaller ones

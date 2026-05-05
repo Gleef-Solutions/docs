@@ -50,10 +50,12 @@ This updates existing keys AND adds new translation keys that were created remot
 ### Filter by Key Pattern
 
 ```bash
-gleef pull --match "feature.*"
+gleef pull --match "^feature\."
 ```
 
-Only pulls keys matching the pattern (supports wildcards and regex).
+Only pulls keys matching the pattern. The pattern is a JavaScript regular expression tested against each key (unanchored), with a fallback to a plain substring check if the pattern isn't valid regex.
+
+<Note>This is regex, not a glob. `.` matches any character and `*` means "zero or more of the previous character", so a pattern like `*.title` is invalid regex and won't behave like a glob. Use `\.title$` to match keys ending with `.title`.</Note>
 
 ### Filter by Namespace
 
@@ -143,10 +145,10 @@ When using `--add-new`, you can filter which new keys to add:
 
 ```bash
 # Only add new keys matching the pattern
-gleef pull --add-new --match "components.*"
+gleef pull --add-new --match "^components\."
 
 # Add new keys for specific features
-gleef pull --add-new --match "auth.*|profile.*"
+gleef pull --add-new --match "^(auth|profile)\."
 ```
 
 ### Namespace Filtering
@@ -164,7 +166,7 @@ gleef pull --namespace "auth|common"
 gleef pull --add-new --namespace "auth"
 
 # Combine with --match for fine-grained control
-gleef pull --namespace "components" --match "button.*"
+gleef pull --namespace "components" --match "^button\."
 ```
 
 **Example Use Case:**
@@ -215,7 +217,7 @@ The `pull` command is designed to be safe:
 
 ```bash
 # Pull new keys added by other team members
-gleef pull --add-new --match "newfeature.*"
+gleef pull --add-new --match "^newfeature\."
 
 # Integrate the keys into your code
 # Then push your own translations

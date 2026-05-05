@@ -138,8 +138,8 @@ gleef pull
 ### Advanced Usage
 
 ```bash
-# Push only specific keys matching a pattern
-gleef push --match "button.*"
+# Push only specific keys matching a pattern (regex)
+gleef push --match "^button\."
 
 # Get all translations including new keys
 gleef pull --add-new

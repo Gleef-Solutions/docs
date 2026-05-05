@@ -45,10 +45,10 @@ This will process all new and modified translation keys in your project.
 ### Filter by Key Pattern
 
 ```bash
-gleef translate --match "button.*"
+gleef translate --match "^button\."
 ```
 
-Only processes keys matching the pattern (supports wildcards and regex).
+Only processes keys matching the pattern. The pattern is a JavaScript regex (see [Pattern Matching](#pattern-matching) below).
 
 ### Filter by Namespace
 
@@ -96,29 +96,31 @@ Nothing new to translate
 
 ## Pattern Matching
 
-The `--match` flag supports flexible pattern matching:
+The `--match` flag accepts a JavaScript regular expression that is tested against each translation key. It is **unanchored**, so a pattern matches if it appears anywhere in the key. If the pattern isn't valid regex, it falls back to a plain substring check.
 
-### Wildcard Patterns
+<Note>This is regex, not a glob. `.` matches any character and `*` means "zero or more of the previous character", so a pattern like `*.title` is invalid regex and won't behave like a glob.</Note>
+
+### Common Patterns
 
 ```bash
-# Match all button-related keys
-gleef translate --match "button.*"
+# Match keys starting with "button."
+gleef translate --match "^button\."
 
-# Match all keys in a specific namespace
-gleef translate --match "auth.*"
+# Match keys ending with ".title"
+gleef translate --match "\.title$"
 
-# Match keys with specific suffixes
-gleef translate --match "*.title"
+# Match keys containing "auth."
+gleef translate --match "auth\."
 ```
 
 ### Complex Patterns
 
 ```bash
-# Match multiple patterns (OR logic)
-gleef translate --match "button.*|nav.*"
+# Match keys containing "button." OR "nav." (regex alternation)
+gleef translate --match "button\.|nav\."
 
-# Match nested keys
-gleef translate --match "components.*.label"
+# Match nested keys like components.<anything>.label
+gleef translate --match "^components\..+\.label$"
 ```
 
 ## Conflict Resolution
@@ -222,17 +224,17 @@ gleef pull
 
 ```bash
 # Work on a specific feature
-gleef translate --match "checkout.*"
+gleef translate --match "^checkout\."
 
 # Test the translations
-gleef pull --match "checkout.*"
+gleef pull --match "^checkout\."
 ```
 
 ### Bulk Updates
 
 ```bash
 # Translate all incomplete navigation-related text
-gleef translate --match "nav.*|menu.*|header.*"
+gleef translate --match "^(nav|menu|header)\."
 ```
 
 ### Namespace-Specific Translation
@@ -245,7 +247,7 @@ gleef translate --namespace "auth"
 gleef translate --namespace "auth|common"
 
 # Combine namespace and pattern filtering
-gleef translate --namespace "components" --match "button.*"
+gleef translate --namespace "components" --match "^button\."
 ```
 
 **Example Use Case:**

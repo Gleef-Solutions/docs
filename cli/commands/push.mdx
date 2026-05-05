@@ -46,10 +46,10 @@ This will upload all new and modified translation keys in your project.
 ### Filter by Key Pattern
 
 ```bash
-gleef push --match "button.*"
+gleef push --match "^button\."
 ```
 
-Only pushes keys matching the pattern (supports wildcards and regex).
+Only pushes keys matching the pattern. The pattern is a JavaScript regex (see [Pattern Matching](#pattern-matching) below).
 
 ### Filter by Namespace
 
@@ -87,29 +87,31 @@ Nothing new to push
 
 ## Pattern Matching
 
-The `--match` flag supports flexible pattern matching:
+The `--match` flag accepts a JavaScript regular expression that is tested against each translation key. It is **unanchored**, so a pattern matches if it appears anywhere in the key. If the pattern isn't valid regex, it falls back to a plain substring check.
 
-### Wildcard Patterns
+<Note>This is regex, not a glob. `.` matches any character and `*` means "zero or more of the previous character", so a pattern like `*.title` is invalid regex and won't behave like a glob.</Note>
+
+### Common Patterns
 
 ```bash
-# Match all button-related keys
-gleef push --match "button.*"
+# Match keys starting with "button."
+gleef push --match "^button\."
 
-# Match all keys in a specific namespace
-gleef push --match "auth.*"
+# Match keys ending with ".title"
+gleef push --match "\.title$"
 
-# Match keys with specific suffixes
-gleef push --match "*.title"
+# Match keys containing "auth."
+gleef push --match "auth\."
 ```
 
 ### Complex Patterns
 
 ```bash
-# Match multiple patterns (OR logic)
-gleef push --match "button.*|nav.*"
+# Match keys containing "button." OR "nav." (regex alternation)
+gleef push --match "button\.|nav\."
 
-# Match nested keys
-gleef push --match "components.*.label"
+# Match nested keys like components.<anything>.label
+gleef push --match "^components\..+\.label$"
 ```
 
 ## Conflict Resolution
@@ -182,10 +184,10 @@ gleef pull
 
 ```bash
 # Push only specific feature translations
-gleef push --match "checkout.*"
+gleef push --match "^checkout\."
 
 # Test the changes
-gleef pull --match "checkout.*"
+gleef pull --match "^checkout\."
 ```
 
 ### Namespace-Specific Push
@@ -198,7 +200,7 @@ gleef push --namespace "auth"
 gleef push --namespace "auth|common"
 
 # Combine namespace and pattern filtering
-gleef push --namespace "components" --match "button.*"
+gleef push --namespace "components" --match "^button\."
 ```
 
 **Example Use Case:**
