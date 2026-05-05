@@ -1,11 +1,11 @@
 ---
 title: gleef push
-description: 'Push translation changes to Gleef without triggering AI translation'
+description: 'Push local translations to Gleef'
 ---
 
-The `gleef push` command uploads your translation changes to Gleef without triggering AI translation. Use this command when you want to push manually edited translations or updates to existing keys.
+The `gleef push` command uploads your local translation changes (new keys and edits) to Gleef. It is the standard command for syncing your local files to Gleef.
 
-<Note>To push changes AND generate AI translations for new keys, use `gleef translate` instead.</Note>
+<Note>If you want Gleef to generate AI translations and merge them back into your local files in one step, use `gleef translate` instead.</Note>
 
 ## Usage
 
@@ -28,10 +28,10 @@ The `push` command:
 1. **Analyzes local files** - Compares your local translations with remote state
 2. **Detects changes** - Identifies new keys and modified translations
 3. **Handles conflicts** - Checks for conflicts with remote edits
-4. **Uploads changes** - Pushes your translations to Gleef without AI translation
+4. **Uploads changes** - Pushes your translations to Gleef
 5. **Creates drafts** - Sets up translations for team review (unless `--skip-review` is used)
 
-<Warning>This command does NOT trigger AI translation. It only uploads your manual changes. Use `gleef translate` to generate AI translations.</Warning>
+<Note>`gleef push` uploads what you have locally. Translations for missing locales are produced by Gleef after the push and become available via `gleef pull`. To generate AI translations and immediately write them back to your local files in one step, use `gleef translate`.</Note>
 
 ## Basic Usage
 
@@ -41,7 +41,7 @@ The `push` command:
 gleef push
 ```
 
-This will upload all new and modified translation keys in your project without generating AI translations.
+This will upload all new and modified translation keys in your project.
 
 ### Filter by Key Pattern
 
@@ -74,14 +74,15 @@ Publishes translations immediately without creating drafts for review.
 ```bash
 $ gleef push
 Pushing 5 edited translations
-✔ Changes pushed successfully. Your team can review them from Gleef Studio.
+⠋ Pushing translations to Gleef...
+✔ Your translations were pushed successfully.
 ```
 
 ### No Changes to Push
 
 ```bash
 $ gleef push
-Nothing to push
+Nothing new to push
 ```
 
 ## Pattern Matching
@@ -135,10 +136,9 @@ Conflict with remotely edited translations. Update keys with the remote value, o
 
 | Use `gleef push` when... | Use `gleef translate` when... |
 |--------------------------|-------------------------------|
-| You've manually edited translations | You have new keys that need AI translation |
-| You want to upload changes without translation | You want AI to generate translations |
-| You're updating existing translations | You're adding new content |
-| You have translations from another source | You want to leverage AI translation |
+| You're adding new keys (the standard workflow) | You want AI translations written back into your local files immediately |
+| You're updating existing translations | You need the AI output available locally before running `gleef pull` |
+| You have translations from another source | You want a single command that generates and merges translations locally |
 
 ## Review Workflow
 
@@ -169,8 +169,8 @@ This is useful for:
 ### Development Workflow
 
 ```bash
-# Edit translations in your local files
-# Then push changes without translation
+# Add or edit translations in your local files
+# Then push them to Gleef
 gleef push
 
 # Ask for review in Gleef Studio

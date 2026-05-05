@@ -91,7 +91,7 @@ Before starting, make sure you have:
     ```bash
     ✔ One pattern added successfully. You can add more in your config file.
     src/locales/{locale}.json
-    Run `gleef translate` to start translating
+    Run `gleef push` to start pushing your translations
     To customize nested/flat output per format, edit the formatOptions in .gleef/config.json
     ```
     
@@ -99,23 +99,23 @@ Before starting, make sure you have:
   </Step>
 
   <Step title="Push your first translations">
-    Upload your existing translation keys to Gleef for AI translation:
+    Upload your existing translation keys to Gleef:
 
     ```bash
-    gleef translate --skip-review
+    gleef push --skip-review
     ```
 
     This will:
     - Analyze your local translation files
-    - Send new keys to Gleef for AI translation
+    - Send new and modified keys to Gleef
     - Publish all translations without asking your team for review (similar to an initial commit)
 
-    <Note>Use `gleef translate` for AI-powered translation. Use `gleef push` only when uploading manual edits without generating translation.</Note>
+    <Note>`gleef push` is the standard command for sending new and updated translations to Gleef. Use `gleef translate` when you want to generate AI translations and merge them back into your local files in one step.</Note>
 
     You'll see progress output like:
     ```
-    Processing 15 new translations
-    ✔ Your files were translated successfully. Your team can review them from Gleef Studio.
+    Pushing 15 new translations
+    ✔ Your translations were pushed successfully.
     ```
   </Step>
 
@@ -150,7 +150,7 @@ my-app/
 
 **After `gleef init`:** Configuration is created
 
-**After `gleef translate`:** Keys are sent to Gleef for translation
+**After `gleef push`:** Keys are sent to Gleef
 
 **After `gleef pull`:** Local files are updated with new translations
 
@@ -186,22 +186,22 @@ The configuration includes:
 ### Adding New Translation Keys
 
 1. Add new keys to your base language file (e.g., `en-US.json`)
-2. Run `gleef translate` to send them for translation
+2. Run `gleef push` to send them to Gleef
 3. Review translations in Gleef Studio
 4. Run `gleef pull` to sync approved translations
 
 ### Updating Existing Translations
 
 1. Modify existing keys in your local files
-2. Run `gleef translate` to update the translations
+2. Run `gleef push` to upload the updates
 3. Review changes in Gleef Studio
-4. Run `gleef pull --all` to sync all updates
+4. Run `gleef pull --add-new` to sync all updates
 
 ### Working with Multiple Developers
 
 1. Each developer runs `gleef pull` before starting work
 2. Make translation changes locally
-3. Run `gleef translate` to push changes
+3. Run `gleef push` to upload changes
 4. Coordinate reviews in Gleef Studio
 5. Run `gleef pull` to get the latest approved translations
 

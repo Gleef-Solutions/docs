@@ -84,6 +84,7 @@
             "cli/commands/overview",
             "cli/commands/init",
             "cli/commands/login",
+            "cli/commands/push",
             "cli/commands/translate",
             "cli/commands/pull"
           ]

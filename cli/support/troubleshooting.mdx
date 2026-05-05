@@ -216,9 +216,9 @@ Warning: Pattern 'src/**.json' matched no files
 
 ## Command Execution Issues
 
-### "Nothing to translate" When Expecting Changes
+### "Nothing new to push" When Expecting Changes
 
-**Issue:** Running `gleef translate` shows no changes despite having new keys.
+**Issue:** Running `gleef push` shows no changes despite having new keys.
 
 **Solutions:**
 
@@ -240,7 +240,7 @@ Warning: Pattern 'src/**.json' matched no files
 4. **Reset and retry:**
    ```bash
    gleef pull
-   gleef translate
+   gleef push
    ```
 
 ### Pull Command Not Updating Files
@@ -264,7 +264,7 @@ Warning: Pattern 'src/**.json' matched no files
 
 4. **Force full sync:**
    ```bash
-   gleef pull --all
+   gleef pull --add-new
    ```
 5. **Remove `.gleef/lock.json`**
 
@@ -280,17 +280,17 @@ Conflict with remotely edited translations. Update keys with the remote value, o
 1. **Accept remote changes:**
    ```bash
    gleef pull  # Get remote version
-   gleef translate  # Push remaining changes
+   gleef push  # Push remaining changes
    ```
 
 2. **Keep local changes:**
    - Update the conflicting key in Gleef Studio to match your local version
-   - Run `gleef translate` again
+   - Run `gleef push` again
 
 3. **Manual resolution:**
    - Decide on the correct value
    - Update both locally and in Gleef Studio
-   - Run `gleef translate`
+   - Run `gleef push`
 
 ## File Format Issues
 
@@ -298,7 +298,7 @@ Conflict with remotely edited translations. Update keys with the remote value, o
 
 **Error:**
 ```bash
-Couldn't generate and push translations: Invalid JSON in locale file
+Couldn't push translations: Invalid JSON in locale file
 ```
 
 **Solution:**
@@ -362,14 +362,14 @@ Error parsing YAML file: Invalid YAML syntax
 
 ### Slow Translation Processing
 
-**Issue:** `gleef translate` takes very long to complete.
+**Issue:** `gleef push` or `gleef translate` takes very long to complete.
 
 **Solutions:**
 
 1. **Use pattern matching:**
    ```bash
    # Process specific keys only
-   gleef translate --match "component.*"
+   gleef push --match "component.*"
    ```
 
 2. **Check file sizes:**
@@ -397,8 +397,8 @@ Error parsing YAML file: Invalid YAML syntax
 
 1. **Process files in batches:**
    ```bash
-   gleef translate --match "auth.*"
-   gleef translate --match "nav.*"
+   gleef push --match "auth.*"
+   gleef push --match "nav.*"
    ```
 
 2. **Reduce file sizes:** Split large translation files into smaller ones
@@ -432,7 +432,7 @@ gleef login
 gleef init
 
 # 6. Pull all translations
-gleef pull --all
+gleef pull --add-new
 
 # 7. Restore files if needed
 cp -r src/locales.backup/* src/locales/
@@ -465,7 +465,7 @@ git log --oneline src/locales/
 git checkout HEAD~1 -- src/locales/
 
 # 3. Or pull fresh from Gleef
-gleef pull --all
+gleef pull --add-new
 ```
 
 ## Getting Help
@@ -495,7 +495,7 @@ curl -I https://api.gleef.eu/
 Enable verbose logging for debugging:
 
 ```bash
-gleef translate 2>&1 | tee gleef.log
+gleef push 2>&1 | tee gleef.log
 ```
 <Info>Contact Gleef to enable verbose/debug mode.</Info>
 
